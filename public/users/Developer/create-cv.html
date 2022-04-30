@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-DaNang</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/98ddc7f134.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="../sass/main.css" />
+</head>
+<body data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" tabindex="0">
+    <div class="header">
+        <div class="header__wrap container">
+          <div class="header__logo">
+            <a href="/">
+              <img src="../img/logo-white.png" alt="logo" class="logo" />
+            </a>
+          </div>
+
+          <div class="header__nav">
+            <ul class="header__nav-list ms-4">
+              <li class="header__nav-item"><a href="">Tìm việc</a></li>
+              <li class="header__nav-item"><a href="">Tạo CV</a></li>
+            </ul>
+            
+            <div class="search-nav align-items-start mx-auto">
+                <form action="" class="search__form">
+                  <div class="search__form-input">
+    
+                    <input
+                      name="search"
+                      type="text"
+                      class="form-control"
+                      id="name"
+                      placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
+                      required
+                    />
+                  </div>
+      
+                  <div class="search__form-select mx-1">
+                    <select class="form-select">
+                      <option selected>Chọn cấp bậc</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </div>
+                  <button class="btn search__form-btn btn-submit ">
+                    <div class="search-icon">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                  </button>
+                </form>
+        
+            </div>
+
+            <ul class="header__nav-list ms-auto">
+              <li class="header__nav-item"><a href="">Đăng nhập</a></li>
+              <li class="header__nav-item">|</li>
+              <li class="header__nav-item"><a href="">Đăng ký</a></li>
+            </ul>
+          </div>
+
+          <div class="header__menu">
+            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop" aria-controls="offcanvasTop">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+  
+            <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">       
+                <div class="search-tablet d-flex justify-content-center p-2">
+                  <button type="button" class="btn-close text-reset align-self-end pe-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  
+                  <form action="" class="search__form mx-auto">
+                    <div class="search__form-input">
+                      <div class="search-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                      </div>
+                      <input
+                        name="search"
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
+                        required
+                      />
+                    </div>
+        
+                    <div class="search__form-select mx-1">
+                      <select class="form-select">
+                        <option selected>Chọn cấp bậc</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                      </select>
+                    </div>
+                    <button class="btn search__form-btn btn-submit">Tìm kiếm</button>       
+                  </form>
+          
+                <!-- </div> -->
+              </div>
+            </div>
+  
+            <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
+              <i class="fa-solid fa-bars"></i>
+            </button>
+            
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+              <div class="offcanvas-header justify-content-end">
+                <button type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas" aria-label="Close">
+  
+                </button>
+              </div>
+              <div class="offcanvas-body">
+                <ul class="header__menu-list">
+                  <li class="header__menu-item">
+                    <a href="">Tìm việc</a>
+                  </li>
+                  <li class="header__menu-item">
+                    <a href="">Tạo CV</a>
+                  </li>
+                  <!-- <li class="header__menu-item">
+                    <a href=""></a>
+                  </li> -->
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="wrap">
+        <div class="banner banner-other ">
+          <div class="container">
+          </div>
+        </div>
+
+        <div class="container-lg my-4">
+            <div class="row g-4">
+                <div class="col-sm-0 col-md-0 col-xl-4">
+                    <div class="cv-btn content py-4 px-4">
+                        <ul class="nav nav-pills cv-btn-list" id="list-example">
+                            <li class="nav-item cv-btn-item">
+                                <a class="nav-link btn" data-set="0" href="#list-item-1">
+                                    <i class="fa-solid fa-user"></i>
+                                    <p>Thông tin cá nhân</p>
+                                </a>
+                            </li>
+                            <li class="nav-item cv-btn-item" >
+                                <a class="nav-link btn" data-set="1" href="#list-item-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                    <p>Giới thiệu bản thân</p>
+                                </a>
+                            </li>
+                            <li class="nav-item cv-btn-item">
+                                <a class="nav-link btn" data-set="2" href="#list-item-3">
+                                    <i class="fa-solid fa-suitcase"></i>
+                                    <p>Kinh nghiệm làm việc</p>
+                                </a>
+                            </li>
+                            <li class="nav-item cv-btn-item">
+                                <a class="nav-link btn" data-set="3" href="#list-item-4">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                    <p>Học vấn</p>
+                                </a>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                </div>
+    
+                <div class="col-sm-12 col-md-12 col-xl-8" >
+                    <form method="post" class="form"> 
+                      <div class="row g-4"> 
+                            <div class="col-12">
+                                <div class="cv-personal content px-3 px-sm-4 px-md-5 py-4">
+                                    <!-- <h2 >Tiêu đề</h2> -->
+                                    
+                                    <div class="row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tiêu đề <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                </div>  
+                            </div>
+
+                            <div class="col-12 pt-4 mt-0" id="list-item-1">
+                                <div class="cv-personal content px-3 px-sm-4 px-md-5 py-4" >
+                                    <h2 >Thông tin cá nhân</h2>
+                                    
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-form-label">Ảnh </label>
+    
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <div class="upload-img px-3 py-3">
+                                                <div class="upload-img-main">
+                                                    <div class="upload">
+                                                        <input type="file" id="image_uploads" name="image_uploads" accept=".jpg, .jpeg, .png" multiple="">
+                                                        <label for="image_uploads">                        
+                                                            <p class="m-0">Thêm ảnh</p>
+                                                            <i class="fa-solid fa-circle-plus"></i>
+                                                        </label>
+                                                    </div>
+                                                    
+                                                    <div class="img">
+    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Họ tên <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí ứng tuyển <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Email <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="email" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Điện thoại <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="number" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Giới tính <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5 d-flex justify-content-center align-items-center">
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineRadio1">Nam</label>
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
+                                            </div>
+                                            <div class="form-check form-check-inline">
+                                                <label class="form-check-label" for="inlineRadio2">Nữ</label>
+                                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
+                                            </div>
+                                        </div>
+                                    </div>
+            
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngày sinh <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="date" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+            
+                                    <div class="row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Địa chỉ cụ thể <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" id="" required>
+                                        </div>
+                                    </div>
+                                </div>                          
+                            </div>
+                     
+                            <div class="col-12 pt-4 mt-0" id="list-item-2">
+    
+                                <div class="cv-introduce content px-3 px-sm-4 px-md-5 py-4" >
+                                    <h2>Giới thiệu bản thân</h2>
+    
+                                    <div class="py-2 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-8">
+                                            <textarea name="mota" class="form-control" id="" cols="50" rows="8" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+    
+                            <div class="col-12 pt-4 mt-0" id="list-item-3">
+    
+                              <div class="cv-experience-box content px-3 px-sm-4 px-md-5 py-4">
+                                <ul class="cv-experience-list " >
+                                  <h2>Kinh nghiệm làm việc</h2>
+
+                                  <li>                      
+                                    <div class="mb-5 row">
+                                      <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên công ty <span class=" red-cl">(*)</span></label>
+                                      <div class="col-sm-7 col-md-7 col-xl-5">
+                                          <input type="text" class="form-control" name="company-0" id="" required>
+                                      </div>
+
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian làm việc <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" name="time-0" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí công việc <span class=" red-cl">(*)</span></label>
+                                        <div class="col-sm-7 col-md-7 col-xl-5">
+                                            <input type="text" class="form-control" name="posistion-0" id="" required>
+                                        </div>
+                                    </div>
+                                    <div class="mb-5 row">
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
+                                        <div class="col-sm-7 col-md-7 col-xl-8">
+                                            <textarea class="form-control" name="description-0" id="" cols="50" rows="5"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="cv-experience-remove col-sm-2 text-end top-0">
+                                      <span class="btn btn-danger experience-remove" >Xóa</span>
+                                    </div>
+                                  </li>
+
+                                </ul> 
+
+                                <div class="col-sm-12 my-4 cv-experience-add text-end ">
+                                  <span class="btn btn-light experience-add">Thêm công việc khác</span>
+                                </div>
+                              </div>
+                            </div>
+    
+                            <div class="col-12 pt-4 mt-0" id="list-item-4">
+    
+                                <div class="cv-education content px-3 px-sm-4 px-md-5 py-4" >
+            
+                                    <ul class="cv-education-list">
+                                      <h2>Học vấn</h2>
+
+                                      <li>
+                                        <div class="mb-5 row">
+                                          <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên trường cơ sở đào tạo <span class=" red-cl">(*)</span></label>
+                                          <div class="col-sm-7 col-md-7 col-xl-5">
+                                              <input type="text" class="form-control" name="school-0" id="" required>
+                                          </div>
+                                        </div>
+                                        <div class="mb-5 row">
+                                            <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian học <span class=" red-cl">(*)</span></label>
+                                            <div class="col-sm-7 col-md-7 col-xl-5">
+                                                <input type="text" class="form-control" name="year-0" id="" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-5 row">
+                                            <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngành học <span class=" red-cl">(*)</span></label>
+                                            <div class="col-sm-7 col-md-7 col-xl-5">
+                                                <input type="text" class="form-control" name="degree-0" id="" required>
+                                            </div>
+                                        </div>
+                                        <div class="mb-2 row">
+                                            <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thông tin khác </label>
+                                            <div class="col-sm-7 col-md-7 col-xl-8">
+                                                <textarea class="form-control" name="info-0" id="" cols="50" rows="5"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="cv-education-remove col-sm-2 text-end top-0">
+                                          <span class="btn btn-danger experience-remove" >Xóa</span>
+                                        </div>
+                                      </li>
+
+                                    </ul>
+                                    <div class="col-sm-12 my-4 cv-education-add text-end ">
+                                      <span class="btn btn-light education-add">Thêm học vấn khác</span>
+                                    </div>
+                                </div> 
+                            </div>
+                      </div>
+    
+                        <div class="col-12 pt-4 mt-0">
+                            <div class="content px-5 py-4 text-end">
+                            <input type="submit" value="Hủy" class="btn btn-secondary">
+                              <input type="submit" value="Lưu CV" class="btn btn-submit">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+    
+            </div>
+        </div>
+    </div>    
+
+    <div class="footer">
+        <div class="footer__wrap container-fluid py-4">
+          <p class="footer-text">Copyright &copy; IT DaNang</p>
+          <div class="footer__social">
+            <a
+              href="https://www.facebook.com/profile.php?id=100008386385400"
+              class="footer__social-link"
+              target="_blank"
+            >
+              <i class="fa-brands fa-facebook"></i>
+            </a>
+            <a href="https://github.com/Vanthanh1320" class="footer__social-link">
+              <i class="fa-brands fa-github"></i>
+            </a>
+            <a
+              href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"
+              class="footer__social-link"
+            >
+              <i class="fa-solid fa-envelope"></i>
+            </a>
+          </div>
+        </div>
+    </div>
+</body>
+
+<script src="../js/app.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+</html>

@@ -1,0 +1,9 @@
+@mixin flex($justify-contnet:null,$align-item:null) {
+    display: flex;
+    justify-content: $justify-contnet;
+    align-items: $align-item;
+}
+
+// @mixin box-shadow() {
+    
+// }

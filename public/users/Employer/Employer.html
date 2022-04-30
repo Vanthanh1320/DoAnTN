@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT-DaNang</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://kit.fontawesome.com/98ddc7f134.js"
+      crossorigin="anonymous"
+    ></script>
+
+    <link rel="stylesheet" href="../sass/main.css" />
+</head>
+<body>
+    <div class="header header-nofix">
+        <div class="header__wrap container">
+          <div class="header__logo">
+            <a href="/">
+              <img src="../img/logo-white.png" alt="logo" class="logo" />
+            </a>
+          </div>
+          <div class="header__nav">
+            <ul class="header__nav-list ms-4">
+              <li class="header__nav-item"><a class="tab-btn show " href="#/posts" data-id="posts">Tuyển dụng</a></li>
+              <li class="header__nav-item"><a class="tab-btn" href="#/candidate" data-id="cabdidates">Ứng viên</a></li>
+              <li class="header__nav-item"><a class="tab-btn" href="#/statistic" data-id="statiscal">Thống kê</a></li>
+            </ul>
+  
+            <ul class="header__nav-list ms-auto">
+                <li class="header__nav-item header__nav-user">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <span class="header__nav-user-name">Văn Thành</span>
+    
+                    <ul class="header__nav-user-dropdown">
+                      <li class="header__nav-user-item ">
+                        <a href="/" class="px-3 py-2">
+                          <i class="fa-solid fa-user mr-2"></i>
+                          Tài khoản
+                        </a>
+                      </li>
+                      <li class="header__nav-user-item ">
+                        <a href="/" class="px-3 py-2">
+                          <i class="fa-solid fa-heart mr-2"></i>
+                          Việc đã lưu
+                        </a>
+                      </li>
+                      <li class="header__nav-user-item ">
+                        <a href="/" class="px-3 py-2">
+                          <i class="fa-solid fa-right-from-bracket mr-2"></i>
+                          Đăng xuất
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+            </ul>
+          </div>
+        </div>
+    </div>
+
+    <div class="container my-4">
+        <div class="employer-main content px-5 py-4 mb-5 show" id="posts">
+            <div class="cv-manage-head">
+                  <h2 class="text-black">
+                      Tuyển dụng
+                  </h2>
+
+                  <a href="/addPost.html" class="btn btn-submit">
+                    <i class="fa-solid fa-address-card"></i>
+                    Tạo bài tuyển dụng
+                  </a>
+            </div>
+  
+            <div class="cv-manage-table">
+              <table class="table align-middle">
+                  <thead class="table-secondary">
+                      <tr>
+                          <th>STT</th>
+                          <th>Tiêu đề</th>
+                          <th>Vị trí</th>
+                          <th>Mức lương</th>
+                          <th>Ngày đăng</th>
+                          <th>Trạng thái</th>
+                          <th>Tùy chọn</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="align-top">
+                      <td >1</td>
+                      <td class="text-black">Frondend</td>
+                      <td>Senior</td>
+                      <td>10.000.000</td>
+                      <td>30-03-2022 10:50:36</td>
+                      <td>Duyệt</td>
+                      <td>
+                          <a href="/">
+                            <i class="fa-solid fa-eye"></i>
+                          </a>
+    
+                          <a href="/" class="mx-2">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                          </a>
+    
+                          <a href="/">
+                            <i class="fa-solid fa-trash-can"></i>
+                          </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="employer-main content px-5 py-4 mb-5" id="cabdidates">
+            <div class="cv-manage-head">
+                <form action="" class="d-flex">
+                    <input type="text" placeholder="Tìm kiếm" class="form-control me-2">
+
+                    <select class="form-select form-select me-2" aria-label=".form-select-lg example">
+                        <option selected>Trạng thái</option>
+                        <option value="1">Duyệt</option>
+                        <option value="2">Chưa duyệt</option>
+                    </select>
+
+                    <button class="btn btn-submit" class="btn btn-submit ">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+
+                <a href="/" class="btn btn-success">
+                    Dowload Excel
+                </a>
+          </div>
+
+          <div class="cv-manage-table">
+            <table class="table align-middle">
+                <thead class="table-secondary">
+                    <tr class="text-center">
+                        <th>STT</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Vị trí ứng tuyển</th>
+                        <th>Ngày ứng tuyển</th>
+                        <th>Link CV</th>
+                        <th>Trạng thái</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  <tr class="align-top text-center">
+                    <td >1</td>
+                    <td class="text-black">Frondend</td>
+                    <td>Senior</td>
+                    <td>10.000.000</td>
+                    <td>30-03-2022 10:50:36</td>
+                    <td>Duyệt</td>
+                    <td>
+                        <div class="form-check form-switch ">
+                            <input class="form-check-input text-center" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                        </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+          </div>
+        </div>
+
+        <div class="employer-main content px-5 py-4 mb-5" id="statiscal" >
+            <div class="cv-manage-head">
+                <form action="" class="d-flex">
+                    <input type="text" placeholder="Tìm kiếm" class="form-control me-2">
+
+                    <select class="form-select form-select-lg me-2" aria-label=".form-select-lg example">
+                        <option selected>Trạng thái</option>
+                        <option value="1">Duyệt</option>
+                        <option value="2">Chưa duyệt</option>
+                    </select>
+
+                    <button class="btn btn-submit" class="btn btn-submit ">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </form>
+
+                <a href="/" class="btn btn-success">
+                    Dowload Excel
+                </a>
+          </div>
+
+         
+        </div>
+    </div>
+
+  
+</body>
+
+<script src="../js/app.js"></script>
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"
+></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+
+
+</html>
