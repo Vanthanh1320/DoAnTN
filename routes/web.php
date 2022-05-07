@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Developer\DeveloperController;
 use App\Http\Controllers\Employer\EmployerController;
+use App\Http\Controllers\Developer\ProfileController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +41,9 @@ Route::middleware(['auth'])->group(function () {
     Route::put('tao',[DeveloperController::class,'account'])->name('account');
 
 
-    Route::get('tao-cv',[DeveloperController::class,'createCV'])->name('createCV');
+    Route::resource('/cv',ProfileController::class);
+    Route::delete('delete-exp',[ProfileController::class,'deleteExp'])->name('delete-exp');
+    Route::get('cv/pdf/{id}',[ProfileController::class,'print_profile'])->name('print-pdf');
 });
 
 Route::get('/', [DeveloperController::class, 'index'])->name('developer');
@@ -53,7 +56,7 @@ Route::prefix('employer')->group(function (){
     Route::post('login',[AuthController::class,'login'])->name('login-emp');
 
     Route::get('register',[AuthController::class,'showFormRegister'])->name('show-register-emp');
-    Route::post('register',[AuthController::class,'register'])->name('register');
+    Route::post('register',[AuthController::class,'register'])->name('register-emp');
 
     Route::get('logout',[AuthController::class,'logout'])->name('logout-emp');
 });

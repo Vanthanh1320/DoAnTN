@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
+use App\Models\Experience;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,9 +39,9 @@ class DeveloperController extends Controller
         $account->name=$data['name'];
 
         $get_image=$request->image;
+        $path='img/account/';
 
         if ($get_image){
-            $path='img/account/';
             if (file_exists($path.$account->image)){
                 unlink($path.$account->image);
             }
@@ -50,17 +51,16 @@ class DeveloperController extends Controller
             $name_image=current(explode('.',$get_name_image));
             $new_image=$name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
             $get_image->move($path,$new_image);
+
+            $account->image=$new_image;
+        }else{
+            $account->image=$account->image;
         }
 
 
-        $account->image=$new_image;
         $account->save();
 
         return redirect()->back()->with('success','Cập nhập thành công');
-    }
-
-    public function createCV(){
-        return view('developer.create_cv');
     }
 
 }

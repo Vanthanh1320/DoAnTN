@@ -18,7 +18,7 @@
                 <div class="employer-content-info px-5">
                     <h2 class="content-title m-0 py-5">Đăng ký tài khoản</h2>
 
-                    <form action="{{route('register')}}" method="post">
+                    <form action="{{route('register-emp')}}" method="post">
                         @csrf
                         <input type="hidden" value="3" name="account_type">
                         <input type="hidden" value="0" name="status">

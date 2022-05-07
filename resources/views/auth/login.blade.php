@@ -93,7 +93,7 @@
                                     <span>Đăng nhập</span>
                                 </a>
 
-                                <a class="content__select-btn" href="{{route('register')}}">
+                                <a class="content__select-btn" href="{{url('register')}}">
                                     <span>Đăng ký</span>
                                 </a>
                             </div>
