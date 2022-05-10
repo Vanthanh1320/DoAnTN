@@ -92,11 +92,16 @@
                                                             <p class="m-0">Thêm ảnh</p>
                                                             <i class="fa-solid fa-circle-plus"></i>
                                                         </label>
+                                                    </div>
+                                                    <div class="img">
+                                                        <img src="{{url('img/profile').'/'.$profile->image}}" alt="image" style="display: block">
 
-                                                        <div class="img">
-                                                            <img src="{{url('img/profile').'/'.$profile->image}}" alt="image" >
-                                                            <input type="file" id="image" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" value="{{url('img/profile').'/'.$profile->image}}">
+                                                        <div class="upload-img-hover">
+                                                            <input type="file" id="image_uploads" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" multiple="">
 
+                                                            <label for="image_uploads">
+                                                                <i class="fa-solid fa-upload"></i>
+                                                            </label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -189,10 +194,10 @@
                                     <div class="py-2 row">
                                         <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-8">
-                                            <textarea id="editor" class="form-control" cols="50" rows="8" name="introduce">
+                                            <div id="editor1" class="form-control" cols="50" rows="8" name="introduce">
                                                 {{$profile->introduce}}
 
-                                            </textarea>
+                                            </div>
 
                                             @if($errors->has('introduce'))
                                                 <span class="text text-danger">{{$errors->first('introduce')}}</span>
@@ -254,7 +259,7 @@
                                                 <div class="mb-5 row">
                                                     <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
                                                     <div class="col-sm-7 col-md-7 col-xl-8">
-                                                        <textarea  class="form-control" name="job_details[]" cols="50" rows="5">
+                                                        <textarea id="{{'editor_exp'.++$key}}" class="form-control" name="job_details[]" cols="50" rows="5">
                                                             {{$item->job_details}}
                                                         </textarea>
                                                     </div>
@@ -370,7 +375,7 @@
                                                 <div class="py-2 row">
                                                     <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-8">
-                                                    <textarea id="editor1" class="form-control" cols="50" rows="8" name="introduce_pro[]">
+                                                    <textarea id="{{'editor_pro'.++$key}}" class="form-control" cols="50" rows="8" name="introduce_pro[]">
                                                         {{$item->introduce_pro}}
                                                     </textarea>
 
@@ -407,4 +412,8 @@
             </div>
         </div>
     </div>
+
+
 @endsection
+
+

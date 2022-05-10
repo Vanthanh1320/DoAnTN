@@ -277,18 +277,22 @@
 
 {{-- Ck-editor --}}
 <script>
+    // CKEDITOR.replace('editor');
+
     CKEDITOR.replace('editor1');
-    CKEDITOR.replace('editor2');
+    CKEDITOR.replace('editor_exp1');
+    CKEDITOR.replace('editor_pro1');
 </script>
 
 <script type="text/javascript">
-
+    const editExp=document.querySelectorAll('[name="job_details[]"]');
+    console.log(editExp.id);
 
     $(document).ready(function () {
-        var i=0;
-
         //kinh nghiệm
         $(document).on('click', '.experience-add', function () {
+            var i=1;
+
             var li = `
                      <li>
                         <hr class="my-5">
@@ -318,7 +322,7 @@
                         <div class="mb-5 row">
                             <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
                             <div class="col-sm-7 col-md-7 col-xl-8">
-                                <textarea id="editor"  class="form-control" name="job_details[]" id="" cols="50" rows="5"></textarea>
+                                <textarea id="editor_exp${++i}"  class="form-control" name="job_details[]" id="" cols="50" rows="5"></textarea>
                             </div>
                         </div>
                         <div class="cv-experience-remove col-sm-2 text-end top-0 pt-5">
@@ -327,7 +331,17 @@
             </li>
               `;
 
+
             $('.cv-experience-list').append(li);
+
+            const editExp=document.querySelectorAll('[name="job_details[]"]');
+            console.log(editExp);
+            // var editor='editor_exp'+ i;
+            // console.log(editor)
+            // console.log(i)
+            //
+            // CKEDITOR.replace(editor);
+
         });
 
         $(document).on('click', '.experience-remove', function () {

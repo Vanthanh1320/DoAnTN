@@ -95,7 +95,7 @@
                                                         <img src="" alt="image" >
 
                                                         <div class="upload-img-hover">
-{{--                                                            <input type="file" id="image_uploads" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" multiple="">--}}
+                                                            <input type="file" id="image_uploads" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" multiple="">
 
                                                             <label for="image_uploads">
                                                                 <i class="fa-solid fa-upload"></i>
@@ -257,7 +257,7 @@
                                             <div class="mb-5 row">
                                                 <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
                                                 <div class="col-sm-7 col-md-7 col-xl-8">
-                                                    <textarea id="editor2" class="form-control" name="job_details[]" cols="50" rows="5">
+                                                    <textarea id="editor_exp1" class="form-control" name="job_details[]" cols="50" rows="5">
                                                         {{old('job_details[]')}}
                                                     </textarea>
                                                 </div>
@@ -357,7 +357,7 @@
                                             <div class="py-2 row">
                                                 <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-8">
-                                                    <textarea id="editor1" class="form-control" cols="50" rows="8" name="introduce_pro[]">
+                                                    <textarea id="editor_pro1" class="form-control" cols="50" rows="8" name="introduce_pro[]">
                                                         {{old('introduce_pro')}}
                                                     </textarea>
 

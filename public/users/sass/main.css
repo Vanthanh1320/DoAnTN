@@ -974,7 +974,8 @@ select:focus, input:focus {
 }
 
 .upload-img-main .img:hover > .upload-img-hover,
-.upload-img-main .img:hover > .upload-img-hover > label {
+.upload-img-main .img:hover > .upload-img-hover > label,
+.upload-img-main .img:hover > .upload-img-hover > label > i {
     opacity: 1 !important;
 }
 
@@ -1015,7 +1016,8 @@ select:focus, input:focus {
     opacity: 0;
 }
 
-.upload-img-hover label {
+.upload-img-hover label,
+.upload-img-hover i{
     opacity: 0;
 }
 
@@ -1114,4 +1116,6 @@ select:focus, input:focus {
     border-radius: 4px 4px 0 0;
     font-weight: 700;
 }
+
+
 /*# sourceMappingURL=main.css.map */

@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Arr;
 use PDF;
+use Dompdf\Dompdf;
 
 class ProfileController extends Controller
 {
@@ -473,15 +474,26 @@ class ProfileController extends Controller
 
 //    Tạo PDF
     public function print_profile($id){
+        $profile=Profile::with('experience','project','education')->where('id',$id)->first();
+        $exp=Experience::with('profile')->where('profile_id',$id)->get();
+        $edu=Education::with('profile')->where('profile_id',$id)->get();
+        $pro=Project::with('profile')->where('profile_id',$id)->get();
+
 //        $pdf= \App::make('dompdf.wrapper');
-//        $pdf->loadHTML($this->print_profile_convert($id));
+//        $pdf->loadHTML($this->print_profile_convert($profile,$exp,$edu,$pro));
 //        return $pdf->stream();
 
-        $pdf=PDF::loadView('developer.profile_pdf',compact('id'));
-        return $pdf->setPaper('a4')->stream('aaa');
+        $path=base_path('public/img/profile/'.$profile->image);
+        $type=pathinfo($path,PATHINFO_EXTENSION);
+        $data=file_get_contents($path);
+        $pic='data:image/'.$type.';base64,'.base64_encode($data);
+
+        $pdf=PDF::setOptions([
+            'isHtml5ParserEnabled' => true,
+            'isRemoteEnabled' => true,
+            'defaultFont' => 'DejaVu Sans','sans-serif'])
+            ->loadView('developer.profile_pdf',compact('profile','exp','edu','pro','pic'));
+        return $pdf->setPaper('a4')->save($profile->title.'.pdf')->stream($profile->title.'.pdf');
     }
 
-    public function print_profile_convert($id){
-        return $id;
-    }
 }
