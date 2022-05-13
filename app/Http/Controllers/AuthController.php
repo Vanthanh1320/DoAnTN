@@ -32,10 +32,11 @@ class AuthController extends Controller
         );
 
         if(Auth::attempt($credentials)) {
-            if(Auth::user()->account_type == 2){
-                return redirect()->back()->with('error','Không có đại chỉ email này');
-            }
-            return redirect()->route('employer');
+//            if(Auth::user()->account_type == 2){
+//                $request->session()->flush();
+//                return redirect()->back()->with('error','Địa chỉ email không tồn tại');
+//            }
+            return redirect()->route('empl');
         }
 
         return redirect()->back()->with('error','Email hoặc mật khẩu không chính xác');
@@ -47,10 +48,10 @@ class AuthController extends Controller
                 'name' => ['required', 'string', 'max:255'],
                 'email' => ['required','email','unique:users'],
                 'password' =>  ['required','min:8'],
-//                'phone_number' => ['required','numeric','min:11'],
-//                'company' => ['required','string'],
-//                'website' => ['required','string'],
-//                'address' => ['required','string'],
+                'phone_number' => ['required','numeric','min:11'],
+                'company' => ['required','string'],
+                'website' => ['required','string'],
+                'address' => ['required','string'],
                 'status' => ['required'],
                 'account_type' => ['required'],
             ],
@@ -61,12 +62,12 @@ class AuthController extends Controller
                 'email.unique' => 'Email đã tồn tại',
                 'password.required' => 'Vui lòng nhập mật khẩu',
                 'password.min'      =>  'Mật khẩu phải từ :min ký tự',
-//                'company.required'=> 'Vui lòng nhập tên công ty',
-//                'phone_number.required'=> 'Vui lòng nhập số điện thoại',
-//                'phone_number.numeric'=> 'Số điện thoại định dạng là số',
-//                'phone_number.min'=> 'Số điện thoại ít nhất là 10 ký tự',
-//                'website.required'=> 'Vui lòng nhập website',
-//                'address.required'=> 'Vui lòng nhập địa chỉ',
+                'company.required'=> 'Vui lòng nhập tên công ty',
+                'phone_number.required'=> 'Vui lòng nhập số điện thoại',
+                'phone_number.numeric'=> 'Số điện thoại định dạng là số',
+                'phone_number.min'=> 'Số điện thoại ít nhất là 10 ký tự',
+                'website.required'=> 'Vui lòng nhập website',
+                'address.required'=> 'Vui lòng nhập địa chỉ',
             ]
         );
 
@@ -74,17 +75,17 @@ class AuthController extends Controller
         $user->name=$data['name'];
         $user->email=$data['email'];
         $user->password=bcrypt($data['password']);
-//        $user->company=$data['company'];
-//        $user->phone_number=$data['phone_number'];
-//        $user->website=$data['website'];
-//        $user->address=$data['address'];
+        $user->company=$data['company'];
+        $user->phone_number=$data['phone_number'];
+        $user->website=$data['website'];
+        $user->address=$data['address'];
         $user->account_type=$data['account_type'];
         $user->status=$data['status'];
 
         $user->save();
 
         if(Auth::attempt($data)) {
-            return redirect()->route('employer');
+            return redirect()->route('empl');
         }
 
         return redirect()->back();

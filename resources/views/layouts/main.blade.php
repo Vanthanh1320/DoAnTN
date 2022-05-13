@@ -20,6 +20,10 @@
 
     <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
 
+    <link href="{{url("users")}}/css/mobiscroll.javascript.min.css" rel="stylesheet" />
+    <script src="{{url("users")}}/js/mobiscroll.javascript.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{url("users")}}/sass/main.css"/>
 </head>
 <body data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" tabindex="0">
@@ -39,37 +43,37 @@
                 </ul>
 
                 <ul class="header__nav-list ms-auto">
-                    <li class="header__nav-item"><a target="_blank" href="{{url('employer/')}}">Nhà tuyển dụng</a></li>
+                    <li class="header__nav-item"><a target="_blank" href="{{url('empl/')}}">Nhà tuyển dụng</a></li>
                 </ul>
             </div>
         </div>
     </div>
-@elseif(Str::contains(url()->current(),'employer'))
+@elseif(Str::contains(url()->current(),'empl'))
     <div class="header header-nofix">
         <div class="header__wrap container">
             <div class="header__logo">
-                <a href="/">
-                    <img src="./img/logo-white.png" alt="logo" class="logo"/>
+                <a href="{{route('empl')}}">
+                    <img src="{{url('users')}}/img/logo-white.png" alt="logo" class="logo"/>
                 </a>
             </div>
             <div class="header__nav">
                 <ul class="header__nav-list ms-4">
-                    <li class="header__nav-item"><a class="tab-btn show " href="#/posts" data-id="posts">Tuyển dụng</a>
+                    <li class="header__nav-item"><a class="tab-btn show " href="employer#/posts" data-id="posts">Tuyển dụng</a>
                     </li>
-                    <li class="header__nav-item"><a class="tab-btn" href="#/candidate" data-id="cabdidates">Ứng viên</a>
+                    <li class="header__nav-item"><a class="tab-btn" href="employer#/candidate" data-id="cabdidates">Ứng viên</a>
                     </li>
-                    <li class="header__nav-item"><a class="tab-btn" href="#/statistic" data-id="statiscal">Thống kê</a>
+                    <li class="header__nav-item"><a class="tab-btn" href="employer#/statistic" data-id="statiscal">Thống kê</a>
                     </li>
                 </ul>
 
                 <ul class="header__nav-list ms-auto">
                     <li class="header__nav-item header__nav-user">
                         <i class="fa-solid fa-circle-user"></i>
-                        <span class="header__nav-user-name">{{Auth::user()->name}}</span>
+                        <span class="header__nav-user-name">{{Auth::user()->company}}</span>
 
                         <ul class="header__nav-user-dropdown">
                             <li class="header__nav-user-item ">
-                                <a href="/" class="px-3 py-2">
+                                <a href="{{route('show-account-epl')}}" class="px-3 py-2">
                                     <i class="fa-solid fa-user mr-2"></i>
                                     Tài khoản
                                 </a>
@@ -234,33 +238,32 @@
 @yield('content')
 
 
-
-{{--    @if(Str::contains(url()->current(),['tao-cv'] || url()->current() === '/'))--}}
-<div class="footer">
-    <div class="footer__wrap container-fluid py-4">
-        <p class="footer-text">Copyright &copy; IT DaNang</p>
-        <div class="footer__social">
-            <a
-                href="https://www.facebook.com/profile.php?id=100008386385400"
-                class="footer__social-link"
-                target="_blank"
-            >
-                <i class="fa-brands fa-facebook"></i>
-            </a>
-            <a href="https://github.com/Vanthanh1320" class="footer__social-link">
-                <i class="fa-brands fa-github"></i>
-            </a>
-            <a
-                href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"
-                class="footer__social-link"
-            >
-                <i class="fa-solid fa-envelope"></i>
-            </a>
+    @if(!Str::contains(url()->current(),['employer']))
+        <div class="footer">
+            <div class="footer__wrap container-fluid py-4">
+                <p class="footer-text">Copyright &copy; IT DaNang</p>
+                <div class="footer__social">
+                    <a
+                        href="https://www.facebook.com/profile.php?id=100008386385400"
+                        class="footer__social-link"
+                        target="_blank"
+                    >
+                        <i class="fa-brands fa-facebook"></i>
+                    </a>
+                    <a href="https://github.com/Vanthanh1320" class="footer__social-link">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a
+                        href="https://mail.google.com/mail/u/0/?tab=rm&ogbl#inbox"
+                        class="footer__social-link"
+                    >
+                        <i class="fa-solid fa-envelope"></i>
+                    </a>
+                </div>
+            </div>
         </div>
-    </div>
-</div>
 
-{{--    @endif--}}
+    @endif
 </body>
 
 <script src="{{url('users')}}/js/app.js"></script>
@@ -275,19 +278,35 @@
         integrity="sha512-k2WPPrSgRFI6cTaHHhJdc8kAXaRM4JBFEDo1pPGGlYiOyv4vnA0Pp0G5XMYYxgAPmtmv/IIaQA6n5fLAyJaFMA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+{{--toast--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 {{-- Ck-editor --}}
 <script>
     // CKEDITOR.replace('editor');
 
-    CKEDITOR.replace('editor1');
-    CKEDITOR.replace('editor_exp1');
-    CKEDITOR.replace('editor_pro1');
+    if (location.href.includes('post')){
+        CKEDITOR.replace('editor_jd');
+        CKEDITOR.replace('editor_jre');
+        CKEDITOR.replace('editor_be');
+    }
+
+    if(location.href.includes('cv')){
+        CKEDITOR.replace('editor1');
+        CKEDITOR.replace('editor_exp1');
+        CKEDITOR.replace('editor_pro1');
+    }
+
+    $(document).ready(function() {
+        toastr.options.timeOut = 4000;
+        @if (Session::has('error'))
+            toastr.error('{{ Session::get('error') }}');
+        @elseif(Session::has('success'))
+            toastr.success('{{ Session::get('success') }}');
+        @endif
+    });
 </script>
 
 <script type="text/javascript">
-    const editExp=document.querySelectorAll('[name="job_details[]"]');
-    console.log(editExp.id);
-
     $(document).ready(function () {
         //kinh nghiệm
         $(document).on('click', '.experience-add', function () {
@@ -334,8 +353,6 @@
 
             $('.cv-experience-list').append(li);
 
-            const editExp=document.querySelectorAll('[name="job_details[]"]');
-            console.log(editExp);
             // var editor='editor_exp'+ i;
             // console.log(editor)
             // console.log(i)

@@ -9,7 +9,7 @@
                     Tuyển dụng
                 </h2>
 
-                <a href="/addPost.html" class="btn btn-submit">
+                <a href="{{route('post.create')}}" class="btn btn-submit">
                     <i class="fa-solid fa-address-card"></i>
                     Tạo bài tuyển dụng
                 </a>
@@ -29,27 +29,38 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="align-top">
-                        <td >1</td>
-                        <td class="text-black">Frondend</td>
-                        <td>Senior</td>
-                        <td>10.000.000</td>
-                        <td>30-03-2022 10:50:36</td>
-                        <td>Duyệt</td>
-                        <td>
-                            <a href="/">
-                                <i class="fa-solid fa-eye"></i>
-                            </a>
+                    @foreach($post as $key=>$item)
+                        <tr class="align-top">
+                            <td>{{$key+1}}</td>
+                            <td class="text-black">{{$item->title}}</td>
+                            <td>{{$item->position}}</td>
+                            <td>{{$item->salary_min}} - {{$item->salary_max}}</td>
+                            <td>{{\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY')}}</td>
+                            <td>{{$item->status}}</td>
+                            <td style="display: inline-block">
+                                <a href="/">
+                                    <i class="fa-solid fa-eye"></i>
+                                </a>
 
-                            <a href="/" class="mx-2">
-                                <i class="fa-solid fa-pen-to-square"></i>
-                            </a>
+                                <a href="{{route('post.edit',[$item->id])}}" class="mx-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
 
-                            <a href="/">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </a>
-                        </td>
-                    </tr>
+{{--                                <a href="/">--}}
+{{--                                    <i class="fa-solid fa-trash-can"></i>--}}
+{{--                                </a>--}}
+
+                                <form action="{{route('post.destroy',[$item->id])}}" method="post" style="display: inline-block">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button onclick="return confirm('Bạn có muốn xóa')" style="width: 0; border: 0">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+
                     </tbody>
                 </table>
             </div>

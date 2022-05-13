@@ -4,14 +4,19 @@ namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Experience;
+use App\Models\Recruitment;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class DeveloperController extends Controller
 {
     public function index(){
-        return view('developer.index');
+        $posts=Recruitment::with('user')->where('status',1)->get();
+
+
+        return view('developer.index')->with(compact('posts'));
     }
 
     public function showAccount(){
@@ -63,4 +68,10 @@ class DeveloperController extends Controller
         return redirect()->back()->with('success','Cập nhập thành công');
     }
 
+    public function post_info($slug){
+        $post=Recruitment::with('user')->where('slug_title',$slug)->first();
+        $kills=explode(',',$post->kills);
+
+        return view('developer.post_info')->with(compact('post','kills'));
+    }
 }

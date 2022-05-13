@@ -30,26 +30,6 @@
                             </select>
                         </div>
                         <button class="btn search__form-btn btn-submit">Tìm kiếm</button>
-
-
-                        <!-- <div class="search__keys">
-                          <div class="search__keys-item">
-                            <span>JavaScript</span>
-                            <span>PHP</span>
-                            <span>Java</span>
-                            <span>Android</span>
-                            <span>.NET</span>
-                            <span>Ruby</span>
-                            <span>Python</span>
-                          </div>
-
-                          <p class="search__keys-text me-4">
-                            Ẩn
-                          </p>
-                        </div> -->
-
-                    </form>
-
                 </div>
             </div>
         </div>
@@ -60,196 +40,49 @@
                 <div class="posts px-3 py-3">
                     <div class="posts-count">
                         <h3 class="posts-number">
-                            <span>100</span>
+                            <span>{{count($posts)}}</span>
                             Việc làm IT
                         </h3>
                     </div>
+
                     <div class="row g-2">
+                        @foreach($posts as $item)
                         <div class="col-sm-12 col-md-12 col-xl-6">
-                            <a class="posts-item py-3 px-3" href="/">
+                            <a class="posts-item py-3 px-3" href="{{route('show-post-info',[$item->slug_title])}}">
                                 <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
+                                    <img src="{{url('empl/img').'/'.$item->user->image}}" alt="logo-company">
                                 </div>
 
                                 <div class="posts-item-info px-sm-2">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
+                                    <h2 class="posts-item-info__title">{{$item->title}}</h2>
+                                    <p class="posts-item-info__company">{{$item->user->company}}</p>
                                     <div class="posts-item-info__address">
                                         <p>
                                             <i class="fa-solid fa-location-dot"></i>
-                                            Quận Hải Châu, Đà Nẵng</p>
+                                            {{$item->address_work}}
+                                        </p>
                                     </div>
                                     <div class="posts-item-info__salary">
                                         <p>
                                             <i class="fa-solid fa-money-bill-wave"></i>
-                                            1,000 - 2,000</p>
+                                            {{$item->salary_min}} - {{$item->salary_max}}
+                                        </p>
                                     </div>
                                     <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
+
+                                        @foreach(Str::of($item->kills)->explode(',') as $kill)
+                                            <span>{{$kill}}</span>
+                                        @endforeach
+
                                     </div>
                                 </div>
 
                                 <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
+                                    <p>{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
                                 </div>
                             </a>
                         </div>
-
-                        <div class="col-sm-12 col-md-12 col-xl-6">
-                            <a class="posts-item py-3 px-3" href="/">
-                                <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
-                                </div>
-
-                                <div class="posts-item-info px-sm-2">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                    <div class="posts-item-info__address">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Quận Hải Châu, Đà Nẵng</p>
-                                    </div>
-                                    <div class="posts-item-info__salary">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        <p>1,000 - 2,000</p>
-                                    </div>
-                                    <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
-                                    </div>
-                                </div>
-
-                                <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row g-2">
-                        <div class="col-sm-12 col-md-12 col-xl-6 ">
-                            <a class="posts-item py-3 px-3" href="/">
-                                <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
-                                </div>
-
-                                <div class="posts-item-info">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                    <div class="posts-item-info__address">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Quận Hải Châu, Đà Nẵng</p>
-                                    </div>
-                                    <div class="posts-item-info__salary">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        <p>1,000 - 2,000</p>
-                                    </div>
-                                    <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
-                                    </div>
-                                </div>
-
-                                <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-xl-6">
-                            <a class="posts-item py-3 px-3" href="/">
-                                <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
-                                </div>
-
-                                <div class="posts-item-info">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                    <div class="posts-item-info__address">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Quận Hải Châu, Đà Nẵng</p>
-                                    </div>
-                                    <div class="posts-item-info__salary">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        <p>1,000 - 2,000</p>
-                                    </div>
-                                    <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
-                                    </div>
-                                </div>
-
-                                <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row g-2">
-                        <div class="col-sm-12 col-md-12 col-xl-6 ">
-                            <a class="posts-item py-3 px-3" href="/">
-                                <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
-                                </div>
-
-                                <div class="posts-item-info">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                    <div class="posts-item-info__address">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Quận Hải Châu, Đà Nẵng</p>
-                                    </div>
-                                    <div class="posts-item-info__salary">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        <p>1,000 - 2,000</p>
-                                    </div>
-                                    <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
-                                    </div>
-                                </div>
-
-                                <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <div class="col-sm-12 col-md-12 col-xl-6">
-                            <a class="posts-item py-3 px-3" href="/">
-                                <div class="posts-item-img">
-                                    <img src="./img/neolab.png" alt="logo-company">
-                                </div>
-
-                                <div class="posts-item-info">
-                                    <h2 class="posts-item-info__title">Frontend Dev (Vue.js/ React) - Romove</h2>
-                                    <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                    <div class="posts-item-info__address">
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        <p>Quận Hải Châu, Đà Nẵng</p>
-                                    </div>
-                                    <div class="posts-item-info__salary">
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        <p>1,000 - 2,000</p>
-                                    </div>
-                                    <div class="posts-item-info__kills">
-                                        <span>JavaScript</span>
-                                        <span>PHP</span>
-                                        <span>Java</span>
-                                    </div>
-                                </div>
-
-                                <div class="posts-item-timer">
-                                    <p>4 giờ trước</p>
-                                </div>
-                            </a>
-                        </div>
+                        @endforeach
                     </div>
 
                 </div>

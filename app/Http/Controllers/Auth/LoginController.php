@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use MongoDB\Driver\Session;
 
 class LoginController extends Controller
 {
@@ -43,8 +44,8 @@ class LoginController extends Controller
     {
         if (Auth::user()->account_type == 2){
             return route('developer');
-
         }
+
         return route('login');
     }
 }

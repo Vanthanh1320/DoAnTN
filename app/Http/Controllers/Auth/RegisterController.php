@@ -87,7 +87,7 @@ class RegisterController extends Controller
 //    protected function redirectTo()
 //    {
 //        if (Auth::user()->account_type == 3){
-//            return route('employer');
+//            return route('empl');
 //        }
 //
 //        return route('developer');

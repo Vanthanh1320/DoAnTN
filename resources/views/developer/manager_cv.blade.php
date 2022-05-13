@@ -50,10 +50,10 @@
                                             <i class="fa-solid fa-pen-to-square"></i>
                                         </a>
 
-                                        <form action="{{route('cv.destroy',[$item->id])}}" method="post">
+                                        <form action="{{route('cv.destroy',[$item->id])}}" method="post" style="display: inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button onclick="return confirm('Bạn có muốn xóa')">
+                                            <button onclick="return confirm('Bạn có muốn xóa')" style="width: 0; border: 0">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </button>
                                         </form>

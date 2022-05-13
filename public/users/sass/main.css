@@ -1119,3 +1119,18 @@ select:focus, input:focus {
 
 
 /*# sourceMappingURL=main.css.map */
+.mbsc-windows.mbsc-textfield-wrapper{
+    margin: 0;
+}
+.mbsc-windows.mbsc-textfield-wrapper{
+    font-size: 18px;
+    font-weight: normal;
+}
+
+.mbsc-windows.mbsc-textfield-box{
+    border-color:#ced4da !important;
+    padding: 2px 0;
+}
+/*.mbsc-select-scroller.mbsc-scroller-pointer.mbsc-select-scroller.mbsc-scroller-pointer div{*/
+/*    display: none !important;*/
+/*}*/

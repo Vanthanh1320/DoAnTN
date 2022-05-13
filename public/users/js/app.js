@@ -3,8 +3,7 @@ const selectBtn=document.querySelectorAll('.content__select-btn');
 const valiForm=document.querySelectorAll('.content-validation');
 const cvItemBtn=document.querySelectorAll('.cv-btn-item');
 const tabBtn=document.querySelectorAll('.tab-btn');
-const employerEl=document.querySelectorAll('.employer-main');
-
+const employerEl=document.querySelectorAll('.empl-main');
 
 
 const hideText=document.querySelector('.search__keys-text');
@@ -12,8 +11,6 @@ const headerEl=document.querySelector('.header');
 const cvBtnList=document.querySelector('.cv-btn');
 const btnChange=document.querySelector('.btn-change');
 const btnCloseChange=document.querySelector('.btn-close-change');
-
-
 
 
 window.addEventListener('scroll',function(){
@@ -125,3 +122,12 @@ var loadFile = function (event) {
 
 }
 
+mobiscroll.select('#multiple-select', {
+    inputElement: document.getElementById('my-input'),
+    touchUi: false
+});
+
+mobiscroll.select('#multiple-select2', {
+    inputElement: document.getElementById('my-input2'),
+    touchUi: false
+});
