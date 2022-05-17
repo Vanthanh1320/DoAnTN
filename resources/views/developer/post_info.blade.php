@@ -1,7 +1,9 @@
 @extends('layouts.main')
 
 @section('content')
+    <div id="toast">
 
+    </div>
     <div class="wrap">
         <div class="banner banner-other ">
             <div class="container">
@@ -17,8 +19,19 @@
                                 {{$post->title}}
                             </h2>
 
+                            <input type="hidden" name="title" value="{{$post->title}}">
+                            <input type="hidden" name="slug" value="{{$post->slug_title}}">
+                            <input type="hidden" name="image" value="{{$post->user->image}}">
+                            <input type="hidden" name="company" value="{{$post->user->company}}">
+                            <input type="hidden" name="address_work" value="{{$post->address_work}}">
+                            <input type="hidden" name="salary_min" value="{{$post->salary_min}}">
+                            <input type="hidden" name="salary_max" value="{{$post->salary_max}}">
+                            <input type="hidden" name="kills" value="{{$post->kills}}">
+                            <input type="hidden" name="time" value="{{\Carbon\Carbon::parse($post->created_at)->diffForHumans()}}">
+
+
                             <span type="button" class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Lưu">
-                              <i class="fa-regular fa-bookmark"></i>
+                              <i class="fa-regular fa-bookmark" id="save" data-set="{{$post->id}}" onclick="savePost({{$post->id}})"></i>
                             </span>
                         </div>
 
@@ -32,7 +45,7 @@
 
                             <p>hoặc</p>
 
-                            <a href="/" class="btn btn-light ">
+                            <a href="{{route('cv.create')}}" class="btn btn-light ">
                                 Tạo CV để ứng tuyển
                             </a>
 
@@ -130,107 +143,42 @@
                     <div class="jobs-other content py-4 px-sm-4 px-md-5">
                         <h2 class="detail-job-title mb-4">Việc làm phù hợp dành cho bạn</h2>
 
-                        <a class="posts-item py-3 px-3" href="/">
-                            <div class="posts-item-img">
-                                <img src="./img/neolab.png" alt="logo-company" />
-                            </div>
+                        @foreach($posts_same as $item)
+                            <a class="posts-item py-3 px-3" href="{{route('show-post-info',[$item->slug_title])}}">
+                                <div class="posts-item-img">
+                                    <img src="{{url('empl/img').'/'.$item->user->image}}" alt="logo-company">
+                                </div>
 
-                            <div class="posts-item-info px-sm-2">
-                                <h2 class="posts-item-info__title">
-                                    Frontend Dev (Vue.js/ React) - Romove
-                                </h2>
-                                <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                <div class="posts-item-info__address">
-                                    <p>
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        Quận Hải Châu, Đà Nẵng
-                                    </p>
-                                </div>
-                                <div class="posts-item-info__salary">
-                                    <p>
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        1,000 - 2,000
-                                    </p>
-                                </div>
-                                <div class="posts-item-info__kills">
-                                    <span>JavaScript</span>
-                                    <span>PHP</span>
-                                    <span>Java</span>
-                                </div>
-                            </div>
+                                <div class="posts-item-info px-sm-2 ms-3 me-auto">
+                                    <h2 class="posts-item-info__title">{{$item->title}}</h2>
+                                    <p class="posts-item-info__company">{{$item->user->company}}</p>
+                                    <div class="posts-item-info__address">
+                                        <p>
+                                            <i class="fa-solid fa-location-dot"></i>
+                                            {{$item->address_work}}
+                                        </p>
+                                    </div>
+                                    <div class="posts-item-info__salary">
+                                        <p>
+                                            <i class="fa-solid fa-money-bill-wave"></i>
+                                            {{$item->salary_min}} - {{$item->salary_max}}
+                                        </p>
+                                    </div>
+                                    <div class="posts-item-info__kills">
 
-                            <div class="posts-item-timer">
-                                <p>4 giờ trước</p>
-                            </div>
-                        </a>
+                                        @foreach(Str::of($item->kills)->explode(',') as $kill)
+                                            <span>{{$kill}}</span>
+                                        @endforeach
 
-                        <a class="posts-item py-3 px-3" href="/">
-                            <div class="posts-item-img">
-                                <img src="./img/neolab.png" alt="logo-company" />
-                            </div>
+                                    </div>
+                                </div>
 
-                            <div class="posts-item-info px-sm-2">
-                                <h2 class="posts-item-info__title">
-                                    Frontend Dev (Vue.js/ React) - Romove
-                                </h2>
-                                <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                <div class="posts-item-info__address">
-                                    <p>
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        Quận Hải Châu, Đà Nẵng
-                                    </p>
+                                <div class="posts-item-timer">
+                                    <p>{{\Carbon\Carbon::parse($item->created_at)->diffForHumans()}}</p>
                                 </div>
-                                <div class="posts-item-info__salary">
-                                    <p>
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        1,000 - 2,000
-                                    </p>
-                                </div>
-                                <div class="posts-item-info__kills">
-                                    <span>JavaScript</span>
-                                    <span>PHP</span>
-                                    <span>Java</span>
-                                </div>
-                            </div>
+                            </a>
 
-                            <div class="posts-item-timer">
-                                <p>4 giờ trước</p>
-                            </div>
-                        </a>
-
-                        <a class="posts-item py-3 px-3" href="/">
-                            <div class="posts-item-img">
-                                <img src="./img/neolab.png" alt="logo-company" />
-                            </div>
-
-                            <div class="posts-item-info px-sm-2">
-                                <h2 class="posts-item-info__title">
-                                    Frontend Dev (Vue.js/ React) - Romove
-                                </h2>
-                                <p class="posts-item-info__company">NEOLAB Việt Nam</p>
-                                <div class="posts-item-info__address">
-                                    <p>
-                                        <i class="fa-solid fa-location-dot"></i>
-                                        Quận Hải Châu, Đà Nẵng
-                                    </p>
-                                </div>
-                                <div class="posts-item-info__salary">
-                                    <p>
-                                        <i class="fa-solid fa-money-bill-wave"></i>
-                                        1,000 - 2,000
-                                    </p>
-                                </div>
-                                <div class="posts-item-info__kills">
-                                    <span>JavaScript</span>
-                                    <span>PHP</span>
-                                    <span>Java</span>
-                                </div>
-                            </div>
-
-                            <div class="posts-item-timer">
-                                <p>4 giờ trước</p>
-                            </div>
-                        </a>
+                        @endforeach
                     </div>
                 </div>
             </div>

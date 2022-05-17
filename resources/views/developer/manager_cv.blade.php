@@ -41,8 +41,7 @@
                                     <td>{{$item->position}}</td>
                                     <td>{{$item->updated_at}}</td>
                                     <td>
-                                        <a target="_blank" href="{{route('print-pdf',[$item->id])}}">PDF</a>
-                                        <a href="/">
+                                        <a href="{{route('print-pdf',[$item->id])}}" target="_blank">
                                             <i class="fa-solid fa-eye"></i>
                                         </a>
 

@@ -1,7 +1,6 @@
 
 const selectBtn=document.querySelectorAll('.content__select-btn');
 const valiForm=document.querySelectorAll('.content-validation');
-const cvItemBtn=document.querySelectorAll('.cv-btn-item');
 const tabBtn=document.querySelectorAll('.tab-btn');
 const employerEl=document.querySelectorAll('.empl-main');
 
@@ -11,6 +10,9 @@ const headerEl=document.querySelector('.header');
 const cvBtnList=document.querySelector('.cv-btn');
 const btnChange=document.querySelector('.btn-change');
 const btnCloseChange=document.querySelector('.btn-close-change');
+var faSave=document.querySelector('.fa-regular');
+var saveJobHtml=document.querySelector('.save-job-list');
+
 
 
 window.addEventListener('scroll',function(){
@@ -131,3 +133,165 @@ mobiscroll.select('#multiple-select2', {
     inputElement: document.getElementById('my-input2'),
     touchUi: false
 });
+
+
+function savePost(id_post) {
+    var id_user=document.querySelector('.header__nav-user > input[name="id_user"]').value;
+    var title=document.querySelector('.detail-job-head > input[name="title"]').value;
+    var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
+    var image=document.querySelector('.detail-job-head > input[name="image"]').value;
+    var company=document.querySelector('.detail-job-head > input[name="company"]').value;
+    var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
+    var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
+    var time=document.querySelector('.detail-job-head > input[name="time"]').value;
+    var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
+
+    const data={
+        'id_user':Number.parseInt(id_user),
+        'id':id_post,
+        'title':title,
+        'slug':slug,
+        'image':image,
+        'company':company,
+        'salary_max':salary_max,
+        'salary_min':salary_min,
+        'time':time,
+        'address':address
+    }
+
+    if(localStorage.getItem('savePost') == null){
+        localStorage.setItem('savePost','[]');
+    }
+
+    var response=JSON.parse(localStorage.getItem('savePost'));
+
+    var count_data=response.filter((item)=> {
+        return item.id === id_post && item.id_user === parseInt(id_user);
+    })
+
+    if (count_data.length == 0){
+        faSave.setAttribute('class','fa-solid fa-bookmark')
+        response.push(data);
+        showSuccessToast();
+        return  localStorage.setItem('savePost',JSON.stringify(response));
+    }else {
+        var id_delete=response.filter((item)=>{
+            return item.id !== id_post || item.id_user !== parseInt(id_user);
+        })
+        faSave.setAttribute('class','fa-regular fa-bookmark')
+
+        return  localStorage.setItem('savePost',JSON.stringify(id_delete))
+    }
+
+}
+
+function toast({title='', message='', type='info', duration=3000}) {
+    const main=document.getElementById('toast');
+    if(main){
+        const toast=document.createElement('div');
+
+        //Remove tấ cả toast
+        const autoRemoveId =setTimeout(function () {
+            main.removeChild(toast);
+        },duration + 1000);
+
+        //Remove khi click vào close
+        toast.onclick=function(e){
+            if(e.target.closest('.toast__close')){
+                main.removeChild(toast);
+                clearTimeout(autoRemoveId);
+            }
+        }
+        const icons={
+            success:'fas fa-check-circle',
+            info:'fa fa-info-circle',
+            warning:'fa fa-exclamation-circle',
+            error:'fa fa-exclamation-circle',
+        };
+        const icon=icons[type];
+        const delay=(duration / 1000).toFixed(2); //chia thời gian
+
+
+        toast.classList.add('toast-show',`toast--${type}`);
+        toast.style.animation=`animation: sliderInLeft ease ${delay}s, Fadeout linear 1s 3s forwards;`;
+
+        toast.innerHTML= `
+                <div class="toast__icon">
+                    <i class="${icon}"></i>
+                </div>
+                <div class="toast__body">
+                    <h1 class="toast__title">${title}</h1>
+                    <p class="toast__msg">${message}</p>
+                </div>
+                <div class="toast__close">
+                    <i class="fas fa-times"></i>
+                 </div>
+            `;
+        main.appendChild(toast);
+    }
+}
+
+function showSuccessToast(){
+    toast({
+        title:'Success',
+        message:'Việc làm đã được lưu',
+        type:'success',
+        duration:50000
+    })
+}
+
+var id_user=document.querySelector('.header__nav-user input[name="id_user"]');
+var data=JSON.parse(localStorage.getItem('savePost'));
+var html=``;
+
+if (id_user){
+    data.map((item)=>{
+        if (item.id_user === Number.parseInt(id_user.value) && saveJobHtml){
+            html+=`
+            <a class="posts-item py-3 px-3" href="tim-viec/${item.slug}">
+                        <div class="posts-item-img">
+                            <img src="${'empl/img/'+item.image}" alt="logo-company">
+                        </div>
+
+                        <div class="posts-item-info ms-4 me-auto">
+                            <h2 class="posts-item-info__title">${item.title}</h2>
+                            <p class="posts-item-info__company">${item.company}</p>
+                            <div class="posts-item-info__address">
+                                <p>
+                                    <i class="fa-solid fa-location-dot"></i>
+                                    ${item.address}
+                                    </p>
+                            </div>
+                            <div class="posts-item-info__salary">
+                                <p>
+                                    <i class="fa-solid fa-money-bill-wave"></i>
+                                    ${item.salary_min} - ${item.salary_max}
+                                    </p>
+                            </div>
+                            <div class="posts-item-info__kills">
+                                <span>JavaScript</span>
+                                <span>PHP</span>
+                                <span>Java</span>
+                            </div>
+                        </div>
+
+                        <div class="posts-item-timer">
+                            <p>${item.time}</p>
+                        </div>
+             </a>
+            `
+            return  saveJobHtml.innerHTML=html;
+        }
+
+    })
+
+}
+
+if (faSave){
+    data.map((item)=>{
+
+        if (item.id === parseInt(faSave.dataset.set) && item.id_user === Number.parseInt(id_user.value)){
+            return  faSave.setAttribute('class','fa-solid fa-bookmark')
+        }
+    })
+}

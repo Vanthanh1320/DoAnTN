@@ -194,10 +194,10 @@
                                     <div class="py-2 row">
                                         <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-8">
-                                            <div id="editor1" class="form-control" cols="50" rows="8" name="introduce">
+                                            <textarea id="editor1" class="form-control" cols="50" rows="8" name="introduce">
                                                 {{$profile->introduce}}
 
-                                            </div>
+                                            </textarea>
 
                                             @if($errors->has('introduce'))
                                                 <span class="text text-danger">{{$errors->first('introduce')}}</span>

@@ -194,8 +194,8 @@
         </div>
     </div>
     <section class="introduce-personal">
-        <p>
-            {!! nl2br(e($profile->introduce)) !!}
+        <p style="margin: 0">
+            {!! html_entity_decode($profile->introduce) !!}
 {{--            {{nl2br(str_replace("\n\r", " ", $profile->introduce))}}--}}
         </p>
     </section>
@@ -216,7 +216,7 @@
                     <span>{{$item->name_company}}</span> <br>
                     <i>{{$item->job_position}}</i>
                     <ul>
-                        <li>{!! nl2br(e($item->job_details)) !!}</li>
+                        <li>{!! html_entity_decode($item->job_details) !!}</li>
                     </ul>
                 </div>
             </div>
@@ -270,7 +270,7 @@
                         </p>
 
                         <span>Mô tả</span>
-                        <p>{{$item->introduce_pro}}</p>
+                        <p>{!! html_entity_decode($item->introduce_pro) !!}</p>
 
                     </div>
                 </div>

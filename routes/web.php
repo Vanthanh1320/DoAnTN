@@ -41,15 +41,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tai-khoan',[DeveloperController::class,'showAccount'])->name('show-account');
     Route::put('tao',[DeveloperController::class,'account'])->name('account');
 
+    Route::get('viec-da-luu',[DeveloperController::class,'save_post'])->name('save-post');
 
 
     Route::resource('/cv',ProfileController::class);
     Route::delete('delete-exp',[ProfileController::class,'deleteExp'])->name('delete-exp');
     Route::get('cv/pdf/{id}',[ProfileController::class,'print_profile'])->name('print-pdf');
+
 });
 
 Route::get('/', [DeveloperController::class, 'index'])->name('developer');
 Route::get('tim-viec/{slug}',[DeveloperController::class,'post_info'])->name('show-post-info');
+Route::post('tim-kiem',[DeveloperController::class,'search'])->name('search');
+Route::post('tim-kiem-nc',[DeveloperController::class,'search_high'])->name('search_high');
 
 
 Route::prefix('employer')->group(function (){

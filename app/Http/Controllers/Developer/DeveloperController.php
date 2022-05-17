@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Experience;
+use App\Models\KeywordKills;
 use App\Models\Recruitment;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -72,6 +73,59 @@ class DeveloperController extends Controller
         $post=Recruitment::with('user')->where('slug_title',$slug)->first();
         $kills=explode(',',$post->kills);
 
-        return view('developer.post_info')->with(compact('post','kills'));
+        $posts_same=Recruitment::with('user')->where('slug_title','like','%'.$slug.'%')->where('id','<>',$post->id)->orderBy('id','DESC')->get();
+//        dd($posts_same);
+
+        return view('developer.post_info')->with(compact('post','kills','posts_same'));
+    }
+
+    public function search(Request $request){
+
+        $key=$request->key;
+        $select=$request->level;
+//        dd($select);
+        $name_company=User::where('account_type',3)->get('company');
+
+        if ($key){
+            $posts=Recruitment::with('user')
+                ->where('title','like','%'.$key.'%')
+                ->orwhere('kills','like','%'.$key.'%')
+                ->orwhere('name_company','like','%'.$key.'%')
+                ->where('status','<>',0)
+                ->orderBy('id','DESC')->get();
+        }
+
+        if ($select !== "Chọn cấp bậc"){
+            $posts=Recruitment::with('user')
+                ->where('level','like','%'.$select.'%')
+                ->where('status','<>',0)
+                ->orderBy('id','DESC')->get();
+        }
+
+
+        return view('developer.search')->with(compact('posts'));
+    }
+
+    public function search_high(Request $request){
+        $key=$request->key;
+
+        if ($key){
+            $keywords=KeywordKills::where('name','like','%'.$key.'%')->orderBy('id','DESC')->get();
+
+            $output='<ul style="display: block; max-height: 145px;overflow-y: scroll">';
+
+            foreach ($keywords as $item){
+                $output.='<li class="keysword-list" style="padding: 5px"><a href="#">'.$item->name.'</a></li>
+
+  ';
+            }
+            $output.='</ul>';
+            echo $output;
+        }
+    }
+
+    public function save_post(){
+
+        return view('developer.save_post');
     }
 }

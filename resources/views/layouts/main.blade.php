@@ -18,7 +18,11 @@
         crossorigin="anonymous"
     ></script>
 
-    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>
+{{--    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>--}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.2/ckeditor.js"
+            integrity="sha512-bGYUkjDyyOMGm3ASzq3zRaWZ4CONNH1wAYMFch/Z0ASZrsg722SeRsX0FPPRZjTuJrqIMbB9fvY0LEMzyHeyeQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
 
     <link href="{{url("users")}}/css/mobiscroll.javascript.min.css" rel="stylesheet" />
     <script src="{{url("users")}}/js/mobiscroll.javascript.min.js"></script>
@@ -111,10 +115,48 @@
 
             <div class="header__nav">
                 <ul class="header__nav-list ms-4">
-                    <li class="header__nav-item"><a href="">Tìm việc</a></li>
+                    <li class="header__nav-item"><a href="/">Tìm việc</a></li>
                     <li class="header__nav-item"><a href="{{route('cv.index')}}">Tạo CV</a></li>
                 </ul>
 
+                @if(Str::contains(url()->current(),['tim-viec','tim-kiem']))
+                    <div class="search-nav align-items-start mx-auto">
+                        <form action="{{route('search')}}" method="post" class="search__form" autocomplete="off">
+                            @csrf
+                            @method('post')
+                            <div class="search__form-input">
+                                <input
+                                    name="key"
+                                    type="text"
+                                    class="form-control"
+                                    id="name"
+                                    placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
+                                    required
+                                />
+                            </div>
+                            <div class="form__suggess" style="top: 66px !important; width: 340px"></div>
+
+                            <div class="search__form-select mx-1">
+                                <select class="form-select" name="level">
+                                    <option>Chọn cấp bậc</option>
+                                    <option value="Intern">Intern</option>
+                                    <option value="Fresher">Fresher</option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Leader Developer">Leader Developer</option>
+                                    <option value="Mid-level Manager">Mid-level Manager</option>
+                                    <option value="Senior Leader">Senior Leader</option>
+                                </select>
+                            </div>
+                            <button class="btn search__form-btn btn-submit ">
+                                <div class="search-icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </div>
+                            </button>
+                        </form>
+
+                    </div>
+                @endif
                 <ul class="header__nav-list ms-auto">
                     @guest()
                         @if(Route::has('login') || Route::has('register'))
@@ -127,6 +169,7 @@
                         <li class="header__nav-item header__nav-user">
                             <i class="fa-solid fa-circle-user"></i>
                             <span class="header__nav-user-name">{{Auth::user()->name}}</span>
+                            <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
 
                             <ul class="header__nav-user-dropdown">
                                 <li class="header__nav-user-item ">
@@ -136,7 +179,7 @@
                                     </a>
                                 </li>
                                 <li class="header__nav-user-item ">
-                                    <a href="/" class="px-3 py-2">
+                                    <a href="{{route('save-post')}}" class="px-3 py-2">
                                         <i class="fa-solid fa-heart mr-2"></i>
                                         Việc đã lưu
                                     </a>
@@ -172,13 +215,15 @@
                         <button type="button" class="btn-close text-reset align-self-end pe-3"
                                 data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
-                        <form action="" class="search__form mx-auto">
+                        <form action="{{route('search')}}" method="get" class="search__form mx-auto">
+                            @csrf
+                            @method('post')
                             <div class="search__form-input">
                                 <div class="search-icon">
                                     <i class="fa-solid fa-magnifying-glass"></i>
                                 </div>
                                 <input
-                                    name="search"
+                                    name="key"
                                     type="text"
                                     class="form-control"
                                     id="name"
@@ -186,6 +231,7 @@
                                     required
                                 />
                             </div>
+                            <div class="form__suggess"></div>
 
                             <div class="search__form-select mx-1">
                                 <select class="form-select">
@@ -198,7 +244,6 @@
                             <button class="btn search__form-btn btn-submit">Tìm kiếm</button>
                         </form>
 
-                        <!-- </div> -->
                     </div>
                 </div>
 
@@ -235,6 +280,8 @@
     </div>
 @endif
 
+
+
 @yield('content')
 
 
@@ -262,7 +309,6 @@
                 </div>
             </div>
         </div>
-
     @endif
 </body>
 
@@ -449,6 +495,10 @@
 
 </script>
 
+{{-- Save Post--}}
+<script>
+
+</script>
 {{-- Delete Exp --}}
 <script type="text/javascript">
     function deleteItems(id,$number) {
@@ -465,5 +515,37 @@
         })
     }
 </script>
+
+<script type="text/javascript">
+    $('.search__form-input > input').keyup(function () {
+        var keywords=$(this).val();
+
+        if(keywords != ''){
+            var token=$('input[name="_token"]').val();
+
+            $.ajax({
+                url:"{{route('search_high')}}",
+                method:'post',
+                data:{key:keywords,_token:token},
+                success:function (data) {
+                    $('.form__suggess').fadeIn();
+                    $('.form__suggess').html(data);
+                }
+            })
+        }else{
+            $('.form__suggess').fadeOut();
+        }
+    })
+
+    $(document).on('click','.keysword-list',function () {
+        $('.search__form-input > input').val($(this).text());
+        $('.form__suggess').fadeOut();
+
+    })
+    $(document).on('click','body',function () {
+        $('.form__suggess').fadeOut();
+    })
+</script>
+
 
 </html>

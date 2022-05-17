@@ -12,6 +12,7 @@
 
 
             <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+            <input type="hidden" name="name_company" value="{{Auth::user()->company}}">
             <input type="hidden" name="status" value="1">
 
             <div class="content-sm px-5 py-4 mb-5">

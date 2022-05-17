@@ -41,6 +41,7 @@ class RecruitmentController extends Controller
         $data=$request->validate([
             'user_id'=>[''],
             'title'=>['required','string'],
+            'name_company'=>[''],
             'position'=>['required','string'],
             'position_type'=>['required'],
 
@@ -85,6 +86,7 @@ class RecruitmentController extends Controller
 
         $post->user_id=$data['user_id'];
         $post->title=$data['title'];
+        $post->name_company=$data['name_company'];
         $post->position=$data['position'];
         $post->position_type=$data['position_type'];
         $post->level=$level;
@@ -132,11 +134,12 @@ class RecruitmentController extends Controller
     {
         $array_level=['Intern','Fresher','Junior','Senior','Leader Developer','Mid-level Manager','Senior Leader'];
         $array_kills=['Python','Java','JavaScript','HTML/CSS','PHP','C#','C/C++','R','Ruby','VB.NET','Golang','Swift','Kotlin'];
+
         $post=Recruitment::where('id',$id)->first();
-//        dd($post->kills);
+
         $levels= explode(',',$post->level);
         $kills= explode(',',$post->kills);
-//        dd($levels);
+
         return view('employer.update_recruitment')->with(compact('post','levels','kills','array_level','array_kills'));
     }
 
@@ -149,7 +152,6 @@ class RecruitmentController extends Controller
      */
     public function update(Request $request, $id)
     {
-//        dd($request->all());
         $data=$request->validate([
             'title'=>['required','string'],
             'position'=>['required','string'],

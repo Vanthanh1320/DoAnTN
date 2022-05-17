@@ -243,6 +243,7 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        ddd($request->all());
         $data=$request->validate([
             'user_id'=>[''],
             'title'=>['required','string'],
@@ -493,7 +494,7 @@ class ProfileController extends Controller
             'isRemoteEnabled' => true,
             'defaultFont' => 'DejaVu Sans','sans-serif'])
             ->loadView('developer.profile_pdf',compact('profile','exp','edu','pro','pic'));
-        return $pdf->setPaper('a4')->save($profile->title.'.pdf')->stream($profile->title.'.pdf');
+        return $pdf->setPaper('a4')->stream($profile->title.'.pdf');
     }
 
 }

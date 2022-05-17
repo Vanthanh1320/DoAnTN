@@ -18,6 +18,7 @@ class Recruitment extends Model
     protected $fillable=[
         'user_id',
         'title',
+        'name_company',
         'position',
         'position_type',
         'level',
