@@ -285,6 +285,13 @@ select:focus, input:focus {
     margin-right: 5px;
 }
 
+.header__nav-user img{
+    width: 34px;
+    border-radius: 50%;
+    margin-right: 5px;
+
+}
+
 .header__nav-user-dropdown {
     position: absolute;
     top: calc(100% - 2px);
@@ -861,6 +868,33 @@ select:focus, input:focus {
     }
 }
 
+
+.detail-select-upload {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.detail-select-upload .select-tab {
+    border: none;
+    background: #fff;
+    font-size: 14px;
+}
+
+.detail-select-upload .select-tab.active-tab {
+    display: block;
+    border-bottom: 1px solid !important;
+    color: #EA1E30;
+}
+
+.detail-files-upload {
+    display: none;
+}
+
+.detail-files-upload.active-tab {
+    display: block !important;
+}
+
 .cv-manage-head {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -1099,6 +1133,13 @@ select:focus, input:focus {
 .employer-content-info {
     border: 1px solid #D2D2D2;
     border-top: none;
+}
+
+.search-key{
+    width: 350px;
+}
+.form-select{
+    width: 200px;
 }
 
 .select-btn {

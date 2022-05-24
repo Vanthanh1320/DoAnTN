@@ -54,6 +54,8 @@ Route::get('/', [DeveloperController::class, 'index'])->name('developer');
 Route::get('tim-viec/{slug}',[DeveloperController::class,'post_info'])->name('show-post-info');
 Route::post('tim-kiem',[DeveloperController::class,'search'])->name('search');
 Route::post('tim-kiem-nc',[DeveloperController::class,'search_high'])->name('search_high');
+Route::post('apply',[DeveloperController::class,'apply'])->name('apply');
+
 
 
 Route::prefix('employer')->group(function (){
@@ -65,6 +67,14 @@ Route::prefix('employer')->group(function (){
 
         Route::resource('/post',RecruitmentController::class);
 
+        Route::get('/update-status-candidate',[EmployerController::class,'statusCandidate'])->name('update-status-candidate');
+        Route::get('/search-candidate',[EmployerController::class,'searchCandidate'])->name('search-candidate');
+        Route::get('/filer-status',[EmployerController::class,'filterStatus'])->name('filter-status');
+
+        Route::post('/xuat-excel',[EmployerController::class,'exportExcel'])->name('export-excel');
+
+        Route::get('/ung-vien',[EmployerController::class,'showCandidate'])->name('show-candidate');
+        Route::get('/thong-ke',[EmployerController::class,'showStatistic'])->name('show-statistic');
 
         Route::get('logout',[AuthController::class,'logout'])->name('logout-emp');
     });

@@ -24,9 +24,6 @@
             crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
 
-    <link href="{{url("users")}}/css/mobiscroll.javascript.min.css" rel="stylesheet" />
-    <script src="{{url("users")}}/js/mobiscroll.javascript.min.js"></script>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{url("users")}}/sass/main.css"/>
 </head>
@@ -47,59 +44,7 @@
                 </ul>
 
                 <ul class="header__nav-list ms-auto">
-                    <li class="header__nav-item"><a target="_blank" href="{{url('empl/')}}">Nhà tuyển dụng</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-@elseif(Str::contains(url()->current(),'empl'))
-    <div class="header header-nofix">
-        <div class="header__wrap container">
-            <div class="header__logo">
-                <a href="{{route('empl')}}">
-                    <img src="{{url('users')}}/img/logo-white.png" alt="logo" class="logo"/>
-                </a>
-            </div>
-            <div class="header__nav">
-                <ul class="header__nav-list ms-4">
-                    <li class="header__nav-item"><a class="tab-btn show " href="employer#/posts" data-id="posts">Tuyển dụng</a>
-                    </li>
-                    <li class="header__nav-item"><a class="tab-btn" href="employer#/candidate" data-id="cabdidates">Ứng viên</a>
-                    </li>
-                    <li class="header__nav-item"><a class="tab-btn" href="employer#/statistic" data-id="statiscal">Thống kê</a>
-                    </li>
-                </ul>
-
-                <ul class="header__nav-list ms-auto">
-                    <li class="header__nav-item header__nav-user">
-                        <i class="fa-solid fa-circle-user"></i>
-                        <span class="header__nav-user-name">{{Auth::user()->company}}</span>
-
-                        <ul class="header__nav-user-dropdown">
-                            <li class="header__nav-user-item ">
-                                <a href="{{route('show-account-epl')}}" class="px-3 py-2">
-                                    <i class="fa-solid fa-user mr-2"></i>
-                                    Tài khoản
-                                </a>
-                            </li>
-                            <li class="header__nav-user-item ">
-                                <a href="/" class="px-3 py-2">
-                                    <i class="fa-solid fa-heart mr-2"></i>
-                                    Việc đã lưu
-                                </a>
-                            </li>
-                            <li class="header__nav-user-item ">
-                                <a href="{{ route('logout-emp') }}" class="px-3 py-2">
-                                    <i class="fa-solid fa-right-from-bracket mr-2"></i>
-                                    Đăng xuất
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
+                    <li class="header__nav-item"><a target="_blank" href="{{url('employer/login')}}">Nhà tuyển dụng</a></li>
                 </ul>
             </div>
         </div>
@@ -167,7 +112,11 @@
                         @endif
                     @else
                         <li class="header__nav-item header__nav-user">
-                            <i class="fa-solid fa-circle-user"></i>
+                            @if(Auth::user()->image)
+                                <img src="{{url('img/account').'/'.Auth::user()->image }}" alt="image">
+                            @else
+                                <i class="fa-solid fa-circle-user"></i>
+                            @endif
                             <span class="header__nav-user-name">{{Auth::user()->name}}</span>
                             <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
 
@@ -280,10 +229,7 @@
     </div>
 @endif
 
-
-
 @yield('content')
-
 
     @if(!Str::contains(url()->current(),['employer']))
         <div class="footer">
@@ -329,12 +275,6 @@
 {{-- Ck-editor --}}
 <script>
     // CKEDITOR.replace('editor');
-
-    if (location.href.includes('post')){
-        CKEDITOR.replace('editor_jd');
-        CKEDITOR.replace('editor_jre');
-        CKEDITOR.replace('editor_be');
-    }
 
     if(location.href.includes('cv')){
         CKEDITOR.replace('editor1');

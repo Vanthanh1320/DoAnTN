@@ -36,19 +36,22 @@
                         </div>
 
                         <div class="detail-job-link">
-                            <a
-                                data-bs-toggle="modal"
-                                data-bs-target="#exampleModal"
-                                class="btn btn-submit">
-                                Ứng Tuyển
-                            </a>
+                            @if(!isset($apply))
+                                <a
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal"
+                                    class="btn btn-submit">
+                                    Ứng Tuyển
+                                </a>
 
-                            <p>hoặc</p>
+                                <p>hoặc</p>
 
-                            <a href="{{route('cv.create')}}" class="btn btn-light ">
-                                Tạo CV để ứng tuyển
-                            </a>
-
+                                <a href="{{route('cv.create')}}" class="btn btn-light ">
+                                    Tạo CV để ứng tuyển
+                                </a>
+                            @else
+                                <span class="btn btn-light "> Đã ứng tuyển </span>
+                            @endif
                         </div>
                         <hr />
 
@@ -84,7 +87,6 @@
                             <h3>Mô tả công việc</h3>
                             <p>
                                 {!! html_entity_decode($post->job_description) !!}
-
                             </p>
 
                             <h3>Yêu cầu công việc</h3>
@@ -193,40 +195,78 @@
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
     >
-        <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <form action="">
+                <form action="{{route('apply')}}" method="post" enctype="multipart/form-data">
+                    @csrf
                     <div class="modal-body">
-                        <div class="apply content-sm px-3 py-3">
-                            <h2 class="apply-title mb-4">
-                                Frontend Dev (Vue.js/ React) - Romove
-                            </h2>
+                        <div class="apply content-sm px-4 py-3">
+                            <h3 class="apply-title mb-4 fw-bold">
+                                {{$post->title}}
+                            </h3>
 
-                            <div class="mb-4 row">
-                                <label for="" class="col-sm-2 col-form-label">Họ tên:</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="" />
-                                </div>
-                            </div>
+                            <input type="hidden" name="recruitment_id" value="{{$post->id}}">
+                            <input type="hidden" name="user_id" value="{{Auth::user() ? Auth::user()->id : ''}}">
+                            <input type="hidden" name="status" value="0">
 
-                            <div class="mb-4 row">
-                                <label for="" class="col-sm-2 col-form-label">CV:</label>
-                                <div class="col-sm-10">
-                                    <input type="file" class="form-control" id="" />
-                                </div>
+                            <div class="mb-4">
+                                <label for="" class="form-label fw-bold">Họ tên <span>*</span></label>
+                                <input type="text" class="form-control" name="name" value="{{Auth::user()? Auth::user()->name : ''}}"/>
+                                @if($errors->has('name'))
+                                    <span class="text text-danger">{{$errors->first('name')}}</span>
+                                @endif
                             </div>
 
                             <div class="mb-4">
-                                <label class="form-label"
-                                >Giới thiệu bản thân, kỹ năng, dự án,...</label
-                                >
-                                <textarea
-                                    name="mota"
-                                    id=""
-                                    class="form-control"
-                                    cols="30"
-                                    rows="5"
-                                ></textarea>
+                                <label for="" class="form-label fw-bold">Email <span>*</span></label>
+                                <input type="email" class="form-control" name="email" value="{{Auth::user() ? Auth::user()->email: ''}}"/>
+                                @if($errors->has('email'))
+                                    <span class="text text-danger">{{$errors->first('email')}}</span>
+                                @endif
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="" class="form-label fw-bold">Số điện thoại <span>*</span></label>
+                                <input type="text" class="form-control" name="phone_number" />
+                                @if($errors->has('phone_number'))
+                                    <span class="text text-danger">{{$errors->first('phone_number')}}</span>
+                                @endif
+                            </div>
+
+                            <div class="mb-4">
+                                <label for="" class="form-label fw-bold">Tải hồ sơ:</label>
+
+                                <div class="detail-select-upload mb-2">
+                                    <button class="select-tab pb-1 active-tab" data-id="profile">
+                                        Hồ sơ của bạn
+                                    </button>
+                                    <button class="select-tab pb-1 ms-3" data-id="upload">
+                                        Tải lên hồ sơ mới
+                                    </button>
+                                </div>
+
+                                <div class="detail-files-upload active-tab" id="profile">
+
+                                    @if(isset($profiles))
+                                        @foreach($profiles as $key=>$item)
+                                            <div class="form-check">
+                                                <input class="form-check-input" value="{{($item->title.'.pdf')}}" type="radio" name="document" {{$key == 0?'checked':''}} id="flexRadioDefault1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    <a target="_blank" href="{{route('print-pdf',[$item->id])}}">
+                                                        {{$item->title}}
+                                                    </a>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    @else
+                                        <a href="{{route('login')}}">Đăng nhập để sử dụng cv đã được áp dụng</a>
+                                    @endif
+
+                                </div>
+
+                                <div class="detail-files-upload" id="upload">
+                                    <input type="file" name="file" class="form-control" />
+                                </div>
                             </div>
                         </div>
                     </div>

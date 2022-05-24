@@ -6,7 +6,7 @@
         <div class="banner banner-home">
             <div class="container">
                 <div class="search my-4">
-                    <form action="{{route('search')}}" method="post" class="search__form" autocomplete="off">
+                    <form action="{{route('search')}}" method="post" class="search__form" autocomplete="off" m>
                         @csrf
                         @method('POST')
                         <div class="search__form-input">
@@ -54,7 +54,7 @@
 
                     <div class="row g-2">
                         @foreach($posts as $item)
-                        <div class="col-sm-12 col-md-12 col-xl-6">
+                        <div class="col-sm-12 col-md-12 col-xl-6 m-0">
                             <a class="posts-item py-3 px-3" href="{{route('show-post-info',[$item->slug_title])}}">
                                 <div class="posts-item-img">
                                     <img src="{{url('empl/img').'/'.$item->user->image}}" alt="logo-company">

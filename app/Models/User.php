@@ -58,4 +58,8 @@ class User extends Authenticatable
         return $this->hasMany(Recruitment::class,'user_id','id');
     }
 
+    public function applyList(){
+        return $this->hasOne(ApplyList::class,'user_id','id');
+    }
+
 }

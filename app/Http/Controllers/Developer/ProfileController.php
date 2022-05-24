@@ -494,7 +494,7 @@ class ProfileController extends Controller
             'isRemoteEnabled' => true,
             'defaultFont' => 'DejaVu Sans','sans-serif'])
             ->loadView('developer.profile_pdf',compact('profile','exp','edu','pro','pic'));
-        return $pdf->setPaper('a4')->stream($profile->title.'.pdf');
+        return $pdf->setPaper('a4')->save('pdf-cv/'.$profile->title.'.pdf')->stream($profile->title.'.pdf');
     }
 
 }

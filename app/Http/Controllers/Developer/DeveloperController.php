@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApplyList;
 use App\Models\Experience;
 use App\Models\KeywordKills;
+use App\Models\Profile;
 use App\Models\Recruitment;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -74,17 +77,24 @@ class DeveloperController extends Controller
         $kills=explode(',',$post->kills);
 
         $posts_same=Recruitment::with('user')->where('slug_title','like','%'.$slug.'%')->where('id','<>',$post->id)->orderBy('id','DESC')->get();
-//        dd($posts_same);
 
-        return view('developer.post_info')->with(compact('post','kills','posts_same'));
+        if (Auth::user() != null){
+            $user_id=Auth::user()->id;
+
+            $profiles=Profile::where('user_id',$user_id)->orderBy('id','DESC')->get();
+            $apply=ApplyList::where('user_id',$user_id)->where('recruitment_id',$post->id)->first();
+
+            return view('developer.post_info')->with(compact('post','kills','posts_same','profiles','apply'));
+        }else{
+            return view('developer.post_info')->with(compact('post','kills','posts_same'));
+
+        }
     }
 
     public function search(Request $request){
 
         $key=$request->key;
         $select=$request->level;
-//        dd($select);
-        $name_company=User::where('account_type',3)->get('company');
 
         if ($key){
             $posts=Recruitment::with('user')
@@ -117,7 +127,7 @@ class DeveloperController extends Controller
             foreach ($keywords as $item){
                 $output.='<li class="keysword-list" style="padding: 5px"><a href="#">'.$item->name.'</a></li>
 
-  ';
+                ';
             }
             $output.='</ul>';
             echo $output;
@@ -125,7 +135,62 @@ class DeveloperController extends Controller
     }
 
     public function save_post(){
-
         return view('developer.save_post');
+    }
+
+    public function apply(Request $request){
+//        dd($request->all());
+        $data=$request->validate(
+            [
+                'recruitment_id' => ['required'],
+                'user_id' => [],
+                'name' => ['required'],
+                'email'=>['required','email'],
+                'phone_number'=>['required','numeric','min:11'],
+                'document'=>[],
+                'file'=>[],
+                'status'=>[],
+            ],
+            [
+                'name.required'=> 'Vui lòng nhập họ tên',
+                'email.required' => 'Vui lòng nhập email',
+                'email.email' => 'Email sai định dạng',
+                'phone_number.required'=>'Vui lòng nhập số điện thoại',
+                'phone_number.numeric'=> 'Số điện thoại định dạng là số',
+                'phone_number.min'=> 'Số điện thoại ít nhất là 10 ký tự',
+            ]
+        );
+
+        $apply=new ApplyList();
+        $apply->recruitment_id=$data['recruitment_id'];
+        $apply->name=$data['name'];
+        $apply->email=$data['email'];
+        $apply->phone_number=$data['phone_number'];
+        $apply->status=$data['status'];
+        $apply->created_at=Carbon::now('Asia/Ho_Chi_Minh');
+
+        $file=$request->file;
+        $document=$request->document;
+        if ($request->user_id != null){
+            $apply->user_id=$data['user_id'];
+        }
+        if ($document){
+            $apply->linkCV=$data['document'];
+        }
+        if($file){
+            $path='pdf-cv/';
+            $get_name_cv=$file->getClientOriginalName();
+
+            $name_cv=current(explode('.',$get_name_cv));
+            $new_cv=$name_cv.rand(0,99).'.'.$file->getClientOriginalExtension();
+            $file->move($path,$new_cv);
+
+            $apply->linkCV=$new_cv;
+        }
+
+        $apply->save();
+
+        return redirect()->back()->with('success');
+
     }
 }

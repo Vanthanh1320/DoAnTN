@@ -2,16 +2,18 @@
 const selectBtn=document.querySelectorAll('.content__select-btn');
 const valiForm=document.querySelectorAll('.content-validation');
 const tabBtn=document.querySelectorAll('.tab-btn');
-const employerEl=document.querySelectorAll('.empl-main');
-
+const employerEl=document.querySelectorAll('.employer-main');
+const selectTabBtn=document.querySelectorAll('.select-tab');
+const filesUpload=document.querySelectorAll('.detail-files-upload');
 
 const hideText=document.querySelector('.search__keys-text');
 const headerEl=document.querySelector('.header');
 const cvBtnList=document.querySelector('.cv-btn');
 const btnChange=document.querySelector('.btn-change');
 const btnCloseChange=document.querySelector('.btn-close-change');
-var faSave=document.querySelector('.fa-regular');
-var saveJobHtml=document.querySelector('.save-job-list');
+const faSave=document.querySelector('.fa-regular');
+const saveJobHtml=document.querySelector('.save-job-list');
+const selectupload=document.querySelector('.detail-select-upload');
 
 
 
@@ -124,65 +126,60 @@ var loadFile = function (event) {
 
 }
 
-mobiscroll.select('#multiple-select', {
-    inputElement: document.getElementById('my-input'),
-    touchUi: false
-});
-
-mobiscroll.select('#multiple-select2', {
-    inputElement: document.getElementById('my-input2'),
-    touchUi: false
-});
-
 
 function savePost(id_post) {
-    var id_user=document.querySelector('.header__nav-user > input[name="id_user"]').value;
-    var title=document.querySelector('.detail-job-head > input[name="title"]').value;
-    var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
-    var image=document.querySelector('.detail-job-head > input[name="image"]').value;
-    var company=document.querySelector('.detail-job-head > input[name="company"]').value;
-    var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
-    var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
-    var time=document.querySelector('.detail-job-head > input[name="time"]').value;
-    var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
+    const inputElm=document.querySelector('.header__nav-user > input[name="id_user"]');
 
-    const data={
-        'id_user':Number.parseInt(id_user),
-        'id':id_post,
-        'title':title,
-        'slug':slug,
-        'image':image,
-        'company':company,
-        'salary_max':salary_max,
-        'salary_min':salary_min,
-        'time':time,
-        'address':address
-    }
+    if (inputElm !== null){
+        var id_user=inputElm.value;
+        var title=document.querySelector('.detail-job-head > input[name="title"]').value;
+        var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
+        var image=document.querySelector('.detail-job-head > input[name="image"]').value;
+        var company=document.querySelector('.detail-job-head > input[name="company"]').value;
+        var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
+        var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
+        var time=document.querySelector('.detail-job-head > input[name="time"]').value;
+        var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
 
-    if(localStorage.getItem('savePost') == null){
-        localStorage.setItem('savePost','[]');
-    }
+        const data={
+            'id_user':Number.parseInt(id_user),
+            'id':id_post,
+            'title':title,
+            'slug':slug,
+            'image':image,
+            'company':company,
+            'salary_max':salary_max,
+            'salary_min':salary_min,
+            'time':time,
+            'address':address
+        }
 
-    var response=JSON.parse(localStorage.getItem('savePost'));
+        if(localStorage.getItem('savePost') == null){
+            localStorage.setItem('savePost','[]');
+        }
 
-    var count_data=response.filter((item)=> {
-        return item.id === id_post && item.id_user === parseInt(id_user);
-    })
+        var response=JSON.parse(localStorage.getItem('savePost'));
 
-    if (count_data.length == 0){
-        faSave.setAttribute('class','fa-solid fa-bookmark')
-        response.push(data);
-        showSuccessToast();
-        return  localStorage.setItem('savePost',JSON.stringify(response));
-    }else {
-        var id_delete=response.filter((item)=>{
-            return item.id !== id_post || item.id_user !== parseInt(id_user);
+        var count_data=response.filter((item)=> {
+            return item.id === id_post && item.id_user === parseInt(id_user);
         })
-        faSave.setAttribute('class','fa-regular fa-bookmark')
 
-        return  localStorage.setItem('savePost',JSON.stringify(id_delete))
+        if (count_data.length == 0){
+            faSave.setAttribute('class','fa-solid fa-bookmark')
+            response.push(data);
+            showSuccessToast();
+            return  localStorage.setItem('savePost',JSON.stringify(response));
+        }else {
+            var id_delete=response.filter((item)=>{
+                return item.id !== id_post || item.id_user !== parseInt(id_user);
+            })
+            faSave.setAttribute('class','fa-regular fa-bookmark')
+
+            return  localStorage.setItem('savePost',JSON.stringify(id_delete))
+        }
+    }else {
+        return location.assign('/login');
     }
-
 }
 
 function toast({title='', message='', type='info', duration=3000}) {
@@ -284,14 +281,43 @@ if (id_user){
         }
 
     })
-
 }
 
-if (faSave){
+if (faSave && id_user){
     data.map((item)=>{
 
         if (item.id === parseInt(faSave.dataset.set) && item.id_user === Number.parseInt(id_user.value)){
             return  faSave.setAttribute('class','fa-solid fa-bookmark')
         }
     })
+}
+
+if(selectupload){
+    selectupload.onclick=(e)=>{
+        e.preventDefault();
+        const id=e.target.dataset.id;
+
+        if(id){
+            selectTabBtn.forEach((tab)=>{
+                tab.classList.remove('active-tab');
+                e.target.classList.add('active-tab');
+            });
+
+            filesUpload.forEach((item)=>{
+                item.classList.remove('active-tab');
+                const element=document.getElementById(id);
+                element.classList.add('active-tab');
+            })
+        }
+    }
+
+    const inputFile=document.querySelector('.detail-files-upload>input');
+
+    inputFile.addEventListener('change',function (e) {
+        const inputDocumnets=document.querySelectorAll('input[name="document"]');
+        inputDocumnets.forEach(item=>{
+            item.checked = false;
+        })
+    })
+
 }
