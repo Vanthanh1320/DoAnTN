@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Employer;
 use App\Http\Controllers\Controller;
 use App\Models\Recruitment;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 
@@ -86,6 +87,7 @@ class RecruitmentController extends Controller
 
         $post->user_id=$data['user_id'];
         $post->title=$data['title'];
+        $post->slug_title=Str::slug($data['title'], '-');
         $post->name_company=$data['name_company'];
         $post->position=$data['position'];
         $post->position_type=$data['position_type'];
@@ -103,7 +105,9 @@ class RecruitmentController extends Controller
         $post->status=$data['status'];
         $post->created_at=Carbon::now('Asia/Ho_Chi_Minh');
 
+//        dd($post);
         $post->save();
+
 
         if ($post){
             return redirect()->back()->with('success','Tin tuyển dụng tạo thành công');

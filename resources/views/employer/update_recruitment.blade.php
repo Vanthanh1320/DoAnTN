@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.main-employer')
 
 @section('content')
 
@@ -197,7 +197,7 @@
                 <div class="mx-3 text-end">
                     <input type="submit" value="Hủy" class="btn btn-secondary me-2">
 
-                    <input type="submit" value="Tạo" class="btn btn-submit">
+                    <input type="submit" value="Cập nhập" class="btn btn-submit">
                 </div>
             </div>
         </form>

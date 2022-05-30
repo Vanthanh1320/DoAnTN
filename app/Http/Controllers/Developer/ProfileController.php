@@ -7,6 +7,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Profile;
 use App\Models\Project;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
@@ -24,9 +25,11 @@ class ProfileController extends Controller
      */
     public function index()
     {
+        $user=User::find(Auth::id());
+
         $user_id=Auth::user()->id;
         $profiles=Profile::where('user_id','=',$user_id)->get();
-        return view('developer.manager_cv')->with(compact('profiles'));
+        return view('developer.manager_cv')->with(compact('profiles','user'));
     }
 
     /**
@@ -36,8 +39,9 @@ class ProfileController extends Controller
      */
     public function create()
     {
+        $user=User::find(Auth::id());
 
-        return view('developer.create_cv');
+        return view('developer.create_cv')->with(compact('user'));
 
     }
 
@@ -226,12 +230,14 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
+        $user=User::find(Auth::id());
+
         $profile=Profile::find($id);
         $experiences=Experience::where('profile_id','=',$id)->get();
         $educations=Education::where('profile_id','=',$id)->get();
         $projects=Project::where('profile_id','=',$id)->get();
 
-        return view('developer.update_cv')->with(compact('profile','experiences','educations','projects'));
+        return view('developer.update_cv')->with(compact('profile','experiences','educations','projects','user'));
     }
 
     /**
@@ -341,7 +347,6 @@ class ProfileController extends Controller
         $time_pro=$request->time_project;
         $intro=$request->introduce_pro;
 
-
         $exps=Experience::with('profile')->where('profile_id',$id)->get();
         $edus=Education::with('profile')->where('profile_id',$id)->get();
         $pros=Project::with('profile')->where('profile_id',$id)->get();
@@ -370,9 +375,7 @@ class ProfileController extends Controller
 
                     $exp->save();
                 }
-
             }
-
         }
 
         if($school){
@@ -399,9 +402,7 @@ class ProfileController extends Controller
 
                     $edu->save();
                 }
-
             }
-
         }
 
         if($project){
@@ -426,9 +427,7 @@ class ProfileController extends Controller
 
                     $pro->save();
                 }
-
             }
-
         }
     }
 

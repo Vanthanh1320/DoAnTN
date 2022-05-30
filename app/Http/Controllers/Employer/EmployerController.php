@@ -7,10 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Models\ApplyList;
 use App\Models\Recruitment;
 use App\Models\User;
+use App\Notifications\browsingNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Facades\Notification;
 
 class EmployerController extends Controller
 {
@@ -48,6 +49,7 @@ class EmployerController extends Controller
             }
 
         })->get();
+
 
         return view('employer.apply')->with(compact('candidates'));
     }
@@ -92,7 +94,7 @@ class EmployerController extends Controller
 
         if ($get_image != null){
             $path='empl/img/';
-            if (file_exists($path.$account->image)){
+            if (file_exists($path.$account->image) && $account->image){
                 unlink($path.$account->image);
             }
 
@@ -114,12 +116,24 @@ class EmployerController extends Controller
 
     public function statusCandidate(Request $request){
         $id=$request->id;
+        $user_developer=$request->user_developer;
         $value=$request->value;
+
+        $image_employer=Auth::user()->image;
+//        dd($image_employer);
+
+        $user_notification=User::where('id',$user_developer)->first();
+//        dd($user_notification);
 
         $apply=ApplyList::find($id);
         $apply->status=$value;
         $apply->save();
 
+
+        if ($value === '1'){
+            $desc='Hồ sơ của bạn đã được duyệt';
+            Notification::send($user_notification, new browsingNotification($id,$image_employer,$desc));
+        }
         return response()->json(['success']);
     }
 

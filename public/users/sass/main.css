@@ -57,7 +57,8 @@ ul {
     .cv-btn-item:hover > a > i {
         color: #fff !important;
     }
-    .header__nav-user:hover > .header__nav-user-dropdown {
+    .header__nav-user:hover > .header__nav-user-dropdown{
+    /*.header__nav-notify:hover > .header__nav-notify-dropdown{*/
         display: block;
     }
     .header__nav-user-item:hover {
@@ -226,6 +227,10 @@ select:focus, input:focus {
     padding: 10px 10px;
 }
 
+.header.shrink li img{
+    width: 28px;
+}
+
 .header__wrap {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -309,6 +314,96 @@ select:focus, input:focus {
 
 .header__nav-user-item a {
     display: block;
+}
+
+.header__nav-notify {
+    position: relative;
+}
+
+.header__nav-notify i {
+    margin-right: 5px;
+    transform: translateY(20%);
+}
+
+.header__nav-notify-dropdown {
+    position: absolute;
+    top: calc(100% - 2px);
+    right: 0;
+    background: #2E2A2B;
+    min-width: 320px;
+    max-height: 330px;
+    border-radius: 3px;
+    display: none;
+    z-index: 10;
+    overflow-y: auto;
+}
+
+.header__nav-notify-dropdown h2 {
+    margin: 0 0 14px 0;
+    color: #b0b3b8;
+    font-size: 22px;
+}
+
+
+.header__nav-notify-item {
+    color: #b0b3b8;
+}
+
+.header__nav-notify-item:hover {
+    background-color: #3a3b3c;
+}
+
+.header__nav-notify-item a {
+    display: block;
+}
+
+.header__nav-notify-box {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    padding: 0 5px;
+}
+
+.header__nav-notify-box img {
+    width: 62px !important;
+    height: 62px;
+    border-radius: 50%;
+    padding: 4px;
+}
+
+.header__nav-notify-box p {
+    font-size: 16px !important;
+    font-weight: normal;
+}
+
+.header__nav-notify-box span {
+    font-size: 14px !important;
+    font-weight: normal;
+    color: #b0b3b8;
+}
+
+.header__nav-notify-quantity {
+    position: absolute;
+    content: "";
+    top: 0;
+    background-color: #EA1E30;
+    border-radius: 50%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    right: 0;
+    display: none;
+}
+
+.header__nav-notify-quantity p {
+    margin: 0 auto;
+    font-size: 16px !important;
 }
 
 @media only screen and (max-width: 1024px) {

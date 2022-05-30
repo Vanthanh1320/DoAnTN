@@ -18,6 +18,8 @@
         crossorigin="anonymous"
     ></script>
 
+{{--    <script src="https://cdn.tailwindcss.com"></script>--}}
+
 {{--    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>--}}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.2/ckeditor.js"
             integrity="sha512-bGYUkjDyyOMGm3ASzq3zRaWZ4CONNH1wAYMFch/Z0ASZrsg722SeRsX0FPPRZjTuJrqIMbB9fvY0LEMzyHeyeQ=="
@@ -76,7 +78,6 @@
                                     class="form-control"
                                     id="name"
                                     placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
-                                    required
                                 />
                             </div>
                             <div class="form__suggess" style="top: 66px !important; width: 340px"></div>
@@ -111,6 +112,41 @@
                                     tuyển dụng</a></li>
                         @endif
                     @else
+                        <li class="header__nav-item header__nav-notify">
+                            <i class="fa-solid fa-bell"></i>
+
+                            <div class="header__nav-notify-quantity {{count($user->unreadNotifications) > 0 ? 'show':''}}">
+                                <p>{{count($user->unreadNotifications) !== 0 ? count($user->unreadNotifications):''}}</p>
+                            </div>
+
+                            <div class="header__nav-notify-dropdown px-3 py-3">
+                                <h2>Thông báo</h2>
+
+                                <ul class="header__nav-notify-list ">
+                                    @foreach ($user->notifications as $notification)
+                                        {{$user->unreadNotifications->markAsRead()}}
+                                        <li class="header__nav-notify-item mb-3 p-0">
+                                            <div class="header__nav-notify-box">
+                                                <div class="header__nav-notify-img">
+                                                    <img src="{{url('empl/img').'/'.$notification->data['image']}}" alt="">
+                                                </div>
+
+                                                <div class="header__nav-notify-content ms-3">
+                                                    <p class="mb-1">{{$notification->data['desc']}}</p>
+                                                    <span>{{\Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
+                                                </div>
+
+                                                @csrf
+                                            </div>
+                                        </li>
+
+                                    @endforeach
+                                </ul>
+                                <span class="d-block text-center" onclick="removeNotify({{Auth::user()->id}})">Xóa tất cả thông báo</span>
+
+                            </div>
+                        </li>
+
                         <li class="header__nav-item header__nav-user">
                             @if(Auth::user()->image)
                                 <img src="{{url('img/account').'/'.Auth::user()->image }}" alt="image">
@@ -121,19 +157,19 @@
                             <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
 
                             <ul class="header__nav-user-dropdown">
-                                <li class="header__nav-user-item ">
+                                <li class="header__nav-user-item p-0">
                                     <a href="{{route('show-account')}}" class="px-3 py-2">
                                         <i class="fa-solid fa-user mr-2"></i>
                                         Tài khoản
                                     </a>
                                 </li>
-                                <li class="header__nav-user-item ">
+                                <li class="header__nav-user-item p-0">
                                     <a href="{{route('save-post')}}" class="px-3 py-2">
                                         <i class="fa-solid fa-heart mr-2"></i>
                                         Việc đã lưu
                                     </a>
                                 </li>
-                                <li class="header__nav-user-item ">
+                                <li class="header__nav-user-item p-0">
                                     <a href="{{ route('logout') }}" class="px-3 py-2"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -487,5 +523,62 @@
     })
 </script>
 
+<script>
+    $(document).ready(function () {
+        $(document).on('click','.pagination a',function (e) {
+            e.preventDefault();
+            var page=$(this).attr('href').split('page=')[1];
+
+            getMorePost(page)
+        });
+    });
+
+    function getMorePost(page) {
+        $.ajax({
+            type: 'GET',
+            url:'{{route('get-more-post')}}' + '?page=' + page,
+            success:function (data) {
+                $('.post-data').html(data);
+            }
+        })
+    }
+</script>
+
+<script type="text/javascript">
+
+    const notifyElement=document.querySelector('.header__nav-notify');
+
+    if (notifyElement){
+
+        $(document).on('click',function (e) {
+            console.log(e)
+
+            if (e.target === notifyElement || e.target.parentElement === notifyElement ){
+                $('.header__nav-notify-quantity').removeClass('show');
+
+                return  $('.header__nav-notify-dropdown').toggleClass('show');
+            }
+            $('.header__nav-notify-dropdown').removeClass('show');
+
+        })
+    }
+
+    function removeNotify(id) {
+        var token = $('input[name="_token"]').val();
+
+        $.ajax({
+            url: "{{route('remove-notify')}}",
+            dataType: "JSON",
+            type: "POST",
+            data: {id: id, _token: token},
+            success: function (data) {
+                $(this).remove();
+            }
+        })
+
+        $('.header__nav-notify-list').remove();
+
+    }
+</script >
 
 </html>

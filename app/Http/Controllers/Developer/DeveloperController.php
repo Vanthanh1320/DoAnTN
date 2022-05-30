@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ApplyList;
 use App\Models\Experience;
 use App\Models\KeywordKills;
+use App\Models\Notify;
 use App\Models\Profile;
 use App\Models\Recruitment;
 use App\Models\User;
@@ -13,21 +14,30 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 
 class DeveloperController extends Controller
 {
+
     public function index(){
-        $posts=Recruitment::with('user')->where('status',1)->get();
+        $date_now=Carbon::now()->toDateString();
+        $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(2);
+
+        $user=User::find(Auth::id());
+        $vd=DB::table('recruitment')->where('expire','<',now())->get();
+//        dd($vd);
 
 
-        return view('developer.index')->with(compact('posts'));
+        return view('developer.index')->with(compact('posts','user'));
     }
 
     public function showAccount(){
         $account_id=Auth::user()->id;
         $account=User::find($account_id);
 
-        return view('developer.account')->with(compact('account'));
+        $user=User::find(Auth::id());
+
+        return view('developer.account')->with(compact('account','user'));
     }
 
     public function account(Request $request){
@@ -73,6 +83,8 @@ class DeveloperController extends Controller
     }
 
     public function post_info($slug){
+        $user=User::find(Auth::id());
+
         $post=Recruitment::with('user')->where('slug_title',$slug)->first();
         $kills=explode(',',$post->kills);
 
@@ -82,16 +94,17 @@ class DeveloperController extends Controller
             $user_id=Auth::user()->id;
 
             $profiles=Profile::where('user_id',$user_id)->orderBy('id','DESC')->get();
-            $apply=ApplyList::where('user_id',$user_id)->where('recruitment_id',$post->id)->first();
+            $apply=ApplyList::where('user_id',$user_id)->where('recruitment_id',$post->id)->where('status',0)->first();
 
-            return view('developer.post_info')->with(compact('post','kills','posts_same','profiles','apply'));
+            return view('developer.post_info')->with(compact('post','kills','posts_same','profiles','apply','user'));
         }else{
-            return view('developer.post_info')->with(compact('post','kills','posts_same'));
+            return view('developer.post_info')->with(compact('post','kills','posts_same','user'));
 
         }
     }
 
     public function search(Request $request){
+        $user=User::find(Auth::id());
 
         $key=$request->key;
         $select=$request->level;
@@ -112,8 +125,7 @@ class DeveloperController extends Controller
                 ->orderBy('id','DESC')->get();
         }
 
-
-        return view('developer.search')->with(compact('posts'));
+        return view('developer.search')->with(compact('posts','user'));
     }
 
     public function search_high(Request $request){
@@ -134,8 +146,17 @@ class DeveloperController extends Controller
         }
     }
 
+    public function getMorePost(Request $request){
+        if ($request->ajax()){
+            $posts=Recruitment::with('user')->where('status',1)->paginate(2);
+            return view('developer.posts-more')->with(compact('posts'))->render();
+        }
+    }
+
     public function save_post(){
-        return view('developer.save_post');
+        $user=User::find(Auth::id());
+
+        return view('developer.save_post')->with(compact('user'));
     }
 
     public function apply(Request $request){
@@ -191,6 +212,14 @@ class DeveloperController extends Controller
         $apply->save();
 
         return redirect()->back()->with('success');
+    }
 
+    public function removeNotify(Request $request){
+        $id_notify=$request->id;
+        $user=User::find($id_notify);
+
+        $user->notifications()->delete();
+
+        return redirect()->back();
     }
 }

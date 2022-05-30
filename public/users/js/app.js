@@ -15,6 +15,8 @@ const faSave=document.querySelector('.fa-regular');
 const saveJobHtml=document.querySelector('.save-job-list');
 const selectupload=document.querySelector('.detail-select-upload');
 
+// const notifyElement=document.querySelector('.header__nav-notify');
+
 
 
 window.addEventListener('scroll',function(){
@@ -321,3 +323,5 @@ if(selectupload){
     })
 
 }
+
+

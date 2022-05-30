@@ -52,7 +52,11 @@
 
             <ul class="header__nav-list ms-auto">
                 <li class="header__nav-item header__nav-user">
-                    <i class="fa-solid fa-circle-user"></i>
+                    @if(Auth::user()->image)
+                        <img src="{{url('empl/img/').'/'.Auth::user()->image }}" alt="image">
+                    @else
+                        <i class="fa-solid fa-circle-user"></i>
+                    @endif
                     <span class="header__nav-user-name">{{Auth::user()->company}}</span>
 
                     <ul class="header__nav-user-dropdown">
@@ -137,12 +141,13 @@
         $('.form-check-input').change(function () {
             var value = $(this).prop('checked') == true ? 1 : 0;
             var id=$(this).data('id');
+            var user_developer=$(this).data('set');
 
             $.ajax({
                 url: "{{route('update-status-candidate')}}",
                 dataType: "JSON",
                 type: "GET",
-                data: {id: id,value:value},
+                data: {id: id,user_developer:user_developer,value:value},
                 success: function (data) {
                     console.log(data.success)
                 }

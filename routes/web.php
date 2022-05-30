@@ -7,6 +7,8 @@ use App\Http\Controllers\Developer\DeveloperController;
 use App\Http\Controllers\Employer\EmployerController;
 use App\Http\Controllers\Employer\RecruitmentController;
 use App\Http\Controllers\Developer\ProfileController;
+use App\Http\Controllers\Admin\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('viec-da-luu',[DeveloperController::class,'save_post'])->name('save-post');
 
+    Route::post('apply',[DeveloperController::class,'apply'])->name('apply');
+
+    Route::post('remove-notify',[DeveloperController::class,'removeNotify'])->name('remove-notify');
 
     Route::resource('/cv',ProfileController::class);
     Route::delete('delete-exp',[ProfileController::class,'deleteExp'])->name('delete-exp');
@@ -52,9 +57,11 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', [DeveloperController::class, 'index'])->name('developer');
 Route::get('tim-viec/{slug}',[DeveloperController::class,'post_info'])->name('show-post-info');
+
 Route::post('tim-kiem',[DeveloperController::class,'search'])->name('search');
 Route::post('tim-kiem-nc',[DeveloperController::class,'search_high'])->name('search_high');
-Route::post('apply',[DeveloperController::class,'apply'])->name('apply');
+
+Route::get('get-more-post',[DeveloperController::class,'getMorePost'])->name('get-more-post');
 
 
 
@@ -87,3 +94,14 @@ Route::prefix('employer')->group(function (){
     Route::post('register',[AuthController::class,'register'])->name('register-emp');
 
 });
+
+Route::prefix('adm')->group(function (){
+    Route::middleware('admin')->group(function (){
+        Route::get('/',[AdminController::class,'index'])->name('admin');
+    });
+
+    Route::get('login',[AdminController::class,'showFormLogin'])->name('show-login-adm');
+
+});
+
+

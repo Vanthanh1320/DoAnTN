@@ -52,10 +52,11 @@
                             <td>{{\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY')}}</td>
                             <td>
                                 <div class="form-check form-switch ">
-                                    <input class="form-check-input text-center"  {{$item->status == 1?'checked':''}} data-id="{{$item->id}}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                    <input class="form-check-input text-center"  {{$item->status == 1?'checked':''}} data-id="{{$item->id}}" data-set="{{$item->user_id}}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                                 </div>
                             </td>
                         </tr>
+
                     @endforeach
                 @endif
                 </tbody>

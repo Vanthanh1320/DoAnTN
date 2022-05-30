@@ -36,7 +36,9 @@
                         </div>
 
                         <div class="detail-job-link">
-                            @if(!isset($apply))
+                            @if($post->expire < \Carbon\Carbon::now()->toDateString())
+                                <span class="btn btn-light "> Đã hết hạn ứng tuyển </span>
+                            @elseif(!isset($apply))
                                 <a
                                     data-bs-toggle="modal"
                                     data-bs-target="#exampleModal"
