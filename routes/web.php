@@ -86,7 +86,6 @@ Route::prefix('employer')->group(function (){
         Route::get('logout',[AuthController::class,'logout'])->name('logout-emp');
     });
 
-
     Route::get('login',[AuthController::class,'showFormLogin'])->name('show-login-emp');
     Route::post('login',[AuthController::class,'login'])->name('login-emp');
 
@@ -98,9 +97,19 @@ Route::prefix('employer')->group(function (){
 Route::prefix('adm')->group(function (){
     Route::middleware('admin')->group(function (){
         Route::get('/',[AdminController::class,'index'])->name('admin');
+        Route::get('/tai-khoan-nguoi-tim-viec',[AdminController::class,'showUserDeveloper'])->name('show-user-developer');
+        Route::get('/tai-khoan-nha-tuyen-dung',[AdminController::class,'showUserEmployer'])->name('show-user-employer');
+
+        Route::get('/update-status',[AdminController::class,'updateStatus'])->name('update-status');
+        Route::get('/tai-khoan-nha-tuyen-dung/{id}',[AdminController::class,'infoUserEmployer'])->name('info-user-employer');
+
+        Route::get('logout',[AuthController::class,'logoutAdmin'])->name('logout-admin');
+
     });
 
-    Route::get('login',[AdminController::class,'showFormLogin'])->name('show-login-adm');
+    Route::get('login',[AuthController::class,'showFormLoginAdmin'])->name('show-login-admin');
+    Route::post('login',[AuthController::class,'loginAdmin'])->name('login-admin');
+
 
 });
 

@@ -24,8 +24,8 @@ class DeveloperController extends Controller
         $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(2);
 
         $user=User::find(Auth::id());
-        $vd=DB::table('recruitment')->where('expire','<',now())->get();
-//        dd($vd);
+//        $vd=DB::table('recruitment')->where('expire','<',now())->get();
+//        dd($user->notifications);
 
 
         return view('developer.index')->with(compact('posts','user'));

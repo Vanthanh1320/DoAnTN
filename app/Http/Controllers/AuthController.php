@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Notifications\userRegisterNotify;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
@@ -15,6 +18,10 @@ class AuthController extends Controller
     public function showFormLogin(){
         return view('employer.login');
     }
+
+//    public function showFormLoginAdmin(){
+//        return view('admin.login');
+//    }
 
     public function login(Request $request){
 
@@ -32,10 +39,11 @@ class AuthController extends Controller
         );
 
         if(Auth::attempt($credentials)) {
-//            if(Auth::user()->account_type == 2){
-//                $request->session()->flush();
-//                return redirect()->back()->with('error','Địa chỉ email không tồn tại');
-//            }
+            if(Auth::user()->account_type == 2){
+                $request->session()->flush();
+                return redirect()->back()->with('error','Địa chỉ email không tồn tại');
+            }
+
             return redirect()->route('empl');
         }
 
@@ -84,7 +92,14 @@ class AuthController extends Controller
 
         $user->save();
 
+        $id_admin=User::where('account_type',1)->first('id');
+
         if(Auth::attempt($data)) {
+            $user_employer=User::orderBy('id','DESC')->first();
+
+            $desc='Tài khoản công ty '. $user_employer->company .' muốn đăng ký làm nhà tuyển dụng ';
+            Notification::send($id_admin,new userRegisterNotify((string)$user_employer->id,$desc));
+
             return redirect()->route('empl');
         }
 
@@ -94,6 +109,42 @@ class AuthController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route('show-login-emp');
+    }
+
+//    Admin
+    public function showFormLoginAdmin(){
+
+        return view('admin.login');
+    }
+
+    public function loginAdmin(Request $request){
+
+        $credentials = $request->validate(
+            [
+                'name' => 'required',
+                'password' =>  'required|min:8',
+            ],
+            [
+                'name.required' => 'Vui lòng nhập email',
+                'password.required' => 'Vui lòng nhập mật khẩu',
+                'password.min'      =>  'Mật khẩu phải từ :min ký tự',
+            ]
+        );
+
+        if(Auth::attempt($credentials)) {
+            if(Auth::user()->account_type !== 1){
+                $request->session()->flush();
+                return redirect()->back()->with('error','Tên đàng nhập không tồn tại');
+            }
+            return redirect()->route('admin');
+        }
+
+        return redirect()->back()->with('error','Tên đăng nhập hoặc mật khẩu không chính xác');
+    }
+
+    public function logoutAdmin(){
+        Auth::logout();
+        return redirect()->route('show-login-admin');
     }
 
 }
