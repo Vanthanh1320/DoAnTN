@@ -29,7 +29,6 @@
                             <input type="hidden" name="kills" value="{{$post->kills}}">
                             <input type="hidden" name="time" value="{{\Carbon\Carbon::parse($post->created_at)->diffForHumans()}}">
 
-
                             <span type="button" class="" data-bs-toggle="tooltip" data-bs-placement="top" title="Lưu">
                               <i class="fa-regular fa-bookmark" id="save" data-set="{{$post->id}}" onclick="savePost({{$post->id}})"></i>
                             </span>
@@ -209,6 +208,7 @@
 
                             <input type="hidden" name="recruitment_id" value="{{$post->id}}">
                             <input type="hidden" name="user_id" value="{{Auth::user() ? Auth::user()->id : ''}}">
+                            <input type="hidden" name="employer_id" value="{{$post->user_id}}">
                             <input type="hidden" name="status" value="0">
 
                             <div class="mb-4">

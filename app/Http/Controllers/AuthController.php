@@ -93,6 +93,7 @@ class AuthController extends Controller
         $user->save();
 
         $id_admin=User::where('account_type',1)->first('id');
+//        dd($id_admin);
 
         if(Auth::attempt($data)) {
             $user_employer=User::orderBy('id','DESC')->first();

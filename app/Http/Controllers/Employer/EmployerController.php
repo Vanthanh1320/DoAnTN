@@ -6,8 +6,10 @@ use App\Exports\ApplyExport;
 use App\Http\Controllers\Controller;
 use App\Models\ApplyList;
 use App\Models\Recruitment;
+use App\Models\StatisticAplly;
 use App\Models\User;
 use App\Notifications\browsingNotification;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
@@ -15,32 +17,29 @@ use Illuminate\Support\Facades\Notification;
 
 class EmployerController extends Controller
 {
+
+    public function userId(){
+        return User::find(Auth::id());
+    }
+
     public function index(){
         if (Auth::check()){
-            $post=Recruitment::where('user_id',Auth::id())->get();
 
-            $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
-                for ($i=0;$i< count($post);$i++){
-                    $query->orWhere('recruitment_id',$post[$i]->id);
-                }
-
-            })->get();
-
-
-            return view('employer.index')->with(compact('post','candidates'));
+            $user=$this->userId();
+            return view('employer.index')->with(compact('user'));
         }
 
         return redirect()->route('show-login-emp');
     }
 
     public function showAccount(){
-        $account_id=Auth::user()->id;
-        $account=User::find($account_id);
-//        dd($account);
-        return view('employer.account')->with(compact('account'));
+        $user=$this->userId();
+
+        return view('employer.account')->with(compact('user'));
     }
 
     public function showCandidate(){
+        $user=User::find(Auth::id());
         $post=Recruitment::where('user_id',Auth::id())->get();
 
         $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
@@ -50,12 +49,54 @@ class EmployerController extends Controller
 
         })->get();
 
+        return view('employer.apply')->with(compact('candidates','user'));
+    }
 
-        return view('employer.apply')->with(compact('candidates'));
+    public function deleteCandidate(Request $request){
+        $apply=ApplyList::find($request->id);
+        $apply->delete();
+
+        if ($apply){
+            return redirect()->back()->with('success','Xóa thành công');
+        }else{
+            return redirect()->back()->with('error','Xóa thất bại');
+        };
     }
 
     public function showStatistic(){
-        return view('employer.statistic');
+        $user=$this->userId();
+
+        $posts=Recruitment::where('user_id',Auth::user()->id)->get();
+
+        $apply_list=ApplyList::with('recruitment')->where('recruitment_id')
+            ->get();
+
+
+
+        $candidates=ApplyList::with('recruitment')->where(function ($query) use ($posts){
+            for ($i=0;$i< count($posts);$i++){
+                $query->orWhere('recruitment_id',$posts[$i]->id)->where('status',1);
+            }
+        })->get();
+
+//        $post1=ApplyList::where(function ($query) use ($candidates){
+//            for ($i=0;$i< count($candidates);$i++){
+//                $query->orWhere('recruitment_id',$candidates[0]->id);
+//            }
+//        })->get();
+
+//        foreach ($candidates as $key=>$item){
+//             if ($item->recruitment_id === )
+//        }
+//        dd($candidates);
+
+//
+        $profileNotBrowsing=ApplyList::where('recruitment_id',1)->where('status',0)->count();
+        $profileBrowsing=ApplyList::where('recruitment_id',1)->where('status',1)->count();
+
+//        dd($profileBrowsing,$profileNotBrowsing);
+
+        return view('employer.statistic')->with(compact('posts','user'));
     }
 
     public function account(Request $request){
@@ -68,7 +109,6 @@ class EmployerController extends Controller
                 'website' => [''],
                 'address' => [''],
                 'phone_number' => [''],
-
             ],
             [
                 'name.required'=> 'Vui lòng nhập họ tên',
@@ -78,11 +118,9 @@ class EmployerController extends Controller
                 'website.required'=> 'Vui lòng nhập địa chỉ website',
                 'address.required'=> 'Vui lòng nhập địa chỉ',
                 'phone_number.required'=> 'Vui lòng nhập số điện thoại',
-
             ]);
 
-        $account_id=Auth::user()->id;
-        $account=User::find($account_id);
+        $account=$this->userId();
 
         $account->name=$data['name'];
         $account->company=$data['company'];
@@ -120,10 +158,8 @@ class EmployerController extends Controller
         $value=$request->value;
 
         $image_employer=Auth::user()->image;
-//        dd($image_employer);
 
         $user_notification=User::where('id',$user_developer)->first();
-//        dd($user_notification);
 
         $apply=ApplyList::find($id);
         $apply->status=$value;
@@ -147,7 +183,6 @@ class EmployerController extends Controller
                 ->get();
 //        }
 
-
         $html='';
         foreach ($candidates as $key=>$item){
             $check=($item->status==1? 'checked':'');
@@ -155,7 +190,7 @@ class EmployerController extends Controller
             $time=\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY');
             $html .='
                       <tr class="align-top text-center">
-                                   <td >'.$key++.'</td>
+                            <td >'.$key++.'</td>
                                    <td >'.$item->recruitment->title.'</td>
                                    <td class="text-black">'.$item->name.'</td>
                                    <td>'.$item->email.'</td>
@@ -166,7 +201,7 @@ class EmployerController extends Controller
                                        <div class="form-check form-switch ">
                                            <input class="form-check-input text-center"  '.$check.'   data-id="'.$item->id.'" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                                        </div>
-                                   </td>
+                            </td>
                       </tr>
 
             ';
@@ -184,7 +219,6 @@ class EmployerController extends Controller
             ->get();
 
 //            dd($candidates);
-
 
         $html='';
         foreach ($candidates as $key=>$item){
@@ -223,11 +257,55 @@ class EmployerController extends Controller
             }
 
         })->get();
-//        dd($post);
-//        return Excel::download(new ApplyExport, 'apply_list.xlsx');
-
 
         return (new ApplyExport)->download('apply_list.xlsx');
-//        return Excel::download(new ApplyExport, 'apply_list.xlsx');
+    }
+
+    public function statisticsCandidate(Request $request){
+        $id_recruitment=$request->value;
+
+        $now=Carbon::now()->toDateString();
+        $yesterday=Carbon::yesterday()->toDateString();
+        $sub7days=Carbon::now()->subDay(7)->toDateString();
+        $start_lastmouth=Carbon::now()->subMonth()->startOfMonth()->toDateString();
+        $end_lastmouth=Carbon::now()->subMonth()->endOfMonth()->toDateString();
+
+        switch ($request->timer){
+            case 'ngayhomqua':
+                $apply_list=StatisticAplly::where('recruitment_id',$id_recruitment)
+                    ->whereBetween('created_at',[$yesterday,$now])
+                    ->get();
+                break;
+            case '7ngayqua':
+                $apply_list=StatisticAplly::where('recruitment_id',$id_recruitment)
+                    ->whereBetween('date_apply',[$sub7days,$now])
+                    ->get();
+                break;
+            case 'thangtruoc':
+                $apply_list=StatisticAplly::where('recruitment_id',$id_recruitment)
+                    ->whereBetween('created_at',[$start_lastmouth,$end_lastmouth])
+                    ->get();
+                break;
+            default:
+                $apply_list=[];
+        }
+
+        if(count($apply_list) >0){
+            foreach ($apply_list as $key => $val){
+
+                $chart_data[]=array(
+                    'quantity_apply'=>$val->quantity_apply,
+                    'quantity_browsing'=>$val->quantity_browsing,
+                    'timer' => $val->date_apply
+                );
+            }
+            echo $data=json_encode($chart_data);
+        }else{
+            echo $data=json_encode([]);
+        }
+
+
+//        return view('employer.statistic')->with(compact('profileBrowsing','profileNotBrowsing'));
+
     }
 }

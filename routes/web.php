@@ -70,18 +70,21 @@ Route::prefix('employer')->group(function (){
     Route::middleware('empl')->group(function (){
         Route::get('/', [EmployerController::class, 'index'])->name('empl');
         Route::get('tai-khoan',[EmployerController::class,'showAccount'])->name('show-account-epl');
-        Route::put('tao',[EmployerController::class,'account'])->name('account-epl');
+        Route::put('update_account_employer',[EmployerController::class,'account'])->name('account-epl');
 
         Route::resource('/post',RecruitmentController::class);
 
         Route::get('/update-status-candidate',[EmployerController::class,'statusCandidate'])->name('update-status-candidate');
-        Route::get('/search-candidate',[EmployerController::class,'searchCandidate'])->name('search-candidate');
+//        Route::get('/search-candidate',[EmployerController::class,'searchCandidate'])->name('search-candidate');
         Route::get('/filer-status',[EmployerController::class,'filterStatus'])->name('filter-status');
-
         Route::post('/xuat-excel',[EmployerController::class,'exportExcel'])->name('export-excel');
 
         Route::get('/ung-vien',[EmployerController::class,'showCandidate'])->name('show-candidate');
+        Route::delete('/delete-candidate/{id}',[EmployerController::class,'deleteCandidate'])->name('delete-candidate');
+
         Route::get('/thong-ke',[EmployerController::class,'showStatistic'])->name('show-statistic');
+        Route::post('/statistics-candidate',[EmployerController::class,'statisticsCandidate'])->name('statistics-candidate');
+
 
         Route::get('logout',[AuthController::class,'logout'])->name('logout-emp');
     });
@@ -102,6 +105,7 @@ Route::prefix('adm')->group(function (){
 
         Route::get('/update-status',[AdminController::class,'updateStatus'])->name('update-status');
         Route::get('/tai-khoan-nha-tuyen-dung/{id}',[AdminController::class,'infoUserEmployer'])->name('info-user-employer');
+
 
         Route::get('logout',[AuthController::class,'logoutAdmin'])->name('logout-admin');
 

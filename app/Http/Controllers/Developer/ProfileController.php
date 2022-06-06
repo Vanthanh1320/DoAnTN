@@ -23,9 +23,13 @@ class ProfileController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function userId(){
+        return User::find(Auth::id());
+    }
+
     public function index()
     {
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         $user_id=Auth::user()->id;
         $profiles=Profile::where('user_id','=',$user_id)->get();
@@ -39,7 +43,7 @@ class ProfileController extends Controller
      */
     public function create()
     {
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         return view('developer.create_cv')->with(compact('user'));
 
@@ -230,7 +234,7 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         $profile=Profile::find($id);
         $experiences=Experience::where('profile_id','=',$id)->get();

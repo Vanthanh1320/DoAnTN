@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
 //            DB::table('recruitment')->where('expire','<',now())->update(['status' => 0]);
 //        })->everyMinute();
 
-        $schedule->command('recruitment:update')->daily('00:00');
+//        ->daily('00:00')
+        $schedule->command('recruitment:update')->everyMinute();
     }
 
     /**

@@ -10,23 +10,27 @@ use App\Models\Notify;
 use App\Models\Profile;
 use App\Models\Recruitment;
 use App\Models\User;
+use App\Notifications\recruitmentNotify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Notification;
 
 class DeveloperController extends Controller
 {
+    public function userId(){
+        return User::find(Auth::id());
+    }
 
     public function index(){
         $date_now=Carbon::now()->toDateString();
         $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(2);
 
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 //        $vd=DB::table('recruitment')->where('expire','<',now())->get();
 //        dd($user->notifications);
-
 
         return view('developer.index')->with(compact('posts','user'));
     }
@@ -35,7 +39,7 @@ class DeveloperController extends Controller
         $account_id=Auth::user()->id;
         $account=User::find($account_id);
 
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         return view('developer.account')->with(compact('account','user'));
     }
@@ -52,8 +56,7 @@ class DeveloperController extends Controller
                 'file.lt'=> 'Dung lượng file phải ít 1 MB',
             ]);
 
-        $account_id=Auth::user()->id;
-        $account=User::find($account_id);
+        $account=$this->userId();
 
         $account->name=$data['name'];
 
@@ -76,14 +79,13 @@ class DeveloperController extends Controller
             $account->image=$account->image;
         }
 
-
         $account->save();
 
         return redirect()->back()->with('success','Cập nhập thành công');
     }
 
     public function post_info($slug){
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         $post=Recruitment::with('user')->where('slug_title',$slug)->first();
         $kills=explode(',',$post->kills);
@@ -104,7 +106,7 @@ class DeveloperController extends Controller
     }
 
     public function search(Request $request){
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         $key=$request->key;
         $select=$request->level;
@@ -154,13 +156,13 @@ class DeveloperController extends Controller
     }
 
     public function save_post(){
-        $user=User::find(Auth::id());
+        $user=$this->userId();
 
         return view('developer.save_post')->with(compact('user'));
     }
 
     public function apply(Request $request){
-//        dd($request->all());
+//        dd($request->employer_id);
         $data=$request->validate(
             [
                 'recruitment_id' => ['required'],
@@ -208,6 +210,11 @@ class DeveloperController extends Controller
 
             $apply->linkCV=$new_cv;
         }
+
+        $desc=$request->name." đã ứng tuyển vào tin tuyển dụng của bạn";
+        $employer_id=User::where('id',(int)$request->employer_id)->first('id');
+
+        Notification::send($employer_id, new recruitmentNotify($desc));
 
         $apply->save();
 

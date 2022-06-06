@@ -551,8 +551,6 @@
     if (notifyElement){
 
         $(document).on('click',function (e) {
-            console.log(e)
-
             if (e.target === notifyElement || e.target.parentElement === notifyElement ){
                 $('.header__nav-notify-quantity').removeClass('show');
 

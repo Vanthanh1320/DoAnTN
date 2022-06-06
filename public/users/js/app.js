@@ -243,7 +243,7 @@ var id_user=document.querySelector('.header__nav-user input[name="id_user"]');
 var data=JSON.parse(localStorage.getItem('savePost'));
 var html=``;
 
-if (id_user){
+if (id_user && data){
     data.map((item)=>{
         if (item.id_user === Number.parseInt(id_user.value) && saveJobHtml){
             html+=`
@@ -285,7 +285,7 @@ if (id_user){
     })
 }
 
-if (faSave && id_user){
+if (faSave && data){
     data.map((item)=>{
 
         if (item.id === parseInt(faSave.dataset.set) && item.id_user === Number.parseInt(id_user.value)){

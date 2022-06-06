@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
+use App\Models\ApplyList;
 use App\Models\Recruitment;
+use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use function GuzzleHttp\Promise\all;
 
 class RecruitmentController extends Controller
 {
@@ -16,8 +20,22 @@ class RecruitmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function userId(){
+        return User::find(Auth::id());
+    }
+
     public function index()
     {
+        $user=$this->userId();
+        $post=Recruitment::where('user_id',Auth::id())->get();
+
+        $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
+            for ($i=0;$i< count($post);$i++){
+                $query->orWhere('recruitment_id',$post[$i]->id);
+            }
+
+        })->paginate(2);
+        return view('employer.manager_recruitment')->with(compact('post','candidates','user'));
     }
 
     /**
@@ -27,7 +45,9 @@ class RecruitmentController extends Controller
      */
     public function create()
     {
-        return view('employer.create_recruitment');
+        $user=$this->userId();
+
+        return view('employer.create_recruitment')->with(compact('user'));
     }
 
     /**
@@ -77,7 +97,7 @@ class RecruitmentController extends Controller
 
             'job_description.required'=>'Vui lòng nhập mô tả công việc',
             'job_requirements.required'=>'Vui lòng nhập yêu cầu công việc',
-            'job_benefit.required'=>'Vui lòng nhập chế độ đãi ngộ',
+            'benefit.required'=>'Vui lòng nhập chế độ đãi ngộ',
         ]);
 
         $level=implode(',',$request->level);
@@ -136,6 +156,8 @@ class RecruitmentController extends Controller
      */
     public function edit($id)
     {
+        $user=$this->userId();
+
         $array_level=['Intern','Fresher','Junior','Senior','Leader Developer','Mid-level Manager','Senior Leader'];
         $array_kills=['Python','Java','JavaScript','HTML/CSS','PHP','C#','C/C++','R','Ruby','VB.NET','Golang','Swift','Kotlin'];
 
@@ -144,7 +166,7 @@ class RecruitmentController extends Controller
         $levels= explode(',',$post->level);
         $kills= explode(',',$post->kills);
 
-        return view('employer.update_recruitment')->with(compact('post','levels','kills','array_level','array_kills'));
+        return view('employer.update_recruitment')->with(compact('user','post','levels','kills','array_level','array_kills'));
     }
 
     /**
@@ -156,6 +178,7 @@ class RecruitmentController extends Controller
      */
     public function update(Request $request, $id)
     {
+//        dd($request->all());
         $data=$request->validate([
             'title'=>['required','string'],
             'position'=>['required','string'],
@@ -191,7 +214,7 @@ class RecruitmentController extends Controller
 
             'job_description.required'=>'Vui lòng nhập mô tả công việc',
             'job_requirements.required'=>'Vui lòng nhập yêu cầu công việc',
-            'job_benefit.required'=>'Vui lòng nhập chế độ đãi ngộ',
+            'benefit.required'=>'Vui lòng nhập chế độ đãi ngộ',
         ]);
 
         $post=Recruitment::find($id);
@@ -240,6 +263,7 @@ class RecruitmentController extends Controller
     {
         $post=Recruitment::find($id);
         $post->delete();
+
         if ($post){
             return redirect()->back()->with('success','Xóa thành công');
         }else{
