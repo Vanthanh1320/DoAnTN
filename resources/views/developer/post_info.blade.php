@@ -279,12 +279,13 @@
                             class="btn btn-secondary"
                             data-bs-dismiss="modal"
                         >
-                            Close
+                            Hủy
                         </button>
 
                         <input
                             class="btn btn-submit px-4"
                             type="submit"
+                            onclick="handleRecruitment({{$post->id}})"
                             value="Ứng tuyển"
                         />
                     </div>

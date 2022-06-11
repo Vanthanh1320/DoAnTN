@@ -107,7 +107,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                        @if(count($candidates) >0)
+                                        @if(isset($cadidates))
                                             @foreach($candidates as $key=>$item)
                                                 <tr class=" align-top text-center">
                                                     <td >{{$key+1}}</td>
@@ -130,6 +130,8 @@
                                                                 <i class="fas fa-trash-alt"></i>
                                                             </button>
                                                         </form>
+
+                                                        <input id="sendMail" onclick="sendMail({{$item->user_id}},{{$item->recruitment_id}})" data-id="{{$item->user_id}}" type="submit" value="Gửi Mail"/>
                                                     </td>
                                                 </tr>
 

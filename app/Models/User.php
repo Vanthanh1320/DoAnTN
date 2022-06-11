@@ -59,7 +59,7 @@ class User extends Authenticatable
     }
 
     public function applyList(){
-        return $this->hasOne(ApplyList::class,'user_id','id');
+        return $this->hasMany(ApplyList::class,'user_id','id');
     }
 
 }

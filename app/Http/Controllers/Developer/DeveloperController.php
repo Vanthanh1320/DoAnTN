@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
+use App\Mail\confirmProfile;
+use App\Mail\postSimilar;
 use App\Models\ApplyList;
 use App\Models\Experience;
 use App\Models\KeywordKills;
@@ -14,6 +16,7 @@ use App\Notifications\recruitmentNotify;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
@@ -24,13 +27,66 @@ class DeveloperController extends Controller
         return User::find(Auth::id());
     }
 
-    public function index(){
-        $date_now=Carbon::now()->toDateString();
-        $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(2);
+    public function testMailAuto(){
+//        $user=User::find(Auth::id());
+//        dd($user);
+//        $apply_list=ApplyList::with('recruitment')->where('user_id',$user->id)->first();
+//
+//        if (isset($apply_list)){
+//            $kills=explode(',',$apply_list->recruitment->kills);
+//            dd($kills);
+//            $post_similar=Recruitment::select('2')->where(function ($query) use ($kills,$apply_list){
+//                for ($i=0;$i< count($kills);$i++) {
+//                    $query->orWhere('kills','like','%'.$kills[$i].'%')
+//                        ->Where('id', '<>',$apply_list->recruitment_id)
+//                        ->Where('status', 1)
+//                        ->Where('created_at','>',$apply_list->created_at);
+//                }
+//            })->get();
+//
+//            dd($post_similar);
+//
+//            $mailable=new postSimilar($user,$post_similar);
+//            Mail::to($user->email)->queue($mailable);
+//        }
+//
 
+        $apply_list=ApplyList::with('recruitment','user')->get();
+//        dd($apply_list[1]->user->email);
+
+//        $kills=[];
+        $data=[];
+        for ($i = 0; $i < count($apply_list); $i++){
+            $kills=explode(',',$apply_list[2]->recruitment->kills);
+//             dd($kills);
+            $post_similar=Recruitment::where(function ($query) use ($kills,$apply_list){
+                for ($i=0;$i< count($kills);$i++) {
+                    $query->orWhere('kills','like','%'.$kills[$i].'%')
+                        ->Where('id', '<>',$apply_list[$i]->recruitment_id)
+                        ->Where('status', 1)
+                        ->Where('created_at','>',$apply_list[$i]->created_at);
+                }
+            })->get();
+
+
+            if (count($post_similar) > 1){
+                $mailable=new postSimilar($apply_list[$i]->user,$post_similar);
+                Mail::to($apply_list[$i]->user->email)->queue($mailable);
+            }
+
+//            dd($post_similar);
+
+        }
+
+        return true;
+//        return view('developer.postSimilarMail');
+    }
+
+    public function index(){
         $user=$this->userId();
-//        $vd=DB::table('recruitment')->where('expire','<',now())->get();
-//        dd($user->notifications);
+
+        $date_now=Carbon::now()->toDateString();
+        $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(4);
 
         return view('developer.index')->with(compact('posts','user'));
     }
@@ -90,7 +146,14 @@ class DeveloperController extends Controller
         $post=Recruitment::with('user')->where('slug_title',$slug)->first();
         $kills=explode(',',$post->kills);
 
-        $posts_same=Recruitment::with('user')->where('slug_title','like','%'.$slug.'%')->where('id','<>',$post->id)->orderBy('id','DESC')->get();
+        $posts_same=Recruitment::with('user')
+            ->where(function ($query) use ($kills,$post){
+            for ($i=0;$i< count($kills);$i++) {
+                $query->orWhere('kills','like','%'.$kills[$i].'%')
+                    ->where('id','<>',$post->id)
+                    ->orderBy('id','DESC');
+            }
+        })->get();
 
         if (Auth::user() != null){
             $user_id=Auth::user()->id;
@@ -113,9 +176,9 @@ class DeveloperController extends Controller
 
         if ($key){
             $posts=Recruitment::with('user')
-                ->where('title','like','%'.$key.'%')
                 ->orwhere('kills','like','%'.$key.'%')
                 ->orwhere('name_company','like','%'.$key.'%')
+                ->orwhere('title','like','%'.$key.'%')
                 ->where('status','<>',0)
                 ->orderBy('id','DESC')->get();
         }
@@ -139,7 +202,8 @@ class DeveloperController extends Controller
             $output='<ul style="display: block; max-height: 145px;overflow-y: scroll">';
 
             foreach ($keywords as $item){
-                $output.='<li class="keysword-list" style="padding: 5px"><a href="#">'.$item->name.'</a></li>
+                $output.='
+                    <li class="keysword-list" style="padding: 5px"><a>'.$item->name.'</a></li>
 
                 ';
             }
@@ -149,8 +213,10 @@ class DeveloperController extends Controller
     }
 
     public function getMorePost(Request $request){
+        $date_now=Carbon::now()->toDateString();
+
         if ($request->ajax()){
-            $posts=Recruitment::with('user')->where('status',1)->paginate(2);
+            $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(4);
             return view('developer.posts-more')->with(compact('posts'))->render();
         }
     }
@@ -159,6 +225,12 @@ class DeveloperController extends Controller
         $user=$this->userId();
 
         return view('developer.save_post')->with(compact('user'));
+    }
+
+    public function listRecruitment(){
+        $user=$this->userId();
+
+        return view('developer.recruitment_list')->with(compact('user'));
     }
 
     public function apply(Request $request){
@@ -217,6 +289,12 @@ class DeveloperController extends Controller
         Notification::send($employer_id, new recruitmentNotify($desc));
 
         $apply->save();
+
+        $user_developer=$this->userId();
+        $post=Recruitment::find($request->recruitment_id);
+
+        $mailable=new confirmProfile($user_developer,$post);
+        Mail::to($user_developer->email)->queue($mailable);
 
         return redirect()->back()->with('success');
     }

@@ -344,7 +344,7 @@
     <header class="topbar" data-navbarbg="skin5">
         <nav class="navbar top-navbar navbar-expand-md navbar-dark">
             <div class="navbar-header" data-logobg="skin5">
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="{{route('empl')}}">
                     <!-- Logo icon -->
                     <b class="logo-icon ps-2">
                         <img
@@ -604,8 +604,8 @@
 <script src="{{url('empl')}}/assets/libs/toastr/build/toastr.min.js"></script>
 
 {{--Morris chart--}}
-<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+{{--<script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>--}}
+{{--<script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>--}}
 
 <script>
     $(".select2").select2();
@@ -654,79 +654,96 @@
 
 </script>
 
-{{--Chart--}}
-<script type="text/javascript">
+{{--Send Mail--}}
+<script>
+    function sendMail (developer_id,post_id) {
 
-    var colorDanger = "#FF1744";
-
-    var chart =new Morris.Bar({
-        element: 'myfirstchart',
-        resize: true,
-        hideHover:'auto',
-        barColors: [
-            '#0875ff',
-            '#e52525',
-        ],
-        data: [
-            {totalApply: 12, browsing: 5, timer: "2022-05-05"},
-            {totalApply: 2, browsing: 1, timer: "2022-06-05"},
-            {totalApply: 4, browsing: 7, timer: "2022-07-05"},
-            {totalApply: 2, browsing: 1, timer: "2022-08-05"},
-            {totalApply: 12, browsing: 5, timer: "2022-09-05"},
-            {totalApply: 12, browsing: 5, timer: "2022-09-05"},
-            {totalApply: 12, browsing: 5, timer: "2022-09-05"},
-        ],
-
-        xkey: 'timer',
-        ykeys: ['quantity_apply','quantity_browsing'],
-        labels: ['Số lượng ứng tuyển','Số lượng đã duyệt hồ sơ']
-    });
-
-    $(document).ready(function () {
-        $('.form-select').change(function () {
-            var token = $('input[name="_token"]').val();
-            var value=$(this).val();
-            var timerfilter=$('.form-select-filter').val();
-
-
-            $.ajax({
-                url: "{{route('statistics-candidate')}}",
-                dataType: "JSON",
-                type: "post",
-                data: {value:value,timer:timerfilter,_token:token},
-                success: function (data) {
-                    if(data.length > 0){
-                        chart.setData(data)
-                    }else{
-                        chart.setData([{timer:0}])
-                    }
-                }
-            })
+        $.ajax({
+            url: "{{route('send-mail')}}",
+            dataType: "JSON",
+            type: "GET",
+            data: {developer_id:developer_id,post_id:post_id},
+            success: function (data) {
+                console.log(data.success)
+            }
         })
-
-        $('.form-select-filter').change(function () {
-            var token = $('input[name="_token"]').val();
-            var value=$('.form-select').val();
-            var timerfilter=$(this  ).val();
-
-            $.ajax({
-                url: "{{route('statistics-candidate')}}",
-                dataType: "JSON",
-                type: "post",
-                data: {value:value,timer:timerfilter,_token:token},
-                success: function (data) {
-                    if(data.length > 0){
-                        chart.setData(data)
-                    }else{
-                        chart.setData([{timer:0}])
-                    }
-                }
-            })
-
-        })
-    })
-
+    }
 </script>
+
+{{--Chart--}}
+{{--<script type="text/javascript">--}}
+
+{{--    var colorDanger = "#FF1744";--}}
+
+{{--    var chart =new Morris.Bar({--}}
+{{--        element: 'myfirstchart',--}}
+{{--        resize: true,--}}
+{{--        hideHover:'auto',--}}
+{{--        barColors: [--}}
+{{--            '#0875ff',--}}
+{{--            '#e52525',--}}
+{{--        ],--}}
+{{--        data: [--}}
+{{--            {totalApply: 12, browsing: 5, timer: "2022-05-05"},--}}
+{{--            {totalApply: 2, browsing: 1, timer: "2022-06-05"},--}}
+{{--            {totalApply: 4, browsing: 7, timer: "2022-07-05"},--}}
+{{--            {totalApply: 2, browsing: 1, timer: "2022-08-05"},--}}
+{{--            {totalApply: 12, browsing: 5, timer: "2022-09-05"},--}}
+{{--            {totalApply: 12, browsing: 5, timer: "2022-09-05"},--}}
+{{--            {totalApply: 12, browsing: 5, timer: "2022-09-05"},--}}
+{{--        ],--}}
+
+{{--        xkey: 'timer',--}}
+{{--        ykeys: ['quantity_apply','quantity_browsing'],--}}
+{{--        labels: ['Số lượng ứng tuyển','Số lượng đã duyệt hồ sơ']--}}
+{{--    });--}}
+
+{{--    $(document).ready(function () {--}}
+{{--        $('.form-select').change(function () {--}}
+{{--            var token = $('input[name="_token"]').val();--}}
+{{--            var value=$(this).val();--}}
+{{--            var timerfilter=$('.form-select-filter').val();--}}
+
+{{--            $.ajax({--}}
+{{--                url: "{{route('statistics-candidate')}}",--}}
+{{--                dataType: "JSON",--}}
+{{--                type: "post",--}}
+{{--                data: {value:value,timer:timerfilter,_token:token},--}}
+{{--                success: function (data) {--}}
+{{--                    if(data.length > 0){--}}
+{{--                        chart.setData(data)--}}
+{{--                    }else{--}}
+{{--                        chart.setData([{timer:0}])--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            })--}}
+{{--        })--}}
+
+{{--        $('.form-select-filter').change(function () {--}}
+{{--            var token = $('input[name="_token"]').val();--}}
+{{--            var value=$('.form-select').val();--}}
+{{--            var timerfilter=$(this  ).val();--}}
+
+{{--            $.ajax({--}}
+{{--                url: "{{route('statistics-candidate')}}",--}}
+{{--                dataType: "JSON",--}}
+{{--                type: "post",--}}
+{{--                data: {value:value,timer:timerfilter,_token:token},--}}
+{{--                success: function (data) {--}}
+{{--                    if(data.length > 0){--}}
+{{--                        chart.setData(data)--}}
+{{--                    }else{--}}
+{{--                        chart.setData([{timer:0}])--}}
+{{--                    }--}}
+{{--                }--}}
+{{--            })--}}
+
+{{--        })--}}
+{{--    })--}}
+
+{{--</script>--}}
+
+
 
 </body>
 </html>

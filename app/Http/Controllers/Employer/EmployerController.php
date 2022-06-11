@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employer;
 
 use App\Exports\ApplyExport;
 use App\Http\Controllers\Controller;
+use App\Mail\confirmProfile;
 use App\Models\ApplyList;
 use App\Models\Recruitment;
 use App\Models\StatisticAplly;
@@ -12,6 +13,7 @@ use App\Notifications\browsingNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Notification;
 
@@ -42,14 +44,18 @@ class EmployerController extends Controller
         $user=User::find(Auth::id());
         $post=Recruitment::where('user_id',Auth::id())->get();
 
-        $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
-            for ($i=0;$i< count($post);$i++){
-                $query->orWhere('recruitment_id',$post[$i]->id);
-            }
+        if (count($post) > 0){
+            $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
+                for ($i=0;$i< count($post);$i++){
+                    $query->orWhere('recruitment_id',$post[$i]->id);
+                }
 
-        })->get();
+            })->get();
 
-        return view('employer.apply')->with(compact('candidates','user'));
+            return view('employer.apply')->with(compact('candidates','user'));
+        }
+
+        return view('employer.apply')->with(compact('user'));
     }
 
     public function deleteCandidate(Request $request){
@@ -306,6 +312,30 @@ class EmployerController extends Controller
 
 
 //        return view('employer.statistic')->with(compact('profileBrowsing','profileNotBrowsing'));
+
+    }
+
+    public function sendMail(Request $request){
+//        $user_developer=User::find($request->developer_id);
+//        $post=Recruitment::find($request->post_id);
+//
+////        config([
+////            'mail.default'=>'smtp',
+////            'mail.mailers.smtp.hpst'=>'smtp.gmail.com',
+////            'mail.mailers.smtp.port'=>587,
+////            'mail.mailers.smtp.encryption'=>'tls',
+////            'mail.mailers.smtp.username'=>'neolab@gmail.com',
+////            'mail.mailers.smtp.password'=>null,
+////            'mail.from.address'=>'neolab@gmail.com',
+////            'mail.from.name'=>'neolab',
+////        ]);
+//
+//        $mailable=new confirmProfile($user_developer,$post);
+//
+//        Mail::to($user_developer->email)->queue($mailable);
+//        return true;
+
+//        return view('employer.confirm_profile_mail');
 
     }
 }

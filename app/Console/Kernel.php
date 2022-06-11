@@ -15,7 +15,8 @@ class Kernel extends ConsoleKernel
      * @return void
      */
     protected $commands = [
-        'App\Console\Commands\PostCommand'
+        'App\Console\Commands\PostCommand',
+        'App\Console\Commands\sendMailAutomatic',
     ];
 
     protected function schedule(Schedule $schedule)
@@ -29,6 +30,7 @@ class Kernel extends ConsoleKernel
 
 //        ->daily('00:00')
         $schedule->command('recruitment:update')->everyMinute();
+        $schedule->command('recruitment:select')->everyMinute();
     }
 
     /**

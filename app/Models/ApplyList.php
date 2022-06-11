@@ -27,6 +27,6 @@ class ApplyList extends Model
     }
 
     public function user(){
-        return $this->hasOne(Profile::class,'id','user_id');
+        return $this->hasOne(User::class,'id','user_id');
     }
 }

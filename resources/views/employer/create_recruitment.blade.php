@@ -57,6 +57,7 @@
                                         <option>JavaScript</option>
                                         <option >HTML/CSS</option>
                                         <option >PHP</option>
+                                        <option >NodeJS</option>
                                         <option >C#</option>
                                         <option >C/C++</option>
                                         <option >R</option>

@@ -159,7 +159,7 @@ class RecruitmentController extends Controller
         $user=$this->userId();
 
         $array_level=['Intern','Fresher','Junior','Senior','Leader Developer','Mid-level Manager','Senior Leader'];
-        $array_kills=['Python','Java','JavaScript','HTML/CSS','PHP','C#','C/C++','R','Ruby','VB.NET','Golang','Swift','Kotlin'];
+        $array_kills=['Python','Java','JavaScript','HTML/CSS','PHP','NodeJS','C#','C/C++','R','Ruby','VB.NET','Golang','Swift','Kotlin'];
 
         $post=Recruitment::where('id',$id)->first();
 

@@ -2,21 +2,6 @@
 
 @section('content')
 
-{{--    <div class="content px-5 py-4 mb-5" id="statiscal" >--}}
-{{--            <div class="cv-manage-head">--}}
-{{--                <form action="" class="d-flex">--}}
-{{--                    @csrf--}}
-{{--                    <select class="form-select form-select-posts me-2" aria-label=".form-select-lg example">--}}
-{{--                        <option selected>Chọn tin</option>--}}
-{{--                        @foreach($posts as $post)--}}
-{{--                            <option value="{{$post->id}}">{{$post->title}}</option>--}}
-{{--                        @endforeach--}}
-{{--                    </select>--}}
-
-{{--                </form>--}}
-{{--            </div>--}}
-{{--    </div>--}}
-
     <div class="page-wrapper">
         <div class="page-breadcrumb">
             <div class="row">

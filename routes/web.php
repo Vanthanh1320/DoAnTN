@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('tao',[DeveloperController::class,'account'])->name('account');
 
     Route::get('viec-da-luu',[DeveloperController::class,'save_post'])->name('save-post');
+    Route::get('viec-ung-tuyen',[DeveloperController::class,'listRecruitment'])->name('recruitment-list');
 
     Route::post('apply',[DeveloperController::class,'apply'])->name('apply');
 
@@ -52,6 +53,8 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/cv',ProfileController::class);
     Route::delete('delete-exp',[ProfileController::class,'deleteExp'])->name('delete-exp');
     Route::get('cv/pdf/{id}',[ProfileController::class,'print_profile'])->name('print-pdf');
+
+    Route::get('testMailAuto',[DeveloperController::class,'testMailAuto'])->name('testMailAuto');
 
 });
 
@@ -81,6 +84,7 @@ Route::prefix('employer')->group(function (){
 
         Route::get('/ung-vien',[EmployerController::class,'showCandidate'])->name('show-candidate');
         Route::delete('/delete-candidate/{id}',[EmployerController::class,'deleteCandidate'])->name('delete-candidate');
+        Route::get('/sendMail',[EmployerController::class,'sendMail'])->name('send-mail');
 
         Route::get('/thong-ke',[EmployerController::class,'showStatistic'])->name('show-statistic');
         Route::post('/statistics-candidate',[EmployerController::class,'statisticsCandidate'])->name('statistics-candidate');

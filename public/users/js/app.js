@@ -1,4 +1,3 @@
-
 const selectBtn=document.querySelectorAll('.content__select-btn');
 const valiForm=document.querySelectorAll('.content-validation');
 const tabBtn=document.querySelectorAll('.tab-btn');
@@ -13,9 +12,8 @@ const btnChange=document.querySelector('.btn-change');
 const btnCloseChange=document.querySelector('.btn-close-change');
 const faSave=document.querySelector('.fa-regular');
 const saveJobHtml=document.querySelector('.save-job-list');
+const recruitmentListHtml=document.querySelector('.recruitment-list');
 const selectupload=document.querySelector('.detail-select-upload');
-
-// const notifyElement=document.querySelector('.header__nav-notify');
 
 
 
@@ -114,7 +112,6 @@ if(btnCloseChange){
 }
 
 
-
 var loadFile = function (event) {
     var showImage=document.querySelector('.account-right-img > img');
     var show=document.querySelector('.img > img');
@@ -129,32 +126,42 @@ var loadFile = function (event) {
 }
 
 
+// Việc ứng tuyển - Việc đã lưu
+var id_user=document.querySelector('.header__nav-user input[name="id_user"]');
+var dataSavePost=JSON.parse(localStorage.getItem('savePost'));
+var dataRecruitmentList=JSON.parse(localStorage.getItem('recruitment_list'));
+
+function getDataPost(id_post) {
+    var title=document.querySelector('.detail-job-head > input[name="title"]').value;
+    var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
+    var image=document.querySelector('.detail-job-head > input[name="image"]').value;
+    var company=document.querySelector('.detail-job-head > input[name="company"]').value;
+    var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
+    var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
+    var kills=document.querySelector('.detail-job-head > input[name="kills"]').value;
+    var time=document.querySelector('.detail-job-head > input[name="time"]').value;
+    var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
+
+    var killsArray=kills.split(',');
+
+    return {
+        'id_user':Number.parseInt(id_user.value),
+        'id_post':id_post,
+        'title':title,
+        'slug':slug,
+        'image':image,
+        'company':company,
+        'salary_max':salary_max,
+        'salary_min':salary_min,
+        'kills':killsArray,
+        'time':time,
+        'address':address,
+    }
+}
+
 function savePost(id_post) {
-    const inputElm=document.querySelector('.header__nav-user > input[name="id_user"]');
-
-    if (inputElm !== null){
-        var id_user=inputElm.value;
-        var title=document.querySelector('.detail-job-head > input[name="title"]').value;
-        var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
-        var image=document.querySelector('.detail-job-head > input[name="image"]').value;
-        var company=document.querySelector('.detail-job-head > input[name="company"]').value;
-        var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
-        var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
-        var time=document.querySelector('.detail-job-head > input[name="time"]').value;
-        var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
-
-        const data={
-            'id_user':Number.parseInt(id_user),
-            'id':id_post,
-            'title':title,
-            'slug':slug,
-            'image':image,
-            'company':company,
-            'salary_max':salary_max,
-            'salary_min':salary_min,
-            'time':time,
-            'address':address
-        }
+    if (id_user !== null){
+        const data=getDataPost(id_post);
 
         if(localStorage.getItem('savePost') == null){
             localStorage.setItem('savePost','[]');
@@ -163,7 +170,7 @@ function savePost(id_post) {
         var response=JSON.parse(localStorage.getItem('savePost'));
 
         var count_data=response.filter((item)=> {
-            return item.id === id_post && item.id_user === parseInt(id_user);
+            return item.id_post === id_post && item.id_user === parseInt(data.id_user);
         })
 
         if (count_data.length == 0){
@@ -173,7 +180,7 @@ function savePost(id_post) {
             return  localStorage.setItem('savePost',JSON.stringify(response));
         }else {
             var id_delete=response.filter((item)=>{
-                return item.id !== id_post || item.id_user !== parseInt(id_user);
+                return item.id_post !== id_post || item.id_user !== parseInt(data.id_user);
             })
             faSave.setAttribute('class','fa-regular fa-bookmark')
 
@@ -184,7 +191,126 @@ function savePost(id_post) {
     }
 }
 
-function toast({title='', message='', type='info', duration=3000}) {
+function handleRecruitment(id_post) {
+    var data= getDataPost(id_post);
+
+    if (localStorage.getItem('recruitment_list') === null){
+        localStorage.setItem('recruitment_list','[]')
+    }
+
+    var response=JSON.parse(localStorage.getItem('recruitment_list'));
+
+    response.push(data);
+    localStorage.setItem('recruitment_list',JSON.stringify(response));
+}
+
+function showPostList(data,divHtml) {
+    var html=``;
+
+    if (+data.length > 0 && id_user){
+        data.map((item)=>{
+            if (item.id_user === Number.parseInt(id_user.value) && divHtml){
+                html+=`
+                <a class="posts-item py-3 px-3" href="tim-viec/${item.slug}">
+                    <div class="posts-item-img">
+                        <img src="${'empl/img/'+item.image}" alt="logo-company">
+                    </div>
+
+                     <div class="posts-item-info ms-4 me-auto">
+                                <h2 class="posts-item-info__title">${item.title}</h2>
+                                <p class="posts-item-info__company">${item.company}</p>
+                                <div class="posts-item-info__address">
+                                    <p>
+                                        <i class="fa-solid fa-location-dot"></i>
+                                        ${item.address}
+                                    </p>
+                                </div>
+                                <div class="posts-item-info__salary">
+                                    <p>
+                                        <i class="fa-solid fa-money-bill-wave"></i>
+                                        ${item.salary_min} - ${item.salary_max}
+                                    </p>
+                                </div>
+                                <div class="posts-item-info__kills">
+                                    ${item.kills.map((kill)=>{
+                        return `
+                                            <span>${kill}</span>
+                                        `
+                    }).join('')}
+                                </div>
+                            </div>
+
+                            <div class="posts-item-timer">
+                                <p>${item.time}</p>
+                            </div>
+                 </a>
+            `
+                return  divHtml.innerHTML=html;
+            }
+
+        })
+
+    }
+}
+
+if (recruitmentListHtml){
+    showPostList(dataRecruitmentList,recruitmentListHtml);
+}else {
+    showPostList(dataSavePost,saveJobHtml);
+}
+
+if (faSave && dataSavePost){
+    dataSavePost.map((item)=>{
+        if (item.id_post === parseInt(faSave.dataset.set) && item.id_user === Number.parseInt(id_user.value)){
+            return  faSave.setAttribute('class','fa-solid fa-bookmark')
+        }
+    })
+}
+
+// --------------
+
+
+if(selectupload){
+    var title=document.querySelector('.detail-job-head > input[name="title"]').value;
+    var slug=document.querySelector('.detail-job-head > input[name="slug"]').value;
+    var image=document.querySelector('.detail-job-head > input[name="image"]').value;
+    var company=document.querySelector('.detail-job-head > input[name="company"]').value;
+    var salary_max=document.querySelector('.detail-job-head > input[name="salary_max"]').value;
+    var salary_min=document.querySelector('.detail-job-head > input[name="salary_min"]').value;
+    var time=document.querySelector('.detail-job-head > input[name="time"]').value;
+    var address=document.querySelector('.detail-job-head > input[name="address_work"]').value;
+
+    selectupload.onclick=(e)=>{
+        e.preventDefault();
+        const id=e.target.dataset.id;
+
+        if(id){
+            selectTabBtn.forEach((tab)=>{
+                tab.classList.remove('active-tab');
+                e.target.classList.add('active-tab');
+            });
+
+            filesUpload.forEach((item)=>{
+                item.classList.remove('active-tab');
+                const element=document.getElementById(id);
+                element.classList.add('active-tab');
+            })
+        }
+    }
+
+    const inputFile=document.querySelector('.detail-files-upload>input');
+
+    inputFile.addEventListener('change',function (e) {
+        const inputDocumnets=document.querySelectorAll('input[name="document"]');
+        inputDocumnets.forEach(item=>{
+            item.checked = false;
+        })
+    })
+
+}
+
+
+function toast({title='', message='', type='info', duration=2000}) {
     const main=document.getElementById('toast');
     if(main){
         const toast=document.createElement('div');
@@ -238,90 +364,4 @@ function showSuccessToast(){
         duration:50000
     })
 }
-
-var id_user=document.querySelector('.header__nav-user input[name="id_user"]');
-var data=JSON.parse(localStorage.getItem('savePost'));
-var html=``;
-
-if (id_user && data){
-    data.map((item)=>{
-        if (item.id_user === Number.parseInt(id_user.value) && saveJobHtml){
-            html+=`
-            <a class="posts-item py-3 px-3" href="tim-viec/${item.slug}">
-                        <div class="posts-item-img">
-                            <img src="${'empl/img/'+item.image}" alt="logo-company">
-                        </div>
-
-                        <div class="posts-item-info ms-4 me-auto">
-                            <h2 class="posts-item-info__title">${item.title}</h2>
-                            <p class="posts-item-info__company">${item.company}</p>
-                            <div class="posts-item-info__address">
-                                <p>
-                                    <i class="fa-solid fa-location-dot"></i>
-                                    ${item.address}
-                                    </p>
-                            </div>
-                            <div class="posts-item-info__salary">
-                                <p>
-                                    <i class="fa-solid fa-money-bill-wave"></i>
-                                    ${item.salary_min} - ${item.salary_max}
-                                    </p>
-                            </div>
-                            <div class="posts-item-info__kills">
-                                <span>JavaScript</span>
-                                <span>PHP</span>
-                                <span>Java</span>
-                            </div>
-                        </div>
-
-                        <div class="posts-item-timer">
-                            <p>${item.time}</p>
-                        </div>
-             </a>
-            `
-            return  saveJobHtml.innerHTML=html;
-        }
-
-    })
-}
-
-if (faSave && data){
-    data.map((item)=>{
-
-        if (item.id === parseInt(faSave.dataset.set) && item.id_user === Number.parseInt(id_user.value)){
-            return  faSave.setAttribute('class','fa-solid fa-bookmark')
-        }
-    })
-}
-
-if(selectupload){
-    selectupload.onclick=(e)=>{
-        e.preventDefault();
-        const id=e.target.dataset.id;
-
-        if(id){
-            selectTabBtn.forEach((tab)=>{
-                tab.classList.remove('active-tab');
-                e.target.classList.add('active-tab');
-            });
-
-            filesUpload.forEach((item)=>{
-                item.classList.remove('active-tab');
-                const element=document.getElementById(id);
-                element.classList.add('active-tab');
-            })
-        }
-    }
-
-    const inputFile=document.querySelector('.detail-files-upload>input');
-
-    inputFile.addEventListener('change',function (e) {
-        const inputDocumnets=document.querySelectorAll('input[name="document"]');
-        inputDocumnets.forEach(item=>{
-            item.checked = false;
-        })
-    })
-
-}
-
 

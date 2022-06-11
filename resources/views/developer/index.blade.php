@@ -2,8 +2,6 @@
 
 @section('content')
 
-
-
 <div class="wrap">
     <div class="banner banner-home">
         <div class="container">
@@ -44,6 +42,7 @@
     </div>
 
     <div class="post-data">
+{{--        <a href="{{route('testMailAuto')}}">Test Mail</a>--}}
         @include('developer.posts-more')
     </div>
 </div>

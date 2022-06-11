@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{url("users")}}/sass/main.css"/>
 </head>
-<body data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" tabindex="0">
+<body {{Str::contains(url()->current(),'cv') ? 'data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" tabindex="0"' : ''}}>
 
 @if(Str::contains(url()->current(),['login','register']))
     <div class="header header-nofix">
@@ -165,8 +165,14 @@
                                 </li>
                                 <li class="header__nav-user-item p-0">
                                     <a href="{{route('save-post')}}" class="px-3 py-2">
-                                        <i class="fa-solid fa-heart mr-2"></i>
+                                        <i class="fa-solid fa-bookmark mr-2"></i>
                                         Việc đã lưu
+                                    </a>
+                                </li>
+                                <li class="header__nav-user-item p-0">
+                                    <a href="{{route('recruitment-list')}}" class="px-3 py-2">
+                                        <i class="fa-solid fa-square-check"></i>
+                                        Việc ứng tuyển
                                     </a>
                                 </li>
                                 <li class="header__nav-user-item p-0">
@@ -267,7 +273,7 @@
 
 @yield('content')
 
-    @if(!Str::contains(url()->current(),['employer']))
+    @if(!Str::contains(url()->current(),['viec-da-luu','viec-ung-tuyen','cv','tai-khoan','tim-kiem']))
         <div class="footer">
             <div class="footer__wrap container-fluid py-4">
                 <p class="footer-text">Copyright &copy; IT DaNang</p>
@@ -308,12 +314,12 @@
 
 {{--toast--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 {{-- Ck-editor --}}
 <script>
-    // CKEDITOR.replace('editor');
+    CKEDITOR.replace('editor1');
 
-    if(location.href.includes('cv')){
-        CKEDITOR.replace('editor1');
+    if(location.href.includes('cv/create')){
         CKEDITOR.replace('editor_exp1');
         CKEDITOR.replace('editor_pro1');
     }
@@ -328,12 +334,31 @@
     });
 </script>
 
+
 <script type="text/javascript">
+    const editorExpElms=document.querySelectorAll('textarea[name="job_details[]"]');
+    const editorProElms=document.querySelectorAll('textarea[name="introduce_pro[]"]');
+    var i;
+
+    if(location.href.includes('edit')){
+        showEditors(editorExpElms);
+        showEditors(editorProElms);
+
+        i=editorExpElms.length || editorProElms.length;
+    }else{
+        i=1;
+    }
+
+    function showEditors(elements) {
+        for (const element of elements) {
+            CKEDITOR.replace(element.id);
+        }
+    }
+
     $(document).ready(function () {
         //kinh nghiệm
-        $(document).on('click', '.experience-add', function () {
-            var i=1;
 
+        $(document).on('click', '.experience-add', function () {
             var li = `
                      <li>
                         <hr class="my-5">
@@ -372,14 +397,11 @@
             </li>
               `;
 
-
             $('.cv-experience-list').append(li);
 
-            // var editor='editor_exp'+ i;
-            // console.log(editor)
-            // console.log(i)
-            //
-            // CKEDITOR.replace(editor);
+            var editor_exp='editor_exp'+ i;
+
+            CKEDITOR.replace(editor_exp);
 
         });
 
@@ -423,6 +445,7 @@
               `;
 
             $('.cv-education-list').append(li);
+
         });
 
         $(document).on('click', '.education-remove', function () {
@@ -451,7 +474,7 @@
                     <div class="py-2 row">
                         <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                         <div class="col-sm-7 col-md-7 col-xl-8">
-                            <textarea id="editor1" class="form-control" cols="50" rows="8" name="introduce_pro[]"></textarea>
+                            <textarea id="editor_pro${++i}" class="form-control" cols="50" rows="8" name="introduce_pro[]"></textarea>
                         </div>
                     </div>
 
@@ -462,6 +485,10 @@
             `;
 
             $('.cv-project-list').append(li);
+
+            var editor_pro='editor_pro'+ i;
+
+            CKEDITOR.replace(editor_pro);
         });
 
         $(document).on('click', '.project-remove', function () {
@@ -469,12 +496,9 @@
         })
     })
 
-</script>
-
-{{-- Save Post--}}
-<script>
 
 </script>
+
 {{-- Delete Exp --}}
 <script type="text/javascript">
     function deleteItems(id,$number) {
@@ -523,7 +547,8 @@
     })
 </script>
 
-<script>
+{{-- Pagination --}}
+<script type="text/javascript">
     $(document).ready(function () {
         $(document).on('click','.pagination a',function (e) {
             e.preventDefault();
@@ -544,8 +569,8 @@
     }
 </script>
 
+{{-- Notify --}}
 <script type="text/javascript">
-
     const notifyElement=document.querySelector('.header__nav-notify');
 
     if (notifyElement){
