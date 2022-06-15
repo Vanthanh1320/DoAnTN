@@ -61,7 +61,7 @@
                                     <input type="hidden" name="user_id" class="form-control" value="{{Auth::user()->id}}">
 
                                     <div class="row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tiêu đề <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tiêu đề <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{old('title')}}" name="title">
 
@@ -78,7 +78,7 @@
                                     <h2 >Thông tin cá nhân</h2>
 
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-form-label">Ảnh </label>
+                                        <label for="" class="col-sm-3 col-form-label fw-bold">Ảnh </label>
 
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <div class="upload-img px-3 py-3">
@@ -92,7 +92,7 @@
                                                     </div>
 
                                                     <div class="img">
-                                                        <img src="" alt="image" >
+                                                        <img src="" class="img-img" alt="image" >
 
                                                         <div class="upload-img-hover">
                                                             <input type="file" id="image_uploads" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" multiple="">
@@ -107,7 +107,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Họ tên <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Họ tên <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{old('name')}}" name="name">
 
@@ -117,7 +117,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí ứng tuyển <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Vị trí ứng tuyển <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{old('position')}}" name="position">
 
@@ -127,7 +127,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Email <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Email <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="email" class="form-control" value="{{old('email')}}" name="email">
 
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Điện thoại <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Điện thoại <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{old('phone_number')}}" name="phone_number">
 
@@ -147,7 +147,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Giới tính <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Giới tính <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5 d-flex justify-content-center align-items-center">
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label" for="inlineRadio1">Nam</label>
@@ -165,7 +165,7 @@
                                     </div>
 
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngày sinh <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Ngày sinh <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="date" class="form-control" value="{{old('dateOfBirth')}}" name="dateOfBirth">
 
@@ -176,7 +176,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Địa chỉ cụ thể <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Địa chỉ cụ thể <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{old('address')}}" name="address">
 
@@ -194,7 +194,7 @@
                                     <h2>Giới thiệu bản thân</h2>
 
                                     <div class="py-2 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100 fw-bold">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-8">
                                             <textarea id="editor1" class="form-control" value="{{old('introduce')}}" cols="50" rows="8" name="introduce">
                                                 {{old('introduce')}}
@@ -215,7 +215,7 @@
 
                                         <li>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên công ty <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên công ty <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('name_company.0')}}" name="name_company[]" >
 
@@ -226,7 +226,7 @@
 
                                             </div>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian làm việc <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian làm việc <span class=" red-cl">(*)</span></label>
 
                                                 <div class="col-sm-3 col-md-3 ">
                                                     <input type="date" class="form-control" value="{{old('start_time.0')}}" name="start_time[]" >
@@ -245,7 +245,7 @@
                                             </div>
 
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí công việc <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Vị trí công việc <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('job_position.0')}}" name="job_position[]" >
 
@@ -255,7 +255,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Chi tiết công việc </label>
                                                 <div class="col-sm-7 col-md-7 col-xl-8">
                                                     <textarea id="editor_exp1" class="form-control" name="job_details[]" cols="50" rows="5">
                                                         {{old('job_details[]')}}
@@ -280,7 +280,7 @@
 
                                         <li>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên trường cơ sở đào tạo <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên trường cơ sở đào tạo <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('name_school.0')}}" name="name_school[]" >
 
@@ -290,7 +290,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian học <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian học <span class=" red-cl">(*)</span></label>
 
                                                 <div class="col-sm-3 col-md-3 ">
                                                     <input type="date" class="form-control" value="{{old('start_year.0')}}" name="start_year[]" >
@@ -308,7 +308,7 @@
                                                 </div>
                                             </div>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngành học <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Ngành học <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('degree.0')}}" name="degree[]" >
 
@@ -333,7 +333,7 @@
 
                                         <li>
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên dự án <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên dự án <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('name_project.0')}}" name="name_project[]" >
 
@@ -344,7 +344,7 @@
                                             </div>
 
                                             <div class="mb-5 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian dự án <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian dự án <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-5">
                                                     <input type="text" class="form-control" value="{{old('time_project.0')}}" name="time_project[]" >
 
@@ -355,7 +355,7 @@
                                             </div>
 
                                             <div class="py-2 row">
-                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
+                                                <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100 fw-bold">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-8">
                                                     <textarea id="editor_pro1" class="form-control" cols="50" rows="8" name="introduce_pro[]">
                                                         {{old('introduce_pro')}}
@@ -385,4 +385,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection

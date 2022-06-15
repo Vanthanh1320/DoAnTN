@@ -16,7 +16,6 @@ const recruitmentListHtml=document.querySelector('.recruitment-list');
 const selectupload=document.querySelector('.detail-select-upload');
 
 
-
 window.addEventListener('scroll',function(){
     if(document.documentElement.scrollTop > 100){
         headerEl.classList.add('shrink');
@@ -119,6 +118,7 @@ var loadFile = function (event) {
     if (show){
         show.src=URL.createObjectURL(event.target.files[0]);
         show.setAttribute('style','display:block');
+
     }else {
         showImage.src=URL.createObjectURL(event.target.files[0]);
     }

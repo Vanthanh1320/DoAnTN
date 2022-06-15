@@ -63,7 +63,7 @@
                                     <input type="hidden" name="user_id" class="form-control" value="{{Auth::user()->id}}">
 
                                     <div class="row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tiêu đề <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tiêu đề <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{$profile->title}}" name="title">
 
@@ -80,7 +80,7 @@
                                     <h2 >Thông tin cá nhân</h2>
 
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-form-label">Ảnh </label>
+                                        <label for="" class="col-sm-3 col-form-label fw-bold">Ảnh </label>
 
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <div class="upload-img px-3 py-3">
@@ -94,7 +94,7 @@
                                                         </label>
                                                     </div>
                                                     <div class="img">
-                                                        <img src="{{url('img/profile').'/'.$profile->image}}" alt="image" style="display: block">
+                                                        <img class="img-img" src="{{url('img/profile').'/'.$profile->image}}" alt="image" style="display: block">
 
                                                         <div class="upload-img-hover">
                                                             <input type="file" id="image_uploads" onchange="loadFile(event)" name="image" accept=".jpg, .jpeg, .png" multiple="">
@@ -109,7 +109,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Họ tên <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Họ tên <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{$profile->name}}" name="name">
 
@@ -119,7 +119,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí ứng tuyển <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Vị trí ứng tuyển <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{$profile->position}}" name="position">
 
@@ -129,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Email <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Email <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="email" class="form-control" value="{{$profile->email}}" name="email">
 
@@ -139,7 +139,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Điện thoại <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Điện thoại <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{$profile->phone_number}}" name="phone_number">
 
@@ -149,7 +149,7 @@
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Giới tính <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Giới tính <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5 d-flex justify-content-center align-items-center">
                                             <div class="form-check form-check-inline">
                                                 <label class="form-check-label" for="inlineRadio1">Nam</label>
@@ -163,7 +163,7 @@
                                     </div>
 
                                     <div class="mb-5 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngày sinh <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Ngày sinh <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="date" class="form-control" value="{{$profile->dateOfBirth}}" name="dateOfBirth">
 
@@ -174,7 +174,7 @@
                                     </div>
 
                                     <div class="row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Địa chỉ cụ thể <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Địa chỉ cụ thể <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-5">
                                             <input type="text" class="form-control" value="{{$profile->address}}" name="address">
 
@@ -192,7 +192,7 @@
                                     <h2>Giới thiệu bản thân</h2>
 
                                     <div class="py-2 row">
-                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
+                                        <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100 fw-bold">Giới thiệu bản thân <span class=" red-cl">(*)</span></label>
                                         <div class="col-sm-7 col-md-7 col-xl-8">
                                             <textarea id="editor1" class="form-control" cols="50" rows="8" name="introduce">
                                                 {{$profile->introduce}}
@@ -217,7 +217,7 @@
                                                 <hr class="my-5">
                                                 <input type="hidden" value="{{$item->id}}" name="exp_id">
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên công ty <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên công ty <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->name_company}}" name="name_company[]" >
 
@@ -228,7 +228,7 @@
 
                                                 </div>
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian làm việc <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian làm việc <span class=" red-cl">(*)</span></label>
 
                                                     <div class="col-sm-3 col-md-3 ">
                                                         <input type="date" class="form-control" value="{{$item->start_time}}" name="start_time[]" >
@@ -247,7 +247,7 @@
                                                 </div>
 
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Vị trí công việc <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Vị trí công việc <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->job_position}}" name="job_position[]" >
 
@@ -257,7 +257,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Chi tiết công việc </label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Chi tiết công việc </label>
                                                     <div class="col-sm-7 col-md-7 col-xl-8">
                                                         <textarea id="{{'editor_exp'.++$key}}" class="form-control" name="job_details[]" cols="50" rows="5">
                                                             {{$item->job_details}}
@@ -289,7 +289,7 @@
                                             <li>
                                                 <hr class="my-5">
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên trường cơ sở đào tạo <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên trường cơ sở đào tạo <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->name_school}}" name="name_school[]" >
 
@@ -299,7 +299,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian học <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian học <span class=" red-cl">(*)</span></label>
 
                                                     <div class="col-sm-3 col-md-3 ">
                                                         <input type="date" class="form-control" value="{{$item->start_year}}" name="start_year[]" >
@@ -317,7 +317,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Ngành học <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Ngành học <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->degree}}" name="degree[]" >
 
@@ -351,7 +351,7 @@
                                             <li>
                                                 <hr class="my-5">
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Tên dự án <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Tên dự án <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->name_project}}" name="name_project[]" >
 
@@ -362,7 +362,7 @@
                                                 </div>
 
                                                 <div class="mb-5 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label">Thời gian dự án <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label fw-bold">Thời gian dự án <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-5">
                                                         <input type="text" class="form-control" value="{{$item->time_project}}" name="time_project[]" >
 
@@ -373,7 +373,7 @@
                                                 </div>
 
                                                 <div class="py-2 row">
-                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
+                                                    <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100 fw-bold">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                                                     <div class="col-sm-7 col-md-7 col-xl-8">
                                                     <textarea id="{{'editor_pro'.++$key}}" class="form-control" cols="50" rows="8" name="introduce_pro[]">
                                                         {{$item->introduce_pro}}

@@ -125,7 +125,7 @@
             font-size: 14px;
             font-weight: normal;
             margin: 0;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         p li,
         ul li,
@@ -216,6 +216,14 @@
             margin-bottom: 0;
         }
 
+        ul{
+            list-style: none;
+            padding-left: 0;
+        }
+        a{
+            text-decoration: none;
+        }
+
         .preheader {
             color: transparent;
             display: none;
@@ -233,166 +241,102 @@
             text-decoration: none;
         }
 
+        .main{
+            padding: 20px;
+        }
+
+        .introduction span{
+            font-weight: bold;
+        }
+
+        .info-introduction{
+            border-top: 3px solid #F3F3F3;
+            margin-left: 5px;
+        }
+
+        .info-introduction-link{
+            text-align: end;
+            display: block;
+            margin:20px;
+            font-style: italic;
+        }
+
+        .info-contact-list{
+            background-color: #f2e7fa;
+            padding: 20px;
+            list-style: outside;
+        }
+
+        .info-contact-item > a{
+            text-decoration: underline;
+        }
+
+        .powered-by > a{
+            color: #3498db;
+            text-decoration: underline;
+        }
+
         hr {
             border: 0;
             border-bottom: 1px solid #f6f6f6;
             margin: 20px 0;
         }
 
-        /* -------------------------------------
-            RESPONSIVE AND MOBILE FRIENDLY STYLES
-        ------------------------------------- */
-        @media only screen and (max-width: 620px) {
-            table.body h1 {
-                font-size: 28px !important;
-                margin-bottom: 10px !important;
-            }
-            table.body p,
-            table.body ul,
-            table.body ol,
-            table.body td,
-            table.body span,
-            table.body a {
-                font-size: 16px !important;
-            }
-            table.body .wrapper,
-            table.body .article {
-                padding: 10px !important;
-            }
-            table.body .content {
-                padding: 0 !important;
-            }
-            table.body .container {
-                padding: 0 !important;
-                width: 100% !important;
-            }
-            table.body .main {
-                border-left-width: 0 !important;
-                border-radius: 0 !important;
-                border-right-width: 0 !important;
-            }
-            table.body .btn table {
-                width: 100% !important;
-            }
-            table.body .btn a {
-                width: 100% !important;
-            }
-            table.body .img-responsive {
-                height: auto !important;
-                max-width: 100% !important;
-                width: auto !important;
-            }
-        }
-
-        /* -------------------------------------
-            PRESERVE THESE STYLES IN THE HEAD
-        ------------------------------------- */
-        @media all {
-            .ExternalClass {
-                width: 100%;
-            }
-            .ExternalClass,
-            .ExternalClass p,
-            .ExternalClass span,
-            .ExternalClass font,
-            .ExternalClass td,
-            .ExternalClass div {
-                line-height: 100%;
-            }
-            .apple-link a {
-                color: inherit !important;
-                font-family: inherit !important;
-                font-size: inherit !important;
-                font-weight: inherit !important;
-                line-height: inherit !important;
-                text-decoration: none !important;
-            }
-            #MessageViewBody a {
-                color: inherit;
-                text-decoration: none;
-                font-size: inherit;
-                font-family: inherit;
-                font-weight: inherit;
-                line-height: inherit;
-            }
-            .btn-primary table td:hover {
-                background-color: #34495e !important;
-            }
-            .btn-primary a:hover {
-                background-color: #34495e !important;
-                border-color: #34495e !important;
-            }
-        }
-        p > span{
-            font-weight: bold;
-        }
-
-        p >a{
-            color: red;
-        }
-
     </style>
 </head>
 <body>
-<span class="preheader">This is preheader text. Some clients will show this text as a preview.</span>
+<span class="preheader">IT DaNang.</span>
 <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="body">
     <tr>
         <td>&nbsp;</td>
-        <td class="container">
-            <div class="headmail">
-                <img src="{{ $message->embed(public_path('users/img').'/logo-white.png') }}" class="headmail-logo" alt="logo" width="160px" />
-
+        <div class="content">
+            <div class="headmain main">
+                <img src="{{ $message->embed(public_path('users/img').'/logo-black.png') }}" class="headmail-logo" alt="logo" width="160px" />
+{{--                <img src="{{ url('users/img').'/logo-black.png' }}" class="headmail-logo" alt="logo" width="160px" />--}}
             </div>
-            <div class="content">
 
-                <!-- START CENTERED WHITE CONTAINER -->
-                <table role="presentation" class="main">
+            <div class="main">
+                <div class="introduction">
+                    <p>Xin chào
+                        {{$name}},
+                    </p>
+                    <p>Chúng tôi đã nhận được đơn ứng tuyển của bạn cho vị trí <span class="fw-bold">{{$post}}</span>  tại {{$company}}
+                        và đang tiến hành xác minh hồ sơ.</p>
+                    <p>
+                        Nếu cần tham vấn thêm thông tin việc làm hoặc hỗ trợ, hãy liên hệ
+                        <a href="http://127.0.0.1:8000/">ITDaNang</a>.
+                    </p>
 
-                    <!-- START MAIN CONTENT AREA -->
-                    <tr>
-                        <td class="wrapper">
-                            <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-                                <tr>
-                                    <td>
-                                        <p>Xin chào {{$name}},</p>
-                                        <p>Chúng tôi đã nhận được đơn ứng tuyển của bạn cho vị trí <span class="">{{$post}}</span>  tại
-                                        {{$company}} và đang tiến hành xác minh hồ sơ.</p>
-                                        <p>
-                                            Nếu cần tham vấn thêm thông tin việc làm hoặc hỗ trợ, hãy liên hệ <a
-                                                href="http://127.0.0.1:8000/">ITDaNang</a>.
-                                        </p>
-
-                                        <p>Cảm ơn bạn rất nhiều !</p>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- END MAIN CONTENT AREA -->
-                </table>
-                <!-- END CENTERED WHITE CONTAINER -->
-
-                <!-- START FOOTER -->
-                <div class="footer">
-                    <table role="presentation" border="0" cellpadding="0" cellspacing="0">
-{{--                        <tr>--}}
-{{--                            <td class="content-block">--}}
-{{--                                <span class="apple-link">Company Inc, 3 Abbey Road, San Francisco CA 94102</span>--}}
-{{--                                <br> Don't like these emails? <a href="http://i.imgur.com/CScmqnj.gif">Unsubscribe</a>.--}}
-{{--                            </td>--}}
-{{--                        </tr>--}}
-                        <tr>
-                            <td class="content-block powered-by">
-                                 <a href="http://127.0.0.1:8000/">IT DaNang</a>.
-                            </td>
-                        </tr>
-                    </table>
+                    <p>Cảm ơn bạn rất nhiều !</p>
                 </div>
-                <!-- END FOOTER -->
 
+                <div class="info-introduction">
+
+                    <div class="info-contact">
+                        <ul class="info-contact-list">
+                            <li class="info-contact-item">
+                                Nếu gặp khó khăn, bạn vui lòng liên hệ qua mail: <a href="">vothanh1320@gmail.com</a>
+                            </li>
+
+                            <li class="info-contact-item">
+                                Hoặc gọi số hotline: 0774794604 để được hỗ trợ
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-        </td>
+
+            <div class="footer">
+                <table role="presentation" border="0" cellpadding="0" cellspacing="0">
+
+                    <td class="content-block powered-by">
+                        <a href="http://127.0.0.1:8000/">IT DaNang</a>.
+                    </td>
+                </table>
+            </div>
+
+        </div>
+
         <td>&nbsp;</td>
     </tr>
 </table>

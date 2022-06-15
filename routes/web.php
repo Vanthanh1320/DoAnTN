@@ -75,6 +75,8 @@ Route::prefix('employer')->group(function (){
         Route::get('tai-khoan',[EmployerController::class,'showAccount'])->name('show-account-epl');
         Route::put('update_account_employer',[EmployerController::class,'account'])->name('account-epl');
 
+        Route::post('remove-notify',[EmployerController::class,'removeNotify'])->name('remove-notify-empl');
+
         Route::resource('/post',RecruitmentController::class);
 
         Route::get('/update-status-candidate',[EmployerController::class,'statusCandidate'])->name('update-status-candidate');
@@ -110,6 +112,8 @@ Route::prefix('adm')->group(function (){
         Route::get('/update-status',[AdminController::class,'updateStatus'])->name('update-status');
         Route::get('/tai-khoan-nha-tuyen-dung/{id}',[AdminController::class,'infoUserEmployer'])->name('info-user-employer');
 
+        Route::get('/dang-thong-bao',[AdminController::class,'showPostNotice'])->name('show-post-notice');
+        Route::post('/create-notice',[AdminController::class,'createNotice'])->name('create-notice');
 
         Route::get('logout',[AuthController::class,'logoutAdmin'])->name('logout-admin');
 
@@ -117,7 +121,6 @@ Route::prefix('adm')->group(function (){
 
     Route::get('login',[AuthController::class,'showFormLoginAdmin'])->name('show-login-admin');
     Route::post('login',[AuthController::class,'loginAdmin'])->name('login-admin');
-
 
 });
 

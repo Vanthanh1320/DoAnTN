@@ -302,10 +302,11 @@ select:focus, input:focus {
     top: calc(100% - 2px);
     right: 0;
     background: #2E2A2B;
-    min-width: 160px;
+    min-width: 180px;
     border-radius: 3px;
     display: none;
     z-index: 10;
+    font-size: 16px;
 }
 
 .header__nav-user-item {
@@ -904,6 +905,12 @@ select:focus, input:focus {
     }
 }
 
+@media only screen and (max-width: 600px) {
+    .detail-job-title {
+        text-align: center;
+    }
+}
+
 .detail-job-link {
     padding: 20px 0;
 }
@@ -921,11 +928,18 @@ select:focus, input:focus {
 
 @media only screen and (max-width: 1024px) {
     .detail-job-link {
-        text-align: center;
+        text-align: left;
     }
     .detail-job-link a, .detail-job-link p {
-        width: 100%;
+        width: 50%;
     }
+}
+
+@media only screen and (max-width: 600px) {
+    .detail-job-link {
+        text-align: left;
+    }
+
 }
 
 .detail-job > .posts-item-info__kills {
@@ -1103,9 +1117,15 @@ select:focus, input:focus {
 }
 
 .upload-img-main .img:hover > .upload-img-hover,
-.upload-img-main .img:hover > .upload-img-hover > label,
-.upload-img-main .img:hover > .upload-img-hover > label > i {
+.upload-img-main .img:hover > .upload-img-hover > label
+ {
     opacity: 1 !important;
+}
+
+.upload-img-hover label,
+.upload-img-hover i{
+    opacity: 0;
+    /*display: none;*/
 }
 
 .upload-img-main img {
@@ -1114,6 +1134,11 @@ select:focus, input:focus {
     -o-object-fit: cover;
     object-fit: cover;
     display: none;
+}
+
+.img img[src^='blob']:hover > .upload-img-hover > i{
+    opacity: 1 !important;
+    display: block !important;
 }
 
 .upload-img-main input {
@@ -1144,13 +1169,6 @@ select:focus, input:focus {
     font-size: 20px;
     opacity: 0;
 }
-
-.upload-img-hover label,
-.upload-img-hover i{
-    opacity: 0;
-}
-
-
 
 .employer-main {
     display: none;
@@ -1381,3 +1399,41 @@ select:focus, input:focus {
     max-height: 145px;
 }
 
+/* Pagination*/
+.pagination{
+    justify-content: center;
+    padding-bottom: 20px;
+}
+
+.page-item > .page-link{
+    color:#1e1e1e;
+}
+.page-item.active > .page-link{
+    background-color: #EA1E30;
+    border-color: #EA1E30;
+}
+
+
+.owl-item{
+    /*min-height: 120px !important;*/
+    /*width: 180px!important;*/
+    background-color: #fff;
+    /*margin-right: 30px !important;*/
+}
+
+.owl-item.active{
+    background-color: #fff!important;
+}
+.owl-carousel .owl-item img{
+    width: 90px !important;
+    margin: 0 auto;
+
+}
+
+.item-img{
+    padding: 20px 0;
+}
+
+.owl-dots{
+    display: none;
+}

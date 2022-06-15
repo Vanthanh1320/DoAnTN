@@ -17,7 +17,6 @@
         src="https://kit.fontawesome.com/98ddc7f134.js"
         crossorigin="anonymous"
     ></script>
-
 {{--    <script src="https://cdn.tailwindcss.com"></script>--}}
 
 {{--    <script src="https://cdn.ckeditor.com/4.18.0/standard/ckeditor.js"></script>--}}
@@ -26,10 +25,19 @@
             crossorigin="anonymous" referrerpolicy="no-referrer">
     </script>
 
+    {{--    Owlcarousel   --}}
+    <link rel="stylesheet" href="{{url("users/OwlCarousel2-2.3.4/docs/assets")}}/owlcarousel/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="{{url("users/OwlCarousel2-2.3.4/docs/assets")}}/owlcarousel/assets/owl.theme.default.min.css">
+
+    <link rel="icon" type="image/png" sizes="96x96"  href="{{url('users/img').'/favicon16x16.png'}}">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{{url("users")}}/sass/main.css"/>
+
+
+
 </head>
-<body {{Str::contains(url()->current(),'cv') ? 'data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" tabindex="0"' : ''}}>
+<body {{Str::contains(url()->current(),'cv') ? "data-bs-spy=scroll data-bs-target=#list-example data-offset=10 tabindex=0" : ''}}>
 
 @if(Str::contains(url()->current(),['login','register']))
     <div class="header header-nofix">
@@ -128,11 +136,16 @@
                                         <li class="header__nav-notify-item mb-3 p-0">
                                             <div class="header__nav-notify-box">
                                                 <div class="header__nav-notify-img">
-                                                    <img src="{{url('empl/img').'/'.$notification->data['image']}}" alt="">
+                                                    <img src="{{isset($notification->data['image']) ? url('empl/img').'/'.$notification->data['image'] : url('users/img/logo-white.png')}}" alt="">
                                                 </div>
 
                                                 <div class="header__nav-notify-content ms-3">
-                                                    <p class="mb-1">{{$notification->data['desc']}}</p>
+{{--                                                    @if(isset($notification->data['name']))--}}
+
+{{--                                                            <h2> {{$notification->data['name']}}</h2>--}}
+{{--                                                    @endif--}}
+
+                                                    <p class="mb-1">{!! html_entity_decode($notification->data['desc']) !!}</p>
                                                     <span>{{\Carbon\Carbon::parse($notification->created_at)->diffForHumans()}}</span>
                                                 </div>
 
@@ -156,7 +169,7 @@
                             <span class="header__nav-user-name">{{Auth::user()->name}}</span>
                             <input type="hidden" name="id_user" value="{{Auth::user()->id}}">
 
-                            <ul class="header__nav-user-dropdown">
+                            <ul class="header__nav-user-dropdown p-1">
                                 <li class="header__nav-user-item p-0">
                                     <a href="{{route('show-account')}}" class="px-3 py-2">
                                         <i class="fa-solid fa-user mr-2"></i>
@@ -206,7 +219,7 @@
                         <button type="button" class="btn-close text-reset align-self-end pe-3"
                                 data-bs-dismiss="offcanvas" aria-label="Close"></button>
 
-                        <form action="{{route('search')}}" method="get" class="search__form mx-auto">
+                        <form action="{{route('search')}}" method="post" class="search__form mx-auto">
                             @csrf
                             @method('post')
                             <div class="search__form-input">
@@ -226,10 +239,14 @@
 
                             <div class="search__form-select mx-1">
                                 <select class="form-select">
-                                    <option selected>Chọn cấp bậc</option>
-                                    <option value="1">One</option>
-                                    <option value="2">Two</option>
-                                    <option value="3">Three</option>
+                                    <option>Chọn cấp bậc</option>
+                                    <option value="Intern">Intern</option>
+                                    <option value="Fresher">Fresher</option>
+                                    <option value="Junior">Junior</option>
+                                    <option value="Senior">Senior</option>
+                                    <option value="Leader Developer">Leader Developer</option>
+                                    <option value="Mid-level Manager">Mid-level Manager</option>
+                                    <option value="Senior Leader">Senior Leader</option>
                                 </select>
                             </div>
                             <button class="btn search__form-btn btn-submit">Tìm kiếm</button>
@@ -315,22 +332,42 @@
 {{--toast--}}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+{{--    Owlcarousel   --}}
+<script src="{{url("users/OwlCarousel2-2.3.4/docs/assets/vendors")}}/jquery.min.js"></script>
+<script src="{{url("users/OwlCarousel2-2.3.4/docs/assets")}}/owlcarousel/owl.carousel.min.js"></script>
+
 {{-- Ck-editor --}}
 <script>
-    CKEDITOR.replace('editor1');
 
     if(location.href.includes('cv/create')){
+        CKEDITOR.replace('editor1');
         CKEDITOR.replace('editor_exp1');
         CKEDITOR.replace('editor_pro1');
     }
 
     $(document).ready(function() {
-        toastr.options.timeOut = 4000;
+        toastr.options.timeOut = 3000;
         @if (Session::has('error'))
             toastr.error('{{ Session::get('error') }}');
         @elseif(Session::has('success'))
             toastr.success('{{ Session::get('success') }}');
         @endif
+    });
+
+
+
+    // autoplay:false
+    autoplayTimeout:5000
+    autoplayHoverPause:false
+
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+        items:4,
+        loop:true,
+        margin:16,
+        autoplay:true,
+        autoplayTimeout:3000,
+        autoplayHoverPause:true
     });
 </script>
 
@@ -341,6 +378,7 @@
     var i;
 
     if(location.href.includes('edit')){
+        CKEDITOR.replace('editor1');
         showEditors(editorExpElms);
         showEditors(editorProElms);
 

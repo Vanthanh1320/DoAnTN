@@ -73,6 +73,17 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3 row">
+                                <label for="staticEmail" class="col-sm-6 col-form-label">Xét duyệt</label>
+
+                                <div class="col-sm-6">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" value="{{$user->id}}" {{$user->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
+                                    </div>
+                                </div>
+
+                            </div>
+
                         </div>
 
                     </div>

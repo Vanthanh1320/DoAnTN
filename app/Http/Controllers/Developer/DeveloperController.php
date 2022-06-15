@@ -11,6 +11,7 @@ use App\Models\KeywordKills;
 use App\Models\Notify;
 use App\Models\Profile;
 use App\Models\Recruitment;
+use App\Models\StatisticAplly;
 use App\Models\User;
 use App\Notifications\recruitmentNotify;
 use Carbon\Carbon;
@@ -28,67 +29,44 @@ class DeveloperController extends Controller
     }
 
     public function testMailAuto(){
-//        $user=User::find(Auth::id());
-//        dd($user);
-//        $apply_list=ApplyList::with('recruitment')->where('user_id',$user->id)->first();
-//
-//        if (isset($apply_list)){
-//            $kills=explode(',',$apply_list->recruitment->kills);
-//            dd($kills);
-//            $post_similar=Recruitment::select('2')->where(function ($query) use ($kills,$apply_list){
-//                for ($i=0;$i< count($kills);$i++) {
-//                    $query->orWhere('kills','like','%'.$kills[$i].'%')
-//                        ->Where('id', '<>',$apply_list->recruitment_id)
-//                        ->Where('status', 1)
-//                        ->Where('created_at','>',$apply_list->created_at);
-//                }
-//            })->get();
-//
-//            dd($post_similar);
-//
-//            $mailable=new postSimilar($user,$post_similar);
-//            Mail::to($user->email)->queue($mailable);
-//        }
-//
 
-        $apply_list=ApplyList::with('recruitment','user')->get();
-//        dd($apply_list[1]->user->email);
+        $apply_list=ApplyList::with('recruitment','user')->orderBy('id','desc')
+            ->first();
 
-//        $kills=[];
-        $data=[];
-        for ($i = 0; $i < count($apply_list); $i++){
-            $kills=explode(',',$apply_list[2]->recruitment->kills);
+//        for ($i = 0; $i < count($apply_list); $i++){
+            $kills=explode(',',$apply_list->recruitment->kills);
 //             dd($kills);
             $post_similar=Recruitment::where(function ($query) use ($kills,$apply_list){
                 for ($i=0;$i< count($kills);$i++) {
                     $query->orWhere('kills','like','%'.$kills[$i].'%')
-                        ->Where('id', '<>',$apply_list[$i]->recruitment_id)
-                        ->Where('status', 1)
-                        ->Where('created_at','>',$apply_list[$i]->created_at);
+                        ->Where('id', '<>',$apply_list->recruitment_id)
+                        ->Where('status', 1);
+//                        ->Where('created_at','>',$apply_list->created_at);
                 }
             })->get();
 
 
             if (count($post_similar) > 1){
-                $mailable=new postSimilar($apply_list[$i]->user,$post_similar);
-                Mail::to($apply_list[$i]->user->email)->queue($mailable);
+                $mailable=new postSimilar($apply_list->user,$post_similar);
+                Mail::to($apply_list->user->email)->queue($mailable);
             }
 
-//            dd($post_similar);
+            dd($post_similar);
 
-        }
-
+//        }
         return true;
-//        return view('developer.postSimilarMail');
     }
 
     public function index(){
         $user=$this->userId();
 
+        $users_employer=User::where('account_type',3)->get();
         $date_now=Carbon::now()->toDateString();
         $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(4);
 
-        return view('developer.index')->with(compact('posts','user'));
+//        dd($posts->total());
+
+        return view('developer.index')->with(compact('posts','users_employer','user'));
     }
 
     public function showAccount(){
@@ -283,18 +261,38 @@ class DeveloperController extends Controller
             $apply->linkCV=$new_cv;
         }
 
-        $desc=$request->name." đã ứng tuyển vào tin tuyển dụng của bạn";
-        $employer_id=User::where('id',(int)$request->employer_id)->first('id');
-
-        Notification::send($employer_id, new recruitmentNotify($desc));
-
         $apply->save();
 
+        //        Gửi Mail
         $user_developer=$this->userId();
         $post=Recruitment::find($request->recruitment_id);
 
         $mailable=new confirmProfile($user_developer,$post);
         Mail::to($user_developer->email)->queue($mailable);
+
+//        Gửi thông báo
+        $desc=$request->name." đã ứng tuyển vào tin tuyển dụng của bạn";
+        $employer_id=User::where('id',(int)$request->employer_id)->first('id');
+
+        Notification::send($employer_id, new recruitmentNotify($desc));
+
+//        Thống kê
+        $statisticapply=StatisticAplly::where('date_apply',Carbon::now()->toDateString())
+            ->where('recruitment_id',$data['recruitment_id'])
+            ->first();
+
+        if (isset($statisticapply)){
+            $statisticPost=StatisticAplly::find($statisticapply->id);
+            $statisticPost->quantity_apply+=1;
+            $statisticPost->save();
+        }else{
+            $statistic=new StatisticAplly();
+            $statistic->recruitment_id=$data['recruitment_id'];
+            $statistic->date_apply=Carbon::now()->toDateString();
+            $statistic->quantity_apply=1;
+            $statistic->quantity_browsing=0;
+            $statistic->save();
+        }
 
         return redirect()->back()->with('success');
     }

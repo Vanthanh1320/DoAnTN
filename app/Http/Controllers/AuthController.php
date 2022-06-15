@@ -19,10 +19,6 @@ class AuthController extends Controller
         return view('employer.login');
     }
 
-//    public function showFormLoginAdmin(){
-//        return view('admin.login');
-//    }
-
     public function login(Request $request){
 
         $credentials = $request->validate(

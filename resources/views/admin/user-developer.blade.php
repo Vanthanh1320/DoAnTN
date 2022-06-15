@@ -16,16 +16,7 @@
                 </nav>
                 <h2 class="h4">Tài khoản người tìm việc</h2>
             </div>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="#" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    New Plan
-                </a>
-                <div class="btn-group ms-2 ms-lg-3">
-                    <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
-                    <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
-                </div>
-            </div>
+
         </div>
 
     </div>
@@ -43,12 +34,12 @@
             </thead>
             <tbody>
             <!-- Item -->
-            @foreach($users_developer as $key=>$user)
+            @foreach($users_developer as $key=>$devloper)
                 <tr>
                     <td>{{$key+1}}</td>
-                    <td>{{$user->name}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->phone_number}}</td>
+                    <td>{{$devloper->name}}</td>
+                    <td>{{$devloper->email}}</td>
+                    <td>{{$devloper->phone_number}}</td>
                     <td>
 {{--                        <div class="can-toggle can-toggle--size-small">--}}
 {{--                            <input id="b" type="checkbox"--}}
@@ -67,7 +58,7 @@
 {{--                        </div>--}}
 
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" value="{{$user->id}}" {{$user->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="{{$devloper->id}}" {{$devloper->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
                         </div>
                     </td>
                 </tr>

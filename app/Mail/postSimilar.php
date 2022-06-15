@@ -19,12 +19,13 @@ class postSimilar extends Mailable
      * @return void
      */
 
-    private $user;
+    private $user,$kills;
     private $post_similar=[];
 
-    public function __construct($user,$post_similar)
+    public function __construct($user,$kills,$post_similar)
     {
         $this->user=$user;
+        $this->kills=$kills;
         $this->post_similar=$post_similar;
     }
 
@@ -39,6 +40,7 @@ class postSimilar extends Mailable
             ->subject('Việc làm phù hợp ngày hôm nay '. Carbon::now()->isoFormat('D/M'))
             ->with([
                 'name'=> $this->user->name,
+                'kills'=> $this->kills,
                 'post_similar'=>$this->post_similar
             ]);
     }

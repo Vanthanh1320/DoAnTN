@@ -1,27 +1,10 @@
-<!--
-
-=========================================================
-* Volt Free - Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-* License (https://themesberg.com/licensing)
-
-* Designed and coded by https://themesberg.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal.
-
--->
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Primary Meta Tags -->
-    <title>IT-DaNang</title>
+    <title>IT-DaNang | Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="title" content="Volt - Free Bootstrap 5 Dashboard">
     <meta name="author" content="Themesberg">
@@ -31,9 +14,9 @@
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="120x120" href="{{url('admin')}}/assets/img/favicon/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{url('admin')}}/assets/img/favicon/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{url('admin')}}/assets/img/favicon/favicon-16x16.png">
-    <link rel="manifest" href="{{url('admin')}}/assets/img/favicon/site.webmanifest">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{url('users/img').'/favicon16x16.png'}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{url('users/img').'/favicon16x16.png'}}">
+    <link rel="manifest" href="{{url('')}}/assets/img/favicon/site.webmanifest">
     <link rel="mask-icon" href="{{url('admin')}}/assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
@@ -47,6 +30,13 @@
     <!-- Volt CSS -->
     <link type="text/css" href="{{url('admin')}}/css/volt.css" rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ckeditor/4.16.2/ckeditor.js"
+            integrity="sha512-bGYUkjDyyOMGm3ASzq3zRaWZ4CONNH1wAYMFch/Z0ASZrsg722SeRsX0FPPRZjTuJrqIMbB9fvY0LEMzyHeyeQ=="
+            crossorigin="anonymous" referrerpolicy="no-referrer">
+    </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" integrity="sha512-3pIirOrwegjM6erE5gPSwkUzO+3cTjpnV9lexlNZqvupR64iZBnOOTiiLPb9M36zpMScbmUNIcHUqKD47M719g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
 {{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">--}}
 {{--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">--}}
@@ -55,9 +45,6 @@
 </head>
 
 <body>
-
-<!-- NOTICE: You can use the _analytics.html partial to include production code specific code & trackers -->
-
 @if(!Str::contains(url()->current(),'login'))
     <nav class="navbar navbar-dark navbar-theme-primary px-4 col-12 d-lg-none">
         <a class="navbar-brand me-lg-5" href="{{route('admin')}}">
@@ -97,16 +84,19 @@
             <ul class="nav flex-column pt-3 pt-md-0">
                 <li class="nav-item">
                     <a href="{{route('admin')}}" class="nav-link d-flex align-items-center">
-                      <span class="sidebar-icon">
-                        <img src="{{url('admin')}}/assets/img/brand/light.svg" height="20" width="20" alt="Volt Logo">
-                      </span>
-                        <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>
+
+{{--                        <span class="mt-1 ms-1 sidebar-text">Volt Overview</span>--}}
+                        <img src="{{url('users/img')}}/logo-white.png" height="80" width="100%" alt="Volt Logo">
+
                     </a>
                 </li>
                 <li class="nav-item  active ">
                     <a href="{{route('admin')}}" class="nav-link">
                           <span class="sidebar-icon">
-                            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 10a8 8 0 018-8v8h8a8 8 0 11-16 0z"></path><path d="M12 2.252A8.014 8.014 0 0117.748 8H12V2.252z"></path></svg>
+
+                            <svg class="icon icon-xs me-2" fill="currentColor" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                            </svg>
                           </span>
                         <span class="sidebar-text">Trang chủ</span>
                     </a>
@@ -118,7 +108,9 @@
                         data-bs-toggle="collapse" data-bs-target="#submenu-app">
                           <span>
                             <span class="sidebar-icon">
-                              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path></svg>
+                              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                  <path fill-rule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clip-rule="evenodd"></path>
+                              </svg>
                             </span>
                             <span class="sidebar-text">Quản lý tài khoản</span>
                           </span>
@@ -142,20 +134,33 @@
                         </ul>
                     </div>
                 </li>
+
                 <li class="nav-item">
-        <span
-            class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-            data-bs-toggle="collapse" data-bs-target="#submenu-pages">
-          <span>
-            <span class="sidebar-icon">
-              <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path></svg>
-            </span>
-            <span class="sidebar-text">Page examples</span>
-          </span>
-          <span class="link-arrow">
-            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-          </span>
-        </span>
+                    <a href="{{route('show-post-notice')}}" class="nav-link">
+                          <span class="sidebar-icon">
+                           <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z"></path>
+                           </svg>
+                          </span>
+                        <span class="sidebar-text">Đăng thông báo</span>
+                    </a>
+                </li>
+
+
+                <li class="nav-item">
+                    <span
+                        class="nav-link  collapsed  d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#submenu-pages">
+                      <span>
+                        <span class="sidebar-icon">
+                          <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path></svg>
+                        </span>
+                        <span class="sidebar-text">Page examples</span>
+                      </span>
+                      <span class="link-arrow">
+                        <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                      </span>
+                    </span>
                     <div class="multi-level collapse " role="list"
                          id="submenu-pages" aria-expanded="false">
                         <ul class="flex-column nav">
@@ -174,16 +179,6 @@
                 </li>
 
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
-                <li class="nav-item">
-                    <a href="https://themesberg.com/docs/volt-bootstrap-5-dashboard/getting-started/quick-start/" target="_blank"
-                       class="nav-link d-flex align-items-center">
-          <span class="sidebar-icon">
-            <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-          </span>
-                        <span class="sidebar-text">Documentation <span class="badge badge-sm bg-secondary ms-1 text-gray-800">v1.4</span></span>
-                    </a>
-                </li>
-
             </ul>
         </div>
     </nav>
@@ -227,10 +222,6 @@
 
                                         <a href="{{route('info-user-employer',[$notification->data['id']])}}" class="list-group-item list-group-item-action border-bottom">
                                             <div class="row align-items-center">
-{{--                                                <div class="col-auto">--}}
-{{--                                                    <!-- Avatar -->--}}
-{{--                                                    <img alt="Image placeholder" src="{{url('admin')}}/assets/img/team/profile-picture-3.jpg" class="avatar-md rounded">--}}
-{{--                                                </div>--}}
                                                 <div class="col ps-0 m-2">
                                                     <p class="font-small mt-1 mb-0">{{$notification->data['desc']}}</p>
 
@@ -338,6 +329,16 @@
         integrity="sha512-k2WPPrSgRFI6cTaHHhJdc8kAXaRM4JBFEDo1pPGGlYiOyv4vnA0Pp0G5XMYYxgAPmtmv/IIaQA6n5fLAyJaFMA=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
+{{--toast--}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+{{-- CkEditor --}}
+<script>
+    CKEDITOR.replace('contents');
+</script>
+
+{{-- Duyệt tài khoản --}}
 <script type="text/javascript">
     $('.form-check-input').change(function () {
         var value = $(this).prop('checked') == true ? 1 : 0;
@@ -354,6 +355,18 @@
             }
         })
     })
+</script>
+
+
+<script>
+    $(document).ready(function() {
+        toastr.options.timeOut = 3000;
+        @if (Session::has('error'))
+        toastr.error('{{ Session::get('error') }}');
+        @elseif(Session::has('success'))
+        toastr.success('{{ Session::get('success') }}');
+        @endif
+    });
 </script>
 </body>
 

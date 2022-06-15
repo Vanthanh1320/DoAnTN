@@ -84,6 +84,7 @@ class ApplyExport implements WithHeadings,WithStyles,WithDrawings,
             AfterSheet::class    => function(AfterSheet $event) {
 
                 $event->sheet->getDelegate()->mergeCells('A3:G3');
+                $event->sheet->getDelegate()->mergeCells('A1:A2');
                 $event->sheet->getDelegate()->getStyle('A:G')->getFont()->setSize(12);
                 $event->sheet->getDelegate()
                     ->getStyle('A3:E3')
@@ -100,23 +101,37 @@ class ApplyExport implements WithHeadings,WithStyles,WithDrawings,
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('This is my logo');
-        $drawing->setPath(public_path('users/img/logo-white.png'));
+        $drawing->setPath(public_path('users/img/logo-black.png'));
         $drawing->setHeight(50);
         $drawing->setCoordinates('A1');
 
         return $drawing;
     }
+    public function __construct(int $status)
+    {
+        $this->status = $status;
+    }
+
 
     public function collection()
     {
         $post=Recruitment::where('user_id',Auth::id())->get();
 
-        $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
-            for ($i=0;$i< count($post);$i++){
-                $query->orWhere('recruitment_id',$post[$i]->id);
-            }
+        if ($this->status === 1){
+             $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
+                for ($i=0;$i< count($post);$i++){
+                    $query->orWhere('recruitment_id',$post[$i]->id);
+                }
 
-        })->get();
+            })->where('status',1)->get();
+        }else{
+            $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
+                for ($i=0;$i< count($post);$i++){
+                    $query->orWhere('recruitment_id',$post[$i]->id);
+                }
+
+            })->where('status',0)->get();
+        }
 
         return $candidates;
     }

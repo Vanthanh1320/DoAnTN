@@ -67,6 +67,59 @@
 
                             </div>
                         </div>
+
+                        <div class="card-body">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">STT</th>
+                                    <th scope="col">Tiêu đề</th>
+                                    <th scope="col">Số lượng hồ sơ ứng tuyển</th>
+                                    <th scope="col">Số lượng hồ sơ được duyệt</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach($statisticApply as $key=>$item)
+                                        <?php
+                                            $total_apply=0;
+                                            $total_browsing=0;
+                                        ?>
+
+                                        <tr>
+                                            <th scope="row">{{$key+1}}</th>
+                                            <td>{{$item->title}}</td>
+                                            <td>
+                                                @if(isset($item->statistics))
+                                                    @foreach($item->statistics as $tt)
+                                                        @php $total_apply+=$tt->quantity_apply @endphp
+                                                    @endforeach
+
+                                                    {{$total_apply}}
+                                                @else
+
+                                                    {{$total_apply}}
+                                                @endif
+                                            </td>
+                                            <td>
+                                                @if(isset($item->statistics))
+                                                    @foreach($item->statistics as $tt)
+                                                        @php $total_browsing+=$tt->quantity_browsing @endphp
+                                                    @endforeach
+
+                                                    {{$total_browsing}}
+                                                @else
+
+                                                    {{$total_browsing}}
+                                                @endif
+                                            </td>
+                                        </tr>
+                                    @endforeach
+
+                                </tbody>
+                            </table>
+
+                        </div>
                     </div>
                 </div>
             </div>

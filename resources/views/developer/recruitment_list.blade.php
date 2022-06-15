@@ -11,7 +11,7 @@
         <div class="container">
             <div class="save-job content-sm px-5 py-4 mb-5">
                 <h2 class="save-job-head mb-4">
-                    Bạn đã lưu  việc làm
+                    Việc làm bạn đã ứng tuyển
                 </h2>
 
                 <div class="recruitment-list">

@@ -32,7 +32,7 @@ class confirmProfile extends Mailable
     public function build()
     {
         return $this->from('vodat1320@gmail.com','IT DaNang')->view('employer.confirm_profile_mail')
-            ->subject('Nhà tuyển dụng đã xác nhận hồ sơ của bạn')
+            ->subject('Bạn đã ứng tuyển thành công vị trí '. $this->post->title)
             ->with([
                 'name'=> $this->user_developer->name,
                 'post'=> $this->post->title,

@@ -4,7 +4,7 @@
         <div class="posts px-3 py-3">
             <div class="posts-count">
                 <h3 class="posts-number">
-                    <span>{{count($posts)}}</span>
+                    <span>{{$posts->total()}}</span>
                     Việc làm IT
                 </h3>
             </div>
@@ -53,4 +53,5 @@
         {!! $posts->links() !!}
 
     </div>
+
 </div>

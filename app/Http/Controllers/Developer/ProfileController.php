@@ -68,7 +68,6 @@ class ProfileController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request->all());
 
         $data=$request->validate([
             'user_id'=>[''],

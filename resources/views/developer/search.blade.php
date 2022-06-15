@@ -19,8 +19,8 @@
                         </h3>
                     </div>
 
-                    <div class="row g-2">
-                        <div class="col-8">
+                    <div class="row gx-4">
+                        <div class="col-sm-9">
                            @if(count($posts) > 0)
                                 @foreach($posts as $item)
                                     <div class="col-sm-12 col-md-12 col-xl-12">
@@ -62,6 +62,10 @@
                             @else
                                <h3>Kết quả bạn tìm kiếm không tồn tại</h3>
                             @endif
+                        </div>
+
+                        <div class="col-sm-3 text-end">
+                            <img src="{{url('users/img')}}/banner-it.png" alt="banner" width="220">
                         </div>
                     </div>
 

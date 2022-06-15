@@ -16,20 +16,9 @@
                 </nav>
                 <h2 class="h4">Tài khoản nhà tuyển dụng</h2>
             </div>
-            <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="#" class="btn btn-sm btn-gray-800 d-inline-flex align-items-center">
-                    <svg class="icon icon-xs me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    New Plan
-                </a>
-                <div class="btn-group ms-2 ms-lg-3">
-                    <button type="button" class="btn btn-sm btn-outline-gray-600">Share</button>
-                    <button type="button" class="btn btn-sm btn-outline-gray-600">Export</button>
-                </div>
-            </div>
         </div>
 
     </div>
-
 
     <div class="card card-body border-0 shadow table-wrapper table-responsive">
         <table class="table table-hover">
@@ -45,20 +34,20 @@
             </thead>
             <tbody>
             <!-- Item -->
-            @foreach($users_employer as $key=>$user)
+            @foreach($users_employer as $key=>$employer)
                 <tr>
                     <td>{{$key+1}}</td>
-                    <td>{{$user->company}}</td>
-                    <td>{{$user->email}}</td>
-                    <td>{{$user->phone_number}}</td>
+                    <td>{{$employer->company}}</td>
+                    <td>{{$employer->email}}</td>
+                    <td>{{$employer->phone_number}}</td>
                     <td>
                         <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" value="{{$user->id}}" {{$user->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
+                            <input class="form-check-input" type="checkbox" value="{{$employer->id}}" {{$employer->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
 
                         </div>
                     </td>
                     <td>
-                        <a class="btn btn-sm btn-info" href="{{route('info-user-employer',[$user->id])}}">Chi tiết</a>
+                        <a class="btn btn-sm btn-info" href="{{route('info-user-employer',[$employer->id])}}">Chi tiết</a>
                     </td>
                 </tr>
             @endforeach

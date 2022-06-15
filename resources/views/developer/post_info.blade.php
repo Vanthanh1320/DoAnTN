@@ -104,27 +104,14 @@
                 </div>
 
                 <div class="col-sm-0 col-md-0 col-xl-4 ">
-                    <div class="detail-company content py-4 px-5">
+                    <div class="detail-company content py-4 px-4">
                         <div class="detail-company-top">
-                            <img src="{{url('empl/img').'/'.$post->user->image}}" alt="logo" />
+                            <img class="mb-3" src="{{url('empl/img').'/'.$post->user->image}}" alt="logo" />
                             <h2>{{$post->user->company}}</h2>
                         </div>
 
                         <div class="detail-company-main py-3">
                             <div class="container">
-                                <div class="row">
-                                    <div class="col-sm-6">
-                                        <div class="detail-company-main-setting">
-                                            <p><i class="fa-solid fa-gear"></i>Dịch vụ</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-6">
-                                        <div class="detail-company-main-people">
-                                            <p><i class="fa-solid fa-users"></i>100</p>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <div class="detail-company-main-web">

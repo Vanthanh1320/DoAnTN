@@ -26,12 +26,21 @@ class EmployerController extends Controller
 
     public function index(){
         if (Auth::check()){
-
             $user=$this->userId();
+
             return view('employer.index')->with(compact('user'));
         }
 
         return redirect()->route('show-login-emp');
+    }
+
+    public function removeNotify(Request $request){
+        $id_notify=$request->id;
+        $user=User::find($id_notify);
+
+        $user->notifications()->delete();
+
+        return redirect()->back();
     }
 
     public function showAccount(){
@@ -43,6 +52,7 @@ class EmployerController extends Controller
     public function showCandidate(){
         $user=User::find(Auth::id());
         $post=Recruitment::where('user_id',Auth::id())->get();
+
 
         if (count($post) > 0){
             $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
@@ -72,12 +82,11 @@ class EmployerController extends Controller
     public function showStatistic(){
         $user=$this->userId();
 
-        $posts=Recruitment::where('user_id',Auth::user()->id)->get();
+        $posts=Recruitment::where('user_id',Auth::user()->id)
+            ->get();
 
         $apply_list=ApplyList::with('recruitment')->where('recruitment_id')
             ->get();
-
-
 
         $candidates=ApplyList::with('recruitment')->where(function ($query) use ($posts){
             for ($i=0;$i< count($posts);$i++){
@@ -85,24 +94,9 @@ class EmployerController extends Controller
             }
         })->get();
 
-//        $post1=ApplyList::where(function ($query) use ($candidates){
-//            for ($i=0;$i< count($candidates);$i++){
-//                $query->orWhere('recruitment_id',$candidates[0]->id);
-//            }
-//        })->get();
+        $statisticApply=Recruitment::with('statistics')->where('user_id',Auth::user()->id)->get();
 
-//        foreach ($candidates as $key=>$item){
-//             if ($item->recruitment_id === )
-//        }
-//        dd($candidates);
-
-//
-        $profileNotBrowsing=ApplyList::where('recruitment_id',1)->where('status',0)->count();
-        $profileBrowsing=ApplyList::where('recruitment_id',1)->where('status',1)->count();
-
-//        dd($profileBrowsing,$profileNotBrowsing);
-
-        return view('employer.statistic')->with(compact('posts','user'));
+        return view('employer.statistic')->with(compact('posts','user','statisticApply'));
     }
 
     public function account(Request $request){
@@ -171,11 +165,22 @@ class EmployerController extends Controller
         $apply->status=$value;
         $apply->save();
 
+//        Cập nhập thống kê
+        $statisticApply=StatisticAplly::where('recruitment_id',$apply->recruitment_id)
+            ->where('date_apply',Carbon::parse($apply->created_at)->toDateString())
+            ->first();
 
         if ($value === '1'){
+            $statisticApply->quantity_browsing+=1;
+            $statisticApply->save();
+
             $desc='Hồ sơ của bạn đã được duyệt';
             Notification::send($user_notification, new browsingNotification($id,$image_employer,$desc));
+        }else{
+            $statisticApply->quantity_browsing-=1;
+            $statisticApply->save();
         }
+
         return response()->json(['success']);
     }
 
@@ -253,18 +258,12 @@ class EmployerController extends Controller
         return response()->json($html);
     }
 
-    public function exportExcel()
+    public function exportExcel(Request $request)
     {
-        $post=Recruitment::where('user_id',Auth::id())->get();
+        $status= +$request->status;
 
-        $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
-            for ($i=0;$i< count($post);$i++){
-                $query->orWhere('recruitment_id',$post[$i]->id);
-            }
-
-        })->get();
-
-        return (new ApplyExport)->download('apply_list.xlsx');
+//        return (new ApplyExport)->download('apply_list.xlsx');
+        return Excel::download(new ApplyExport($status), 'apply_list.xlsx');
     }
 
     public function statisticsCandidate(Request $request){
@@ -279,7 +278,7 @@ class EmployerController extends Controller
         switch ($request->timer){
             case 'ngayhomqua':
                 $apply_list=StatisticAplly::where('recruitment_id',$id_recruitment)
-                    ->whereBetween('created_at',[$yesterday,$now])
+                    ->whereBetween('date_apply',[$yesterday,$now])
                     ->get();
                 break;
             case '7ngayqua':
@@ -289,7 +288,7 @@ class EmployerController extends Controller
                 break;
             case 'thangtruoc':
                 $apply_list=StatisticAplly::where('recruitment_id',$id_recruitment)
-                    ->whereBetween('created_at',[$start_lastmouth,$end_lastmouth])
+                    ->whereBetween('date_apply',[$start_lastmouth,$end_lastmouth])
                     ->get();
                 break;
             default:

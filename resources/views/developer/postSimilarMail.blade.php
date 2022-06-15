@@ -315,15 +315,14 @@
         <td>&nbsp;</td>
         <div class="content">
             <div class="headmain main">
-                <img src="{{ $message->embed(public_path('users/img').'/logo-white.png') }}" class="headmail-logo" alt="logo" width="160px" />
-
+                <img src="{{ $message->embed(public_path('users/img').'/logo-black.png') }}" class="headmail-logo" alt="logo" width="160px" />
             </div>
 
             <div class="main">
                 <div class="introduction">
                     <p>Chào {{$name}}, </p>
                     <br>
-                    <p>Chúng tôi đã tìm thấy {{count($post_similar)}} công việc phù hợp mà bạn đã ứng tuyển</p>
+                    <p>Chúng tôi đã tìm thấy {{count($post_similar)}} công việc {{$kills}} phù hợp với bạn. </p>
                 </div>
 
                 <div class="post-similar">

@@ -1,7 +1,6 @@
 @extends('layouts.main')
 
 @section('content')
-
 <div class="wrap">
     <div class="banner banner-home">
         <div class="container">
@@ -44,6 +43,54 @@
     <div class="post-data">
 {{--        <a href="{{route('testMailAuto')}}">Test Mail</a>--}}
         @include('developer.posts-more')
+    </div>
+
+    <div class="container-lg">
+        <h3 class="fw-bold">Nhà tuyển dụng nổi bật</h3>
+        <section id="demos" class="mt-3 mb-4">
+            <div class="row">
+                <div class="large-12 columns">
+                    <div class="owl-carousel owl-theme">
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/neolab-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/cmc-small.jpg" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/mgm-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/techzen-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/ubisoft-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/em&ai-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+                        <div class="item">
+                            <div class="item-img">
+                                <img src="{{url('empl/img')}}/lvtstart-small.png" width="50px"  alt="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
 </div>
 @endsection
