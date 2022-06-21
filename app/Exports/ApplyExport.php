@@ -122,15 +122,19 @@ class ApplyExport implements WithHeadings,WithStyles,WithDrawings,
                 for ($i=0;$i< count($post);$i++){
                     $query->orWhere('recruitment_id',$post[$i]->id);
                 }
-
             })->where('status',1)->get();
+        }else if ($this->status === 0){
+            $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
+                for ($i=0;$i< count($post);$i++){
+                    $query->orWhere('recruitment_id',$post[$i]->id);
+                }
+            })->where('status',0)->get();
         }else{
             $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
                 for ($i=0;$i< count($post);$i++){
                     $query->orWhere('recruitment_id',$post[$i]->id);
                 }
-
-            })->where('status',0)->get();
+            })->get();
         }
 
         return $candidates;

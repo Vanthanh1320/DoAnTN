@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <title>PDF</title>
+    <title>PDF | IT-DaNang</title>
 
     <style type="text/css">
         /*pdf*/
@@ -174,13 +174,13 @@
 
                 <div class="personal-info-diffrence">
                     <div class="personal-info-items">
-                        <p>Name <span>{{$profile->name}}</span></p>
-                        <p>Phone <span>{{$profile->phone_number}}</span></p>
-                        <p>Address <span>{{$profile->address}}</span></p>
+                        <p>Họ tên <span>{{$profile->name}}</span></p>
+                        <p>Số điện thoại <span>{{$profile->phone_number}}</span></p>
+                        <p>Địa chỉ <span>{{$profile->address}}</span></p>
                     </div>
 
                     <div class="personal-info-items">
-                        <p>Birth <span>{{\Carbon\Carbon::parse($profile->dateOfBirth)->isoFormat('D/MM/YYYY')}}</span></p>
+                        <p>Ngày sinh <span>{{\Carbon\Carbon::parse($profile->dateOfBirth)->isoFormat('D/MM/YYYY')}}</span></p>
                         <p>Email <span>{{$profile->email}}</span></p>
                     </div>
                 </div>
@@ -196,88 +196,83 @@
     <section class="introduce-personal">
         <p style="margin: 0">
             {!! html_entity_decode($profile->introduce) !!}
-{{--            {{nl2br(str_replace("\n\r", " ", $profile->introduce))}}--}}
         </p>
     </section>
 
-    <div class="title-section">
-        <div class="title-section-item">
-            <h4>Kinh nghiệm việc làm</h4>
-        </div>
-    </div>
-    <section class="experience-work">
-        @foreach($exp as $key=>$item)
-            <div class="flex-style">
-                <div class="timeline">
-                    <span>{{\Carbon\Carbon::parse($item->start_time)->isoFormat('MM-YYYY')}} - {{\Carbon\Carbon::parse($item->end_time)->isoFormat('MM-YYYY')}}</span>
-                </div>
-
-                <div class="content-items">
-                    <span>{{$item->name_company}}</span> <br>
-                    <i>{{$item->job_position}}</i>
-                    <ul>
-                        <li>{!! html_entity_decode($item->job_details) !!}</li>
-                    </ul>
-                </div>
+    @if(count($exp) > 0)
+        <div class="title-section">
+            <div class="title-section-item">
+                <h4>Kinh nghiệm việc làm</h4>
             </div>
-        @endforeach
-    </section>
-
-    <div class="title-section">
-        <div class="title-section-item">
-            <h4>Học vấn</h4>
         </div>
-    </div>
-    <section class="education">
-
-        @foreach($edu as $key=>$item)
-            <div class="flex-style">
-                <div class="timeline">
-                    <span>{{\Carbon\Carbon::parse($item->start_year)->isoFormat('MM-YYYY')}} - {{\Carbon\Carbon::parse($item->end_year)->isoFormat('MM-YYYY')}}</span>
-                </div>
-
-                <div class="content-items">
-                    <span>{{$item->name_school}}</span> <br>
-                    <i>{{$item->degree}}</i>
-                </div>
-            </div>
-        @endforeach
-
-    </section>
-
-    <div class="title-section">
-        <div class="title-section-item">
-            <h4>Dự án</h4>
-        </div>
-    </div>
-    <section class="projects">
-       @foreach($pro as $key=>$item)
-            <div class="projects-items">
+        <section class="experience-work">
+            @foreach($exp as $key=>$item)
                 <div class="flex-style">
                     <div class="timeline">
-                        <span>{{$item->name_project}}</span>
-                        <p>{{$item->time_project}}</p>
+                        <span>{{\Carbon\Carbon::parse($item->start_time)->isoFormat('MM-YYYY')}} - {{\Carbon\Carbon::parse($item->end_time)->isoFormat('MM-YYYY')}}</span>
                     </div>
 
                     <div class="content-items">
-                        <span>Số lượng</span>
-                        <p>2</p>
-
-                        <span>Công nghệ sử dụng</span>
-                        <p>- Frontend: ReactJS <br>
-                            - Backend: PHP (Laravel, Lumen), NodeJS, Apache Kafka, Websocket, Mongodb, MariaDB,
-                            Redis, Docker, AWS EC2, AWS S3
-                        </p>
-
-                        <span>Mô tả</span>
-                        <p>{!! html_entity_decode($item->introduce_pro) !!}</p>
-
+                        <span>{{$item->name_company}}</span> <br>
+                        <i>{{$item->job_position}}</i>
+                        <ul>
+                            <li>{!! html_entity_decode($item->job_details) !!}</li>
+                        </ul>
                     </div>
                 </div>
-            </div>
-        @endforeach
+            @endforeach
+        </section>
+    @endif
 
-    </section>
+
+    @if(count($edu) > 0)
+        <div class="title-section">
+            <div class="title-section-item">
+                <h4>Học vấn</h4>
+            </div>
+        </div>
+        <section class="education">
+            @foreach($edu as $key=>$item)
+                <div class="flex-style">
+                    <div class="timeline">
+                        <span>{{\Carbon\Carbon::parse($item->start_year)->isoFormat('MM-YYYY')}} - {{\Carbon\Carbon::parse($item->end_year)->isoFormat('MM-YYYY')}}</span>
+                    </div>
+
+                    <div class="content-items">
+                        <span>{{$item->name_school}}</span> <br>
+                        <i>{{$item->degree}}</i>
+                    </div>
+                </div>
+            @endforeach
+        </section>
+    @endif
+
+
+    @if(count($pro) > 0)
+        <div class="title-section">
+            <div class="title-section-item">
+                <h4>Dự án</h4>
+            </div>
+        </div>
+        <section class="projects">
+            @foreach($pro as $key=>$item)
+                <div class="projects-items">
+                    <div class="flex-style">
+                        <div class="timeline">
+                            <span>{{$item->name_project}}</span>
+                            <p>{{$item->time_project}}</p>
+                        </div>
+
+                        <div class="content-items">
+                            <span>Mô tả</span>
+                            <p>{!! html_entity_decode($item->introduce_pro) !!}</p>
+
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </section>
+    @endif
 </div>
 </body>
 </html>

@@ -46,18 +46,6 @@ class ProfileController extends Controller
         $user=$this->userId();
 
         return view('developer.create_cv')->with(compact('user'));
-
-    }
-
-    public function validateExp($request){
-//        dd($request['name_company']);
-        $rules=['name_company'=>'required'];
-
-        foreach ($request['name_company'] as $key=>$item){
-            $rules['name_company'.$key]='required';
-        }
-
-        return $rules;
     }
 
     /**
@@ -482,9 +470,6 @@ class ProfileController extends Controller
         $edu=Education::with('profile')->where('profile_id',$id)->get();
         $pro=Project::with('profile')->where('profile_id',$id)->get();
 
-//        $pdf= \App::make('dompdf.wrapper');
-//        $pdf->loadHTML($this->print_profile_convert($profile,$exp,$edu,$pro));
-//        return $pdf->stream();
 
         $path=base_path('public/img/profile/'.$profile->image);
         $type=pathinfo($path,PATHINFO_EXTENSION);

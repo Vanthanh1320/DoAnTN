@@ -21,6 +21,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
+use Money\Money;
 
 class DeveloperController extends Controller
 {
@@ -60,11 +61,12 @@ class DeveloperController extends Controller
     public function index(){
         $user=$this->userId();
 
+//        dd($user->notifications);
         $users_employer=User::where('account_type',3)->get();
         $date_now=Carbon::now()->toDateString();
-        $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(4);
-
-//        dd($posts->total());
+        $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])
+            ->orderBy('created_at','DESC')
+            ->paginate(6);
 
         return view('developer.index')->with(compact('posts','users_employer','user'));
     }
@@ -129,6 +131,7 @@ class DeveloperController extends Controller
             for ($i=0;$i< count($kills);$i++) {
                 $query->orWhere('kills','like','%'.$kills[$i].'%')
                     ->where('id','<>',$post->id)
+                    ->where([['expire','>',Carbon::now()->toDateString()],['status',1]])
                     ->orderBy('id','DESC');
             }
         })->get();
@@ -148,6 +151,7 @@ class DeveloperController extends Controller
 
     public function search(Request $request){
         $user=$this->userId();
+        $date_now=Carbon::now()->toDateString();
 
         $key=$request->key;
         $select=$request->level;
@@ -157,14 +161,15 @@ class DeveloperController extends Controller
                 ->orwhere('kills','like','%'.$key.'%')
                 ->orwhere('name_company','like','%'.$key.'%')
                 ->orwhere('title','like','%'.$key.'%')
-                ->where('status','<>',0)
+                ->where([['expire','>',$date_now],['status',1]])
+//                ->where('expire','>',$date_now)
                 ->orderBy('id','DESC')->get();
         }
 
         if ($select !== "Chọn cấp bậc"){
             $posts=Recruitment::with('user')
                 ->where('level','like','%'.$select.'%')
-                ->where('status','<>',0)
+                ->where([['expire','>',$date_now],['status',1]])
                 ->orderBy('id','DESC')->get();
         }
 
@@ -194,7 +199,9 @@ class DeveloperController extends Controller
         $date_now=Carbon::now()->toDateString();
 
         if ($request->ajax()){
-            $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])->paginate(4);
+            $posts=Recruitment::with('user')->where([['expire','>',$date_now],['status',1]])
+                ->orderBy('created_at','DESC')
+                ->paginate(6);
             return view('developer.posts-more')->with(compact('posts'))->render();
         }
     }
@@ -212,7 +219,7 @@ class DeveloperController extends Controller
     }
 
     public function apply(Request $request){
-//        dd($request->employer_id);
+
         $data=$request->validate(
             [
                 'recruitment_id' => ['required'],

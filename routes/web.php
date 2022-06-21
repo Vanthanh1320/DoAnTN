@@ -78,6 +78,7 @@ Route::prefix('employer')->group(function (){
         Route::post('remove-notify',[EmployerController::class,'removeNotify'])->name('remove-notify-empl');
 
         Route::resource('/post',RecruitmentController::class);
+        Route::get('/update-status-post',[EmployerController::class,'statusPost'])->name('update-status-post');
 
         Route::get('/update-status-candidate',[EmployerController::class,'statusCandidate'])->name('update-status-candidate');
 //        Route::get('/search-candidate',[EmployerController::class,'searchCandidate'])->name('search-candidate');

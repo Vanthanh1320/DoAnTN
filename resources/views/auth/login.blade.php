@@ -33,7 +33,7 @@
 
                                     <div class="mb-3">
                                         <label class="form-label">Địa chỉ Email <span>*</span> </label>
-                                        <input type="email" name="email" class="form-control "  id="email" value="{{old('email')}}" placeholder="name@example.com">
+                                        <input type="email" name="email" class="form-control "  id="email" value="{{old('email')}}" placeholder="name@gmail.com">
                                         @if($errors->has('email'))
                                             <span class="text text-danger">{{$errors->first('email')}}</span>
                                         @endif

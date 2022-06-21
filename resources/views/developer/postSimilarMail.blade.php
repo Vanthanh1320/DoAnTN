@@ -270,7 +270,7 @@
         }
 
         .post-similar-kills > span:nth-child(2){
-            margin: 0 10px;
+            margin: 0 14px;
         }
 
         .info-introduction{
@@ -332,7 +332,7 @@
                                 <div class="post-similar-item-content">
                                     <a href="{{route('show-post-info',[$item->slug_title])}}" class="post-similar-link">{{$item->title}}</a>
                                     <p class="post-similar-company">{{$item->name_company}}</p>
-                                    <p class="post-similar-salary">{{$item->salary_min}} - {{$item->salary_max}}</p>
+                                    <p class="post-similar-salary">{{Str::replace('000000','',$item->salary_min)}} - {{Str::replace('000000','',$item->salary_max)}} triệu</p>
                                     <div class="post-similar-kills">
                                         @foreach(Str::of($item->kills)->explode(',') as $kill)
                                             <span>{{$kill}}</span>

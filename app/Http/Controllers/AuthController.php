@@ -89,10 +89,9 @@ class AuthController extends Controller
         $user->save();
 
         $id_admin=User::where('account_type',1)->first('id');
-//        dd($id_admin);
 
         if(Auth::attempt($data)) {
-            $user_employer=User::orderBy('id','DESC')->first();
+            $user_employer=User::where('account_type',3)->orderBy('id','DESC')->first();
 
             $desc='Tài khoản công ty '. $user_employer->company .' muốn đăng ký làm nhà tuyển dụng ';
             Notification::send($id_admin,new userRegisterNotify((string)$user_employer->id,$desc));

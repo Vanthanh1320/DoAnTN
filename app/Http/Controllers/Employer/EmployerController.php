@@ -53,7 +53,6 @@ class EmployerController extends Controller
         $user=User::find(Auth::id());
         $post=Recruitment::where('user_id',Auth::id())->get();
 
-
         if (count($post) > 0){
             $candidates=ApplyList::with('recruitment')->where(function ($query) use ($post){
                 for ($i=0;$i< count($post);$i++){
@@ -66,6 +65,17 @@ class EmployerController extends Controller
         }
 
         return view('employer.apply')->with(compact('user'));
+    }
+
+    public function statusPost(Request $request){
+        $id_post=$request->id_post;
+        $value=$request->value;
+
+        $post=Recruitment::find($id_post);
+        $post->status=$value;
+        $post->save();
+
+        return redirect()->back();
     }
 
     public function deleteCandidate(Request $request){
@@ -153,6 +163,7 @@ class EmployerController extends Controller
     }
 
     public function statusCandidate(Request $request){
+//        dd($request->all());
         $id=$request->id;
         $user_developer=$request->user_developer;
         $value=$request->value;
@@ -165,12 +176,13 @@ class EmployerController extends Controller
         $apply->status=$value;
         $apply->save();
 
+//        dd($apply->recruitment_id);
 //        Cập nhập thống kê
         $statisticApply=StatisticAplly::where('recruitment_id',$apply->recruitment_id)
             ->where('date_apply',Carbon::parse($apply->created_at)->toDateString())
             ->first();
 
-        if ($value === '1'){
+        if (+$value === 1){
             $statisticApply->quantity_browsing+=1;
             $statisticApply->save();
 
@@ -182,43 +194,6 @@ class EmployerController extends Controller
         }
 
         return response()->json(['success']);
-    }
-
-    public function searchCandidate(Request $request){
-        $keyword=$request->keyword;
-
-//        if ($keyword){
-            $candidates=ApplyList::with('recruitment')
-                ->where('name','like','%'.$keyword.'%')
-                ->orderBy('id','DESC')
-                ->get();
-//        }
-
-        $html='';
-        foreach ($candidates as $key=>$item){
-            $check=($item->status==1? 'checked':'');
-
-            $time=\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY');
-            $html .='
-                      <tr class="align-top text-center">
-                            <td >'.$key++.'</td>
-                                   <td >'.$item->recruitment->title.'</td>
-                                   <td class="text-black">'.$item->name.'</td>
-                                   <td>'.$item->email.'</td>
-                                   <td>'.$item->phone_number.'</td>
-                                   <td><a href="{{url(\'pdf-cv\').\'/\'.$item->linkCV}}" target="_blank">'.$item->linkCV.'</a></td>
-                                   <td>'.$time.'</td>
-                                   <td>
-                                       <div class="form-check form-switch ">
-                                           <input class="form-check-input text-center"  '.$check.'   data-id="'.$item->id.'" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                       </div>
-                            </td>
-                      </tr>
-
-            ';
-        }
-
-        return response()->json($html);
     }
 
     public function filterStatus(Request $request){

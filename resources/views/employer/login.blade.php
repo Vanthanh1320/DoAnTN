@@ -28,7 +28,7 @@
 
                         <div class="mb-3 ">
                             <label class="form-label fw-bold">Địa chỉ Email <span>*</span> </label>
-                            <input type="email" name="email" value="{{old('email')}}" class="form-control py-2" placeholder="name@example.com">
+                            <input type="email" name="email" value="{{old('email')}}" class="form-control py-2" placeholder="name@gmail.com">
 
                             @if($errors->has('email'))
                                 <span class="text text-danger">{{$errors->first('email')}}</span>

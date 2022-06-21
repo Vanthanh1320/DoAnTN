@@ -36,7 +36,7 @@ class postSimilar extends Mailable
      */
     public function build()
     {
-        return $this->from('','IT DaNang')->view('developer.postSimilarMail')
+        return $this->from('vodat1320@gmail.com','IT DaNang')->view('developer.postSimilarMail')
             ->subject('Việc làm phù hợp ngày hôm nay '. Carbon::now()->isoFormat('D/M'))
             ->with([
                 'name'=> $this->user->name,

@@ -25,7 +25,7 @@
 
                         <div class="mb-3 ">
                             <label class="form-label fw-bold">Địa chỉ Email <span>*</span> </label>
-                            <input type="email" name="email" class="form-control py-2" value="{{old('email')}}" id="name" placeholder="name@example.com" >
+                            <input type="email" name="email" class="form-control py-2" value="{{old('email')}}" id="name" placeholder="name@gmail.com" >
 
                             @if($errors->has('email'))
                                 <span class="text text-danger">{{$errors->first('email')}}</span>
@@ -43,7 +43,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Họ tên <span>*</span></label>
-                            <input type="text" name="name" value="{{old('name')}}" class="form-control py-2">
+                            <input type="text" name="name" value="{{old('name')}}" class="form-control py-2" placeholder="Họ tên...">
 
                             @if($errors->has('name'))
                                 <span class="text text-danger">{{$errors->first('name')}}</span>
@@ -52,7 +52,7 @@
 
                         <div class="mb-3">
                             <label class="form-label fw-bold">Số điện thoại <span>*</span></label>
-                            <input type="text" name="phone_number" value="{{old('phone_number')}}" class="form-control py-2" >
+                            <input type="text" name="phone_number" value="{{old('phone_number')}}" class="form-control py-2" placeholder="Số điện thoại...">
 
                             @if($errors->has('phone_number'))
                                 <span class="text text-danger">{{$errors->first('phone_number')}}</span>
@@ -70,7 +70,7 @@
                                 class="form-control py-2"
                                 id="name"
                                 value="{{old('company')}}"
-                                placeholder=""
+                                placeholder="Tên công ty..."
                             />
                             @if($errors->has('company'))
                                 <span class="text text-danger">{{$errors->first('company')}}</span>
@@ -87,7 +87,7 @@
                                 class="form-control py-2"
                                 id="name"
                                 value="{{old('website')}}"
-                                placeholder=""
+                                placeholder="Website..."
                             />
                             @if($errors->has('website'))
                                 <span class="text text-danger">{{$errors->first('website')}}</span>
@@ -102,7 +102,7 @@
                                 class="form-control py-2"
                                 id="name"
                                 value="{{old('address')}}"
-                                placeholder=""
+                                placeholder="Địa chỉ..."
                             />
                             @if($errors->has('address'))
                                 <span class="text text-danger">{{$errors->first('address')}}</span>

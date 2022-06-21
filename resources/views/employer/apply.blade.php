@@ -28,7 +28,7 @@
                                             class="form-select select-status shadow-none me-3"
                                             style="width: 150px; height: 36px"
                                         >
-                                            <option value="2">Select</option>
+                                            <option value="2">Tất cả</option>
                                             <option value="1">Đã duyệt</option>
                                             <option value="0">Chưa duyệt</option>
                                         </select>
@@ -50,7 +50,7 @@
                                         <th class="fw-bold">Họ tên</th>
                                         <th class="fw-bold">Email</th>
                                         <th class="fw-bold">Số điện thoại</th>
-                                        <th class="fw-bold">Link CV</th>
+                                        <th class="fw-bold">Link hồ sơ</th>
                                         <th class="fw-bold">Ngày ứng tuyển</th>
                                         <th class="fw-bold">Trạng thái</th>
                                         <th class="fw-bold">Hành động</th>
@@ -68,11 +68,12 @@
                                                     <td><a href="{{url('pdf-cv').'/'.$item->linkCV}}" target="_blank">{{$item->linkCV}}</a></td>
                                                     <td>{{\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY')}}</td>
                                                     <td>
-                                                        <div class="form-check form-switch ">
-                                                            <input class="form-check-input text-center"  {{$item->status == 1?'checked':''}} data-id="{{$item->id}}" data-set="{{$item->user_id}}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                                                        </div>
+                                                        <span class="{{$item->status ==1 ? 'badge bg-success' : 'badge bg-secondary'}}">
+                                                            {{$item->status == 1?'Đã duyệt':'Chưa duyệt'}}
+                                                        </span>
                                                     </td>
-                                                    <td>
+                                                    <td class="d-flex align-items-start" style="height: 80px;">
+
                                                         <form action="{{route('delete-candidate',[$item->id])}}" method="post" style="display: inline-block">
                                                             @csrf
                                                             @method('DELETE')
@@ -81,7 +82,11 @@
                                                             </button>
                                                         </form>
 
-                                                        <input id="sendMail" onclick="sendMail({{$item->user_id}},{{$item->recruitment_id}})" data-id="{{$item->user_id}}" type="submit" value="Gửi Mail"/>
+                                                        <div class="form-check form-switch mx-2">
+                                                            <input class="form-check-input text-center status-apply"  {{$item->status == 1?'checked':''}} data-id="{{$item->id}}" data-set="{{$item->user_id}}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                        </div>
+
+{{--                                                        <input id="sendMail" onclick="sendMail({{$item->user_id}},{{$item->recruitment_id}})" data-id="{{$item->user_id}}" type="submit" value="Gửi Mail"/>--}}
                                                     </td>
                                                 </tr>
 

@@ -13,12 +13,12 @@
             <div class="cv-manage content-sm px-5 py-4 mb-5">
                 <div class="cv-manage-head">
                     <h2>
-                        Quản lý CV
+                        Quản lý hồ sơ
                     </h2>
 
                     <a href="{{route('cv.create')}}" class="btn btn-submit">
                         <i class="fa-solid fa-address-card"></i>
-                        Tạo CV mới
+                        Tạo hồ sơ
                     </a>
                 </div>
 

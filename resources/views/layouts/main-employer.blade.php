@@ -392,7 +392,7 @@
 {{-- Update status candidate --}}
 <script type="text/javascript">
     $(function () {
-        $('.form-check-input').change(function () {
+        $('.status-apply').change(function () {
             var value = $(this).prop('checked') == true ? 1 : 0;
             var id=$(this).data('id');
             var user_developer=$(this).data('set');
@@ -402,6 +402,27 @@
                 dataType: "JSON",
                 type: "GET",
                 data: {id: id,user_developer:user_developer,value:value},
+                success: function (data) {
+                    location.reload()
+                }
+            })
+
+        })
+    })
+
+</script>
+
+<script type="text/javascript">
+    $(function () {
+        $('.status-post').change(function () {
+            var value = $(this).prop('checked') == true ? 1 : 0;
+            var id_post=$(this).data('id');
+
+            $.ajax({
+                url: "{{route('update-status-post')}}",
+                dataType: "JSON",
+                type: "GET",
+                data: {id_post: id_post,value:value},
                 success: function (data) {
                     console.log(data.success)
                 }

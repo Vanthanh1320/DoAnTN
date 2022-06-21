@@ -21,7 +21,7 @@
                                 <div class="col-sm-12 col-md-6 justify-content-end">
                                     <a href="{{route('post.create')}}" class="btn btn-info mb-3">
                                         <i class="fas fa-address-card"></i>
-                                        Tạo bài tuyển dụng
+                                        Tạo tin tuyển dụng
                                     </a>
                                 </div>
                             </div>
@@ -48,7 +48,11 @@
                                                 <td>{{$key+1}}</td>
                                                 <td class="text-black">{{$item->title}}</td>
                                                 <td>{{$item->position}}</td>
-                                                <td>{{$item->salary_min}} - {{$item->salary_max}}</td>
+                                                <td>
+                                                    {{Str::replace('000000','',$item->salary_min)}}
+                                                    -
+                                                    {{ Str::replace('000000','',$item->salary_max) }} triệu
+                                                </td>
                                                 <td>{{\Carbon\Carbon::parse($item->created_at)->isoFormat('DD-MM-YYYY')}}</td>
                                                 <td>
                                                     @if($item->status === 1)
@@ -57,11 +61,7 @@
                                                         <span class="btn btn-danger btn-sm text-white">Tin bị gỡ</span>
                                                     @endif
                                                 </td>
-                                                <td >
-                                                    {{--                                                <a href="/">--}}
-                                                    {{--                                                    <i class="fas fa-eye"></i>--}}
-                                                    {{--                                                </a>--}}
-
+                                                <td class="d-flex align-items-center">
                                                     <a href="{{route('post.edit',[$item->id])}}" class="btn btn-cyan btn-sm text-white mx-2">
                                                         <i class="fas fa-edit"></i>
                                                     </a>
@@ -73,6 +73,10 @@
                                                             <i class="fas fa-trash-alt"></i>
                                                         </button>
                                                     </form>
+
+                                                    <div class="form-check form-switch mx-2">
+                                                        <input class="form-check-input text-center status-post"  {{$item->status == 1?'checked':''}} data-id="{{$item->id}}" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                                                    </div>
                                                 </td>
                                             </tr>
                                         @endforeach

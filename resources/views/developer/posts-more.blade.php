@@ -20,16 +20,13 @@
                             <div class="posts-item-info px-sm-2 ms-3 me-auto">
                                 <h2 class="posts-item-info__title">{{$item->title}}</h2>
                                 <p class="posts-item-info__company">{{$item->user->company}}</p>
-{{--                                <div class="posts-item-info__address">--}}
-{{--                                    <p>--}}
-{{--                                        <i class="fa-solid fa-location-dot"></i>--}}
-{{--                                        {{$item->address_work}}--}}
-{{--                                    </p>--}}
-{{--                                </div>--}}
+
                                 <div class="posts-item-info__salary">
                                     <p>
                                         <i class="fa-solid fa-money-bill-wave"></i>
-                                        {{$item->salary_min}} - {{$item->salary_max}}
+                                        {{Str::replace('000000','',$item->salary_min)}}
+                                            -
+                                        {{ Str::replace('000000','',$item->salary_max) }} triệu
                                     </p>
                                 </div>
                                 <div class="posts-item-info__kills">

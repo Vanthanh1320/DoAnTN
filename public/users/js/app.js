@@ -22,7 +22,6 @@ window.addEventListener('scroll',function(){
 
         if(cvBtnList){
             cvBtnList.classList.add('is-fixed');
-            // formEl.setAttribute('style','margin-top:20px')
         }
     }else{
         headerEl.classList.remove('shrink');
@@ -110,7 +109,6 @@ if(btnCloseChange){
     });
 }
 
-
 var loadFile = function (event) {
     var showImage=document.querySelector('.account-right-img > img');
     var show=document.querySelector('.img > img');
@@ -151,8 +149,8 @@ function getDataPost(id_post) {
         'slug':slug,
         'image':image,
         'company':company,
-        'salary_max':salary_max,
-        'salary_min':salary_min,
+        'salary_max':salary_max.replace('000000',''),
+        'salary_min':salary_min.replace('000000',''),
         'kills':killsArray,
         'time':time,
         'address':address,
@@ -207,7 +205,7 @@ function handleRecruitment(id_post) {
 function showPostList(data,divHtml) {
     var html=``;
 
-    if (+data.length > 0 && id_user){
+    if (+data.length && id_user){
         data.map((item)=>{
             if (item.id_user === Number.parseInt(id_user.value) && divHtml){
                 html+=`
@@ -228,7 +226,7 @@ function showPostList(data,divHtml) {
                                 <div class="posts-item-info__salary">
                                     <p>
                                         <i class="fa-solid fa-money-bill-wave"></i>
-                                        ${item.salary_min} - ${item.salary_max}
+                                        ${ item.salary_min} - ${item.salary_max} triệu
                                     </p>
                                 </div>
                                 <div class="posts-item-info__kills">
@@ -249,7 +247,6 @@ function showPostList(data,divHtml) {
             }
 
         })
-
     }
 }
 

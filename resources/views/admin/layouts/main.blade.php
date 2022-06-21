@@ -16,7 +16,6 @@
     <link rel="apple-touch-icon" sizes="120x120" href="{{url('admin')}}/assets/img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="{{url('users/img').'/favicon16x16.png'}}">
     <link rel="icon" type="image/png" sizes="16x16" href="{{url('users/img').'/favicon16x16.png'}}">
-    <link rel="manifest" href="{{url('')}}/assets/img/favicon/site.webmanifest">
     <link rel="mask-icon" href="{{url('admin')}}/assets/img/favicon/safari-pinned-tab.svg" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
@@ -146,38 +145,6 @@
                     </a>
                 </li>
 
-
-                <li class="nav-item">
-                    <span
-                        class="nav-link  collapsed  d-flex justify-content-between align-items-center"
-                        data-bs-toggle="collapse" data-bs-target="#submenu-pages">
-                      <span>
-                        <span class="sidebar-icon">
-                          <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M2 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 002 2H4a2 2 0 01-2-2V5zm3 1h6v4H5V6zm6 6H5v2h6v-2z" clip-rule="evenodd"></path><path d="M15 7h1a2 2 0 012 2v5.5a1.5 1.5 0 01-3 0V7z"></path></svg>
-                        </span>
-                        <span class="sidebar-text">Page examples</span>
-                      </span>
-                      <span class="link-arrow">
-                        <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
-                      </span>
-                    </span>
-                    <div class="multi-level collapse " role="list"
-                         id="submenu-pages" aria-expanded="false">
-                        <ul class="flex-column nav">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('admin')}}/pages/examples/sign-in.html">
-                                    <span class="sidebar-text">Sign In</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{url('admin')}}/pages/examples/sign-up.html">
-                                    <span class="sidebar-text">Sign Up</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-
                 <li role="separator" class="dropdown-divider mt-4 mb-3 border-gray-700"></li>
             </ul>
         </div>
@@ -248,22 +215,17 @@
                         <li class="nav-item dropdown ms-lg-3">
                             <a class="nav-link dropdown-toggle pt-1 px-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <div class="media d-flex align-items-center">
-                                    <img class="avatar rounded-circle" alt="Image placeholder" src="{{url('admin')}}/assets/img/team/profile-picture-3.jpg">
+                                    <svg class="icon icon-sm text-gray-900 font-14" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                                        <path d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256s256-114.6 256-256S397.4 0 256 0zM256 128c39.77 0 72 32.24 72 72S295.8 272 256 272c-39.76 0-72-32.24-72-72S216.2 128 256 128zM256 448c-52.93 0-100.9-21.53-135.7-56.29C136.5 349.9 176.5 320 224 320h64c47.54 0 87.54 29.88 103.7 71.71C356.9 426.5 308.9 448 256 448z"/>
+                                    </svg>
+
+{{--                                    <img class="avatar rounded-circle" alt="Image placeholder" src="{{url('admin')}}/assets/img/team/profile-picture-3.jpg">--}}
                                     <div class="media-body ms-2 text-dark align-items-center d-none d-lg-block">
                                         <span class="mb-0 font-small fw-bold text-gray-900">Quản trị viên</span>
                                     </div>
                                 </div>
                             </a>
                             <div class="dropdown-menu dashboard-dropdown dropdown-menu-end mt-2 py-1">
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-6-3a2 2 0 11-4 0 2 2 0 014 0zm-2 4a5 5 0 00-4.546 2.916A5.986 5.986 0 0010 16a5.986 5.986 0 004.546-2.084A5 5 0 0010 11z" clip-rule="evenodd"></path></svg>
-                                    My Profile
-                                </a>
-                                <a class="dropdown-item d-flex align-items-center" href="#">
-                                    <svg class="dropdown-icon text-gray-400 me-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-2 0c0 .993-.241 1.929-.668 2.754l-1.524-1.525a3.997 3.997 0 00.078-2.183l1.562-1.562C15.802 8.249 16 9.1 16 10zm-5.165 3.913l1.58 1.58A5.98 5.98 0 0110 16a5.976 5.976 0 01-2.516-.552l1.562-1.562a4.006 4.006 0 001.789.027zm-4.677-2.796a4.002 4.002 0 01-.041-2.08l-.08.08-1.53-1.533A5.98 5.98 0 004 10c0 .954.223 1.856.619 2.657l1.54-1.54zm1.088-6.45A5.974 5.974 0 0110 4c.954 0 1.856.223 2.657.619l-1.54 1.54a4.002 4.002 0 00-2.346.033L7.246 4.668zM12 10a2 2 0 11-4 0 2 2 0 014 0z" clip-rule="evenodd"></path></svg>
-                                    Support
-                                </a>
-                                <div role="separator" class="dropdown-divider my-1"></div>
                                 <a class="dropdown-item d-flex align-items-center" href="{{route('logout-admin')}}">
                                     <svg class="dropdown-icon text-danger me-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
                                     Đăng xuất
@@ -289,7 +251,7 @@
 <script src="{{url('admin')}}/vendor/onscreen/dist/on-screen.umd.min.js"></script>
 
 <!-- Slider -->
-<script src="{{url('admin')}}/vendor/nouislider/distribute/nouislider.min.js"></script>
+{{--<script src="{{url('admin')}}/vendor/nouislider/distribute/nouislider.min.js"></script>--}}
 
 <!-- Smooth scroll -->
 <script src="{{url('admin')}}/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
@@ -335,7 +297,9 @@
 
 {{-- CkEditor --}}
 <script>
-    CKEDITOR.replace('contents');
+    if(location.href.includes('dang-thong-bao')){
+        CKEDITOR.replace('contents');
+    }
 </script>
 
 {{-- Duyệt tài khoản --}}

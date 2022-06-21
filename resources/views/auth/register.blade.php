@@ -9,7 +9,7 @@
                     <div class="content-left">
                         <h3 class="content__head mb-4">
                             Chào mừng đến
-                            <img src="../img/logo-black.png" alt="" class="content__head-logo">
+                            <img src="{{url('users/img')}}/logo-black.png" alt="" class="content__head-logo">
                         </h3>
 
                         <div class="content-box">
@@ -39,7 +39,7 @@
                                             class="form-control"
                                             id="name"
                                             value="{{old('name')}}"
-                                            placeholder=""
+                                            placeholder="Họ tên"
                                         />
                                         @if($errors->has('name'))
                                             <span class="text text-danger">{{$errors->first('name')}}</span>
@@ -55,7 +55,7 @@
                                             type="email"
                                             class="form-control"
                                             value="{{old('email')}}"
-                                            placeholder="name@example.com"
+                                            placeholder="name@gmail.com"
                                         />
                                         @if($errors->has('email'))
                                             <span class="text text-danger">{{$errors->first('email')}}</span>
@@ -69,7 +69,7 @@
                                             type="password"
                                             class="form-control"
                                             value="{{old('password')}}"
-                                            placeholder=""
+                                            placeholder="********"
                                         />
                                         @if($errors->has('password'))
                                             <span class="text text-danger">{{$errors->first('password')}}</span>

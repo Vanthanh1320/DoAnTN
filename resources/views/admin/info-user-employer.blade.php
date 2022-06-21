@@ -11,7 +11,7 @@
                         </a>
                     </li>
                     <li class="breadcrumb-item"><a href="{{route('show-user-employer')}}">Nhà tuyển dụng</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{$user->company}}</li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$user_employer->company}}</li>
                 </ol>
             </nav>
         </div>
@@ -27,49 +27,49 @@
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6">Ảnh</label>
                                 <div class="col-sm-6">
-                                    <img src="{{url('empl/img').'/'.$user->image}}" class="rounded avatar-xl" alt="">
+                                    <img src="{{url('empl/img').'/'.$user_employer->image}}" class="rounded avatar-xl" alt="">
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 ">Tên công ty</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->company}}</p>
+                                    <p class="small pe-4">{{$user_employer->company}}</p>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 ">Người đại diện</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->name}}</p>
+                                    <p class="small pe-4">{{$user_employer->name}}</p>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 ">Địa chỉ email</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->email}}</p>
+                                    <p class="small pe-4">{{$user_employer->email}}</p>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 ">Địa chỉ</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->address}}</p>
+                                    <p class="small pe-4">{{$user_employer->address}}</p>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 col-form-label">Số điện thoại</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->phone_number}}</p>
+                                    <p class="small pe-4">{{$user_employer->phone_number}}</p>
                                 </div>
                             </div>
 
                             <div class="mb-3 row">
                                 <label for="staticEmail" class="col-sm-6 col-form-label">Website công ty</label>
                                 <div class="col-sm-6">
-                                    <p class="small pe-4">{{$user->website}}</p>
+                                    <p class="small pe-4">{{$user_employer->website}}</p>
                                 </div>
                             </div>
 
@@ -78,7 +78,7 @@
 
                                 <div class="col-sm-6">
                                     <div class="form-check form-switch">
-                                        <input class="form-check-input" type="checkbox" value="{{$user->id}}" {{$user->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
+                                        <input class="form-check-input" type="checkbox" value="{{$user_employer->id}}" {{$user_employer->status === 1 ? 'checked' :''}} id="flexSwitchCheckDefault">
                                     </div>
                                 </div>
 

@@ -50,7 +50,7 @@
             <div class="header__nav">
                 <ul class="header__nav-list ms-4">
                     <li class="header__nav-item"><a href="">Tìm việc</a></li>
-                    <li class="header__nav-item"><a href="{{route('cv.index')}}">Tạo CV</a></li>
+                    <li class="header__nav-item"><a href="{{route('cv.index')}}">Tạo hồ sơ</a></li>
                 </ul>
 
                 <ul class="header__nav-list ms-auto">
@@ -71,7 +71,7 @@
             <div class="header__nav">
                 <ul class="header__nav-list ms-4">
                     <li class="header__nav-item"><a href="/">Tìm việc</a></li>
-                    <li class="header__nav-item"><a href="{{route('cv.index')}}">Tạo CV</a></li>
+                    <li class="header__nav-item"><a href="{{route('cv.index')}}">Tạo hồ sơ</a></li>
                 </ul>
 
                 @if(Str::contains(url()->current(),['tim-viec','tim-kiem']))

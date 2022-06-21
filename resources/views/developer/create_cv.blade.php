@@ -375,8 +375,8 @@
 
                         <div class="col-12 pt-4 mt-0">
                             <div class="content px-5 py-4 text-end">
-                                <input type="submit" value="Hủy" class="btn btn-secondary">
-                                <input type="submit" value="Lưu CV" class="btn btn-submit">
+                                <a type="submit" href="{{route('cv.index')}}" value="Hủy" class="btn btn-secondary">Hủy</a>
+                                <input type="submit" value="Tạo" class="btn btn-submit">
                             </div>
                         </div>
                     </form>

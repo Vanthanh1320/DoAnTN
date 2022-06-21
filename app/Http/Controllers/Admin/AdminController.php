@@ -49,9 +49,10 @@ class AdminController extends Controller
     }
 
     public function infoUserEmployer(Request $request){
-        $user=User::find($request->id);
+        $user_employer=User::find($request->id);
+        $user=$this->user();
 
-        return view('admin.info-user-employer')->with(compact('user'));
+        return view('admin.info-user-employer')->with(compact('user','user_employer'));
     }
 
     public function showPostNotice(){
