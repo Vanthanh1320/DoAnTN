@@ -6,7 +6,7 @@
         <div class="page-breadcrumb">
             <div class="row">
                 <div class="col-12 d-flex no-block align-items-center">
-                    <h4 class="page-title">Tạo tin tuyển dụng</h4>
+                    <h4 class="page-title">Cập nhập tin tuyển dụng</h4>
                 </div>
             </div>
         </div>
@@ -52,7 +52,7 @@
                                         style="height: 36px; width: 100%"
                                     >
                                         @foreach($array_kills as $item)
-                                            <option value="{{$item}}" {{in_array($item,$kills) ? 'selected':''}}>{{$item}}</option>
+                                            <option value="{{$item->name}}" {{in_array($item->name,$kills) ? 'selected':''}}>{{$item->name}}</option>
                                         @endforeach
                                     </select>
 

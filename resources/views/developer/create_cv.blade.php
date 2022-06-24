@@ -49,9 +49,9 @@
 
                 <div class="col-sm-12 col-md-12 col-xl-8" >
                     <form method="post" class="form" action="{{route('cv.store')}}" enctype="multipart/form-data">
-                        @if(session('errors'))
-                            {{session('errors')}}
-                        @endif
+{{--                        @if(session('errors'))--}}
+{{--                            {{session('errors')}}--}}
+{{--                        @endif--}}
 
                         @csrf
                         <div class="row g-4">
@@ -104,6 +104,10 @@
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            @if($errors->has('image'))
+                                                <span class="text text-danger">{{$errors->first('image')}}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <div class="mb-5 row">
@@ -300,7 +304,7 @@
                                                     @endif
                                                 </div>
                                                 <div class="col-sm-3 col-md-3 ">
-                                                    <input type="date" class="form-control" value="{{old('end_ỷear.0')}}" name="end_year[]" >
+                                                    <input type="date" class="form-control" value="{{old('end_year.0')}}" name="end_year[]" >
 
                                                     @if($errors->has('end_year.0'))
                                                         <span class="text text-danger">{{$errors->first('end_year.0')}}</span>
@@ -358,7 +362,7 @@
                                                 <label for="" class="col-sm-3 col-md-3 col-xl-3 col-form-label h-100 fw-bold">Giới thiệu dự án <span class=" red-cl">(*)</span></label>
                                                 <div class="col-sm-7 col-md-7 col-xl-8">
                                                     <textarea id="editor_pro1" class="form-control" cols="50" rows="8" name="introduce_pro[]">
-                                                        {{old('introduce_pro')}}
+                                                        {{old('introduce_pro[]')}}
                                                     </textarea>
 
                                                 </div>

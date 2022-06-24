@@ -18,6 +18,10 @@
                             class="form-control"
                             id="key"
                             placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
+
+                            @if(isset($_POST['key']))
+                                value="{{$_POST['key']}}"
+                            @endif
                         />
                     </div>
                     <div class="form__suggess"></div>
@@ -39,6 +43,7 @@
             </div>
         </div>
     </div>
+
 
     <div class="post-data">
 {{--        <a href="{{route('testMailAuto')}}">Test Mail</a>--}}

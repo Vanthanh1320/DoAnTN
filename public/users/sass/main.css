@@ -273,7 +273,7 @@ select:focus, input:focus {
 }
 
 .header__nav-item {
-    padding: 12px 12px;
+    padding: 10px 8px;
     font-weight: 600;
     font-size: 18px;
 }

@@ -216,7 +216,7 @@
                         <span>{{$item->name_company}}</span> <br>
                         <i>{{$item->job_position}}</i>
                         <ul>
-                            <li>{!! html_entity_decode($item->job_details) !!}</li>
+                            <p>{!! html_entity_decode($item->job_details) !!}</p>
                         </ul>
                     </div>
                 </div>
@@ -264,7 +264,7 @@
                         </div>
 
                         <div class="content-items">
-                            <span>Mô tả</span>
+                            <span>Thông tin dự án</span>
                             <p>{!! html_entity_decode($item->introduce_pro) !!}</p>
 
                         </div>

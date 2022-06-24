@@ -8,6 +8,7 @@
                     Việc làm IT
                 </h3>
             </div>
+{{--            <a href="{{route('testMailAuto')}}">Test</a>--}}
 
             <div class="row g-2">
                 @foreach($posts as $item)

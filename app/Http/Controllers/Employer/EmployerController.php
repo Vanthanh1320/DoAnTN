@@ -27,7 +27,7 @@ class EmployerController extends Controller
     public function index(){
         if (Auth::check()){
             $user=$this->userId();
-
+//            dd($user->unreadNotifications);
             return view('employer.index')->with(compact('user'));
         }
 
@@ -59,7 +59,7 @@ class EmployerController extends Controller
                     $query->orWhere('recruitment_id',$post[$i]->id);
                 }
 
-            })->get();
+            })->orderBy('id','desc')->get();
 
             return view('employer.apply')->with(compact('candidates','user'));
         }
@@ -75,7 +75,7 @@ class EmployerController extends Controller
         $post->status=$value;
         $post->save();
 
-        return redirect()->back();
+        return response()->json(['success']);
     }
 
     public function deleteCandidate(Request $request){

@@ -48,23 +48,21 @@ class sendMailAutomatic extends Command
             ->orderBy('id','desc')
             ->first();
 
-//        for ($i = 0; $i < count($apply_list); $i++){
             $kills=explode(',',$apply_list->recruitment->kills);
 
             $post_similar=Recruitment::where(function ($query) use ($kills,$apply_list){
                 for ($i=0;$i< count($kills);$i++) {
                     $query->orWhere('kills','like','%'.$kills[$i].'%')
                         ->Where('id', '<>',$apply_list->recruitment_id)
-                        ->Where('status', 1);
-//                        ->Where('created_at','>',$apply_list->created_at);
+                        ->Where('status', 1)
+                        ->Where('created_at','>',$apply_list->created_at);
                 }
             })->get();
 
-            if (count($post_similar) > 1){
+            if (count($post_similar) > 0){
                 $mailable=new postSimilar($apply_list->user,$apply_list->recruitment->kills,$post_similar);
-                Mail::to($apply_list->user->email)->queue($mailable);
+                Mail::to($apply_list->email)->queue($mailable);
             }
-//        }
 
     }
 }

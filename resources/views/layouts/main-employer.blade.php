@@ -69,6 +69,32 @@
 
     {{-- Morris chart   --}}
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+    <style>
+        .notify{
+            content: '';
+            position: absolute;
+            background: red;
+            border-radius:50%;
+            width: 18px;
+            height: 18px;
+            top: 12px;
+            left: 30px;
+            color: white;
+            text-align: center;
+            display: none;
+        }
+        .notify > p{
+            position: absolute;
+            content: '';
+            top: -23px;
+            right: 4px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .notify.show{
+            display: block !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -149,7 +175,7 @@
                 <ul class="navbar-nav float-end">
 
                     <li class="nav-item dropdown">
-                        <a
+                        <div
                             class="nav-link dropdown-toggle"
                             href="#"
                             id="navbarDropdown"
@@ -157,8 +183,12 @@
                             data-bs-toggle="dropdown"
                             aria-expanded="false"
                         >
-                            <i class="mdi mdi-bell font-24"></i>
-                        </a>
+                            <i class="mdi mdi-bell font-24" onclick="Notify(a)"></i>
+
+                            <div class="notify {{count($user->unreadNotifications) > 0 ? 'show':''}}">
+                                <p>{{count($user->unreadNotifications) !== 0 ? count($user->unreadNotifications):''}}</p>
+                            </div>
+                        </div>
                         <ul
                             class="
                                 dropdown-menu dropdown-menu-end
@@ -188,7 +218,7 @@
                                                     <div class="ms-2">
                                                         {{-- <h5 class="mb-0">Event today</h5>--}}
                                                         <span class="mail-desc">
-                                                                {{$notification->data['desc']}}
+                                                                {!! html_entity_decode($notification->data['desc']) !!}
                                                             </span>
                                                     </div>
                                                 </div>
@@ -306,20 +336,6 @@
                             <i class="fas fa-chart-pie"></i>
                             <span class="hide-menu">Thống kê </span>
                         </a>
-{{--                        <ul aria-expanded="false" class="collapse first-level">--}}
-{{--                            <li class="sidebar-item">--}}
-{{--                                <a href="form-basic.html" class="sidebar-link"--}}
-{{--                                ><i class="mdi mdi-note-outline"></i--}}
-{{--                                    ><span class="hide-menu"> Form Basic </span></a--}}
-{{--                                >--}}
-{{--                            </li>--}}
-{{--                            <li class="sidebar-item">--}}
-{{--                                <a href="form-wizard.html" class="sidebar-link"--}}
-{{--                                ><i class="mdi mdi-note-plus"></i--}}
-{{--                                    ><span class="hide-menu"> Form Wizard </span></a--}}
-{{--                                >--}}
-{{--                            </li>--}}
-{{--                        </ul>--}}
                     </li>
 
                 </ul>
@@ -331,6 +347,19 @@
 
     @yield('content')
 </div>
+
+<script type="text/javascript">
+    function Notify(a) {
+        alert(a)
+    }
+    const bell=document.querySelector('.dropdown');
+
+    bell.onclick=function (event) {
+        console.log(event)
+        const notify=document.querySelector('.notify');
+        notify.classList.add('show');
+    }
+</script>
 
 <script src="{{url('empl')}}/assets/libs/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
@@ -364,6 +393,8 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
 
+
+
 <script>
     $(".select2").select2();
     // $(".select3").select2();
@@ -388,6 +419,7 @@
     });
 
 </script>
+
 
 {{-- Update status candidate --}}
 <script type="text/javascript">
@@ -424,7 +456,7 @@
                 type: "GET",
                 data: {id_post: id_post,value:value},
                 success: function (data) {
-                    console.log(data.success)
+                    location.reload()
                 }
             })
         })
@@ -453,71 +485,73 @@
 
     var colorDanger = "#FF1744";
 
-    var chart =new Morris.Bar({
-        element: 'myfirstchart',
-        resize: true,
-        hideHover:'auto',
-        barColors: [
-            '#0875ff',
-            '#e52525',
-        ],
-        data: [
-            {quantity_apply: 12, quantity_browsing: 5, timer: "2022-05-05"},
-            {quantity_apply: 2, quantity_browsing: 1, timer: "2022-06-05"},
-            {quantity_apply: 4, quantity_browsing: 7, timer: "2022-07-05"},
-            {quantity_apply: 2, quantity_browsing: 1, timer: "2022-08-05"},
-            {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
-            {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
-            {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
-        ],
+    if (location.href.includes('thong-ke')){
+        var chart =new Morris.Bar({
+            element: 'myfirstchart',
+            resize: true,
+            hideHover:'auto',
+            barColors: [
+                '#0875ff',
+                '#e52525',
+            ],
+            data: [
+                // {quantity_apply: 12, quantity_browsing: 5, timer: "2022-05-05"},
+                // {quantity_apply: 2, quantity_browsing: 1, timer: "2022-06-05"},
+                // {quantity_apply: 4, quantity_browsing: 7, timer: "2022-07-05"},
+                // {quantity_apply: 2, quantity_browsing: 1, timer: "2022-08-05"},
+                // {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
+                // {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
+                // {quantity_apply: 12, quantity_browsing: 5, timer: "2022-09-05"},
+            ],
 
-        xkey: 'timer',
-        ykeys: ['quantity_apply','quantity_browsing'],
-        labels: ['Số lượng ứng tuyển','Số lượng đã duyệt hồ sơ']
-    });
+            xkey: 'timer',
+            ykeys: ['quantity_apply','quantity_browsing'],
+            labels: ['Số lượng ứng tuyển','Số lượng đã duyệt hồ sơ']
+        });
 
-    $(document).ready(function () {
-        $('.form-select').change(function () {
-            var token = $('input[name="_token"]').val();
-            var value=$(this).val();
-            var timerfilter=$('.form-select-filter').val();
+        $(document).ready(function () {
+            $('.form-select').change(function () {
+                var token = $('input[name="_token"]').val();
+                var value=$(this).val();
+                var timerfilter=$('.form-select-filter').val();
 
-            $.ajax({
-                url: "{{route('statistics-candidate')}}",
-                dataType: "JSON",
-                type: "post",
-                data: {value:value,timer:timerfilter,_token:token},
-                success: function (data) {
-                    if(data.length > 0){
-                        chart.setData(data)
-                    }else{
-                        chart.setData([{timer:0}])
+                $.ajax({
+                    url: "{{route('statistics-candidate')}}",
+                    dataType: "JSON",
+                    type: "post",
+                    data: {value:value,timer:timerfilter,_token:token},
+                    success: function (data) {
+                        if(data.length > 0){
+                            chart.setData(data)
+                        }else{
+                            chart.setData([{timer:0}])
+                        }
                     }
-                }
-            })
-        })
-
-        $('.form-select-filter').change(function () {
-            var token = $('input[name="_token"]').val();
-            var value=$('.form-select').val();
-            var timerfilter=$(this  ).val();
-
-            $.ajax({
-                url: "{{route('statistics-candidate')}}",
-                dataType: "JSON",
-                type: "post",
-                data: {value:value,timer:timerfilter,_token:token},
-                success: function (data) {
-                    if(data.length > 0){
-                        chart.setData(data)
-                    }else{
-                        chart.setData([{timer:0}])
-                    }
-                }
+                })
             })
 
+            $('.form-select-filter').change(function () {
+                var token = $('input[name="_token"]').val();
+                var value=$('.form-select').val();
+                var timerfilter=$(this  ).val();
+
+                $.ajax({
+                    url: "{{route('statistics-candidate')}}",
+                    dataType: "JSON",
+                    type: "post",
+                    data: {value:value,timer:timerfilter,_token:token},
+                    success: function (data) {
+                        if(data.length > 0){
+                            chart.setData(data)
+                        }else{
+                            chart.setData([{timer:0}])
+                        }
+                    }
+                })
+
+            })
         })
-    })
+    }
 
 </script>
 

@@ -33,6 +33,8 @@ class DeveloperController extends Controller
 
         $apply_list=ApplyList::with('recruitment','user')->orderBy('id','desc')
             ->first();
+//                dd($apply_list->recruitment->kills);
+
 
 //        for ($i = 0; $i < count($apply_list); $i++){
             $kills=explode(',',$apply_list->recruitment->kills);
@@ -41,18 +43,18 @@ class DeveloperController extends Controller
                 for ($i=0;$i< count($kills);$i++) {
                     $query->orWhere('kills','like','%'.$kills[$i].'%')
                         ->Where('id', '<>',$apply_list->recruitment_id)
-                        ->Where('status', 1);
-//                        ->Where('created_at','>',$apply_list->created_at);
+                        ->Where('status', 1)
+                        ->Where('created_at','>',$apply_list->created_at);
                 }
             })->get();
+        dd($post_similar);
 
 
             if (count($post_similar) > 1){
-                $mailable=new postSimilar($apply_list->user,$post_similar);
-                Mail::to($apply_list->user->email)->queue($mailable);
+                $mailable=new postSimilar($apply_list->user,$apply_list->recruitment->kills,$post_similar);
+                Mail::to($apply_list->email)->queue($mailable);
             }
 
-            dd($post_similar);
 
 //        }
         return true;
@@ -131,10 +133,9 @@ class DeveloperController extends Controller
             for ($i=0;$i< count($kills);$i++) {
                 $query->orWhere('kills','like','%'.$kills[$i].'%')
                     ->where('id','<>',$post->id)
-                    ->where([['expire','>',Carbon::now()->toDateString()],['status',1]])
-                    ->orderBy('id','DESC');
+                    ->where([['expire','>',Carbon::now()->toDateString()],['status',1]]);
             }
-        })->get();
+        })->orderBy('created_at','DESC')->get();
 
         if (Auth::user() != null){
             $user_id=Auth::user()->id;
@@ -162,15 +163,14 @@ class DeveloperController extends Controller
                 ->orwhere('name_company','like','%'.$key.'%')
                 ->orwhere('title','like','%'.$key.'%')
                 ->where([['expire','>',$date_now],['status',1]])
-//                ->where('expire','>',$date_now)
-                ->orderBy('id','DESC')->get();
+                ->orderBy('created_at','DESC')->get();
         }
 
         if ($select !== "Chọn cấp bậc"){
             $posts=Recruitment::with('user')
                 ->where('level','like','%'.$select.'%')
                 ->where([['expire','>',$date_now],['status',1]])
-                ->orderBy('id','DESC')->get();
+                ->orderBy('created_at','DESC')->get();
         }
 
         return view('developer.search')->with(compact('posts','user'));

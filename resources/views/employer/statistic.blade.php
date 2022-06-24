@@ -42,6 +42,7 @@
                                                 class="select2 form-select form-select-filter shadow-none"
                                                 style="width: 100%; height: 36px"
                                             >
+                                                <option >Thời gian</option>
                                                 <option value="ngayhomqua">ngày hôm qua</option>
                                                 <option value="7ngayqua">7 ngày qua</option>
                                                 <option value="thangtruoc">tháng trước</option>

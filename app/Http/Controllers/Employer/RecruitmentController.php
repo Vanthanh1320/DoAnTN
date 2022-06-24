@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Employer;
 
 use App\Http\Controllers\Controller;
 use App\Models\ApplyList;
+use App\Models\KeywordKills;
 use App\Models\Recruitment;
 use App\Models\User;
 use Carbon\Carbon;
@@ -46,8 +47,9 @@ class RecruitmentController extends Controller
     public function create()
     {
         $user=$this->userId();
+        $array_kills=KeywordKills::all();
 
-        return view('employer.create_recruitment')->with(compact('user'));
+        return view('employer.create_recruitment')->with(compact('user','array_kills'));
     }
 
     /**
@@ -133,7 +135,7 @@ class RecruitmentController extends Controller
             return redirect()->back()->with('success','Tin tuyển dụng tạo thành công');
         }else{
             return redirect()->back()->with('error','Tin tuyển dụng tạo thất bại');
-        };
+        }
 
     }
 
@@ -159,7 +161,7 @@ class RecruitmentController extends Controller
         $user=$this->userId();
 
         $array_level=['Intern','Fresher','Junior','Senior','Leader Developer','Mid-level Manager','Senior Leader'];
-        $array_kills=['Python','Java','JavaScript','HTML/CSS','PHP','NodeJS','C#','C/C++','R','Ruby','VB.NET','Golang','Swift','Kotlin'];
+        $array_kills=KeywordKills::all();
 
         $post=Recruitment::where('id',$id)->first();
 

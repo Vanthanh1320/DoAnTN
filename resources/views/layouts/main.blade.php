@@ -86,10 +86,12 @@
                                     class="form-control"
                                     id="name"
                                     placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
+                                    @if(isset($_POST['key']))
+                                        value="{{$_POST['key']}}"
+                                    @endif
                                 />
                             </div>
                             <div class="form__suggess" style="top: 66px !important; width: 340px"></div>
-
                             <div class="search__form-select mx-1">
                                 <select class="form-select" name="level">
                                     <option>Chọn cấp bậc</option>
@@ -233,14 +235,17 @@
                                     id="name"
                                     placeholder="Nhập theo kỹ năng, chức vụ, công ty..."
                                     required
+                                    @if(isset($_POST['key']))
+                                        value="{{$_POST['key']}}"
+                                    @endif
                                 />
                             </div>
                             <div class="form__suggess"></div>
 
                             <div class="search__form-select mx-1">
-                                <select class="form-select">
+                                <select class="form-select" name="level">
                                     <option>Chọn cấp bậc</option>
-                                    <option value="Intern">Intern</option>
+                                    <option value="Intern" {{isset($_POST['level']) == 'Intern' ? 'selected':''}}>Intern</option>
                                     <option value="Fresher">Fresher</option>
                                     <option value="Junior">Junior</option>
                                     <option value="Senior">Senior</option>
@@ -265,7 +270,6 @@
                     <div class="offcanvas-header justify-content-end">
                         <button type="button" class="btn-close text-reset " data-bs-dismiss="offcanvas"
                                 aria-label="Close">
-
                         </button>
                     </div>
                     <div class="offcanvas-body">
@@ -287,6 +291,7 @@
         </div>
     </div>
 @endif
+
 
 @yield('content')
 

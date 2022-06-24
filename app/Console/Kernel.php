@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
 //        })->everyMinute();
 
 //        ->daily('00:00')
-//        $schedule->command('recruitment:update')->everyMinute();
+        $schedule->command('recruitment:update')->everyMinute();
         $schedule->command('recruitment:select')->everyMinute();
     }
 

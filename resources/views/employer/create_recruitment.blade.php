@@ -52,20 +52,9 @@
                                         multiple="multiple"
                                         style="height: 36px; width: 100%"
                                     >
-                                        <option>Python</option>
-                                        <option>Java</option>
-                                        <option>JavaScript</option>
-                                        <option >HTML/CSS</option>
-                                        <option >PHP</option>
-                                        <option >NodeJS</option>
-                                        <option >C#</option>
-                                        <option >C/C++</option>
-                                        <option >R</option>
-                                        <option >Ruby</option>
-                                        <option >VB.NET</option>
-                                        <option >Golang</option>
-                                        <option >Swift</option>
-                                        <option >Kotlin</option>
+                                        @foreach($array_kills as $item)
+                                            <option value="{{$item->name}}">{{$item->name}}</option>
+                                        @endforeach
                                     </select>
 
                                     @if($errors->has('kills'))
@@ -99,11 +88,11 @@
                                     <select class="form-select" name="experience">
                                         <option selected>Chưa có kinh nghiệm</option>
                                         <option value="1">Dưới 1 năm</option>
-                                        <option value="2">1</option>
-                                        <option value="3">2</option>
-                                        <option value="3">3</option>
-                                        <option value="3">4</option>
-                                        <option value="3">5</option>
+                                        <option value="2">1 năm</option>
+                                        <option value="3">2 năm</option>
+                                        <option value="3">3 năm</option>
+                                        <option value="3">4 năm</option>
+                                        <option value="3">5 năm</option>
                                         <option value="3">Trên 5 năm</option>
                                     </select>
                                 </div>

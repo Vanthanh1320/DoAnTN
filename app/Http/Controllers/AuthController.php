@@ -40,6 +40,10 @@ class AuthController extends Controller
                 return redirect()->back()->with('error','Địa chỉ email không tồn tại');
             }
 
+            if (Auth::user()->status == 0){
+                return redirect()->back()->with('error','Tài khoản đang bị khóa');
+            }
+
             return redirect()->route('empl');
         }
 
